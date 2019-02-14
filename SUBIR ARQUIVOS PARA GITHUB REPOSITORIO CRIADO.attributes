@@ -1,0 +1,13 @@
+SUBIR ARQUIVOS PARA GITHUB REPOSITORIO CRIADO
+
+cd c:/
+Cd github-course
+git add .
+git commit -m "nome do arquivo"
+git push origin master
+
+
+Obs: este processo é para inserir no arquivo ja criado chamado (github-course).
+
+Caso seja criado novo projeto criar novo repositorio no github e apos fazer este processo acima.
+
