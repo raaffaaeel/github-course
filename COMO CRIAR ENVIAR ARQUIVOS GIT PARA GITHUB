@@ -1,0 +1,26 @@
+COMO CRIAR ENVIAR ARQUIVOS GIT PARA GITHUB
+
+git config --global user.name ""           - COLOCAR NOME 
+git config --global user.email ""          - INSERIR E-MAIL
+git config --global core.editor sublime    - INSERINDO EDITOR
+git config --list                          - MOSTRA AS INFORMAÇÕES INICIAIS
+
+mkdir git-course 2                         - INSERINDO O NOME DA PASTA
+cd git-course 2                            - ABRINDO PASTA
+git init                                   - RESPONSAVEL PARA REINICIAR O REPOSITORIO
+ls la                                      - INFORMA QUE TEM UM DIRETORIO
+cd .git
+cd ..                                      - VOLTAR PARA O DIRETORIO
+vi readme.md                               - ENTRAR NO ARQUIVO PARA EDITAR
+ls
+cd c:/                                     - MUDAR PARA LOCAL ex C:
+git clone                                  - COPIAR ENDEREÇO HTTPS://GITHUB - NOVO
+git status                                 - COMO ESTÁ O REPOSITÓRIO
+cd git-course 2                            - INFORMAR O NOME DA PASTA NESTE MOMENTO, IR ATÉ PASTA C BUSCAR COM ESTE NOME E INSERIR O ARQUIVO
+git status                                 - NESTE PONTO TRAZ PASTA UNIDADE C
+git add.
+git add .
+git commit -m "segundo commit ssh 2"       - INSERIR NOME QUE VAI APARECER NO GITHUB OPEN SOURCE
+git push origin master
+
+ÁPOS IR NA TELA SITE GITHUB E ATUALIZAR
