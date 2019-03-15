@@ -1,0 +1,53 @@
+CONFIGURAÇÃO GIT
+
+git config --global user.name "Rafael Macedo"   CONFIGURAR NOME
+git config --global user.email "rafael.macedo@blueshift.com.br" CONFIGURAR E-MAIL
+git config --global core.editor emacs    CONFIGURAR EDITOR PRINCIPAL GIT
+git config user.name   PARA SABER O VALOR 
+git config --list  TRAZ TODAS AS INFORMAÇÕES
+mkdir              COMANDO DE CRIAR PASTA
+dir                ENTRADA NA PASTA WINDOWS
+cd                 ENTRAR NA PASTA LINEX E MAC
+git init           REAPONSAVEL POR REINICIAR REPOSITÓRIO
+ls -la             INFORMA QUE TEM 1 DIRETORIO
+cd .git            ?
+ls                 ?
+cd ..              VOLTAR PARA DIRETORIO
+vi                 ENTRAR NO ARQUIVO A LETRA I É PARA EDITAR
+
+ DENTRO DO GIT NA INSERÇÃO esc É PARA SAIR DA INSERÇÃO.
+ DENTRO DO GIT NA INSERÇÃO : INICIAR COMANDO
+ DENTRO DO GIT NA INSERÇÃO w ESCREVER SALVAR
+ DENTRO DO GIT NA INSERÇÃO q SERVE PARA SAIR
+
+git status         COMO ESTÁ O REPOSITÓRIO
+git add            COMO O NOME DO ARQUIVO SERVE PARA ADICIONAR ARQUIVO
+git commit -m ""   CRIAR IMAGEM E VERSÃO MSG
+git add            INSERINDO O NOME DO ARQUIVO GRAVA MODIFICAÇÃO
+
+git log            MOSTRA COMMIT, AUTOR, DATA
+git log --decorate
+git log --author   MOSTRA AUTHOR OU USUARIO
+git log --author="rafael"  
+git shortlog       QUAIS USUARIOS
+git shortlog -n    MOSTRAR TODOS
+git log --graph
+git diff           MOSTRA ULTIMAS MODIFICAÇÕES
+git diff --name-only  PARA VER NOMES
+git commit -am "editreadme"    SALVE TODO O COMMIT
+git show           MOSTRA AS MUDANÇAS
+
+git checkout       COM NOME DO ARQUIVO ALTERAR A ULTIMA ALTERAÇÃO
+git reset HEAD     COM NOME DO ARQUIVO - TIRA DO STAGE
+git reset --soft   COM Nº DO COMMIT ALTERA AS MODIFICAÇÕES E VOLTAR O COMMIT
+git reset --mixed  MATAR COMMIT + VOLTA PARA ANTES DO STAGE
+git reset --hard   MATAR TUDO DO COMMIT
+
+Apos criar o arquivo no GITHUB inserir no repositório remoto open souce criando nome. E apos entrar help.github.com para conectar 
+
+
+
+
+
+
+
