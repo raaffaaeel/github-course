@@ -1,0 +1,126 @@
+
+# Como subir arquivos para Github #
+
+nicio.
+
+$ cd ..
+
+$ cd git
+
+$ cd github-course
+
+$ git status
+
+$ git add .
+
+$ git commit -m "Subindo documentação treinamento" # entre aspas apenas comentario.
+
+$ git push origin master
+
+$ git status
+
+Fim.
+
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c/Users (master)
+$ cd ..
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c (master)
+$ cd git
+git/           Git-course2/   github rafael/ github-course/
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c (master)
+$ cd git
+git/           Git-course2/   github rafael/ github-course/
+
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c (master)
+$ cd github-course
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c/github-course (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   Lista de comandos mais usados no Linux
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        Aula Python Alex.py
+        COMANDOS SPARK.py
+        "CONFIGURA\303\207\303\203O GIT.gitconfig"
+        CURSO PYTHON 3.py
+        DATA FRAME  SPARK
+        DESAFIO SPARK.py
+        Desafio Resolvido.py
+        MySQL_001.sql
+        SCALA + INTELLIJ
+        pwd = Imprimir diretorio de trabalho.gitlog
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c/github-course (master)
+$ git add .
+warning: LF will be replaced by CRLF in MySQL_001.sql.
+The file will have its original line endings in your working directory
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c/github-course (master)
+$ git commit -m "Subindo documentação treinamento"
+[master 77ceb2c] Subindo documentação treinamento
+ 11 files changed, 936 insertions(+), 74 deletions(-)
+ create mode 100644 Aula Python Alex.py
+ create mode 100644 COMANDOS SPARK.py
+ create mode 100644 "CONFIGURA\303\207\303\203O GIT.gitconfig"
+ create mode 100644 CURSO PYTHON 3.py
+ create mode 100644 DATA FRAME  SPARK
+ create mode 100644 DESAFIO SPARK.py
+ create mode 100644 Desafio Resolvido.py
+ rewrite Lista de comandos mais usados no Linux (100%)
+ create mode 100644 MySQL_001.sql
+ create mode 100644 SCALA + INTELLIJ
+ create mode 100644 pwd = Imprimir diretorio de trabalho.gitlog
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c/github-course (master)
+$ git push origin master
+Enumerating objects: 13, done.
+Counting objects: 100% (13/13), done.
+Delta compression using up to 4 threads
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (11/11), 19.11 KiB | 1.36 MiB/s, done.
+Total 11 (delta 0), reused 0 (delta 0)
+To https://github.com/raaffaaeel/github-course.git
+   c8acfc5..77ceb2c  master -> master
+
+BlueShift@DESKTOP-URQONFO MINGW64 /c/github-course (master)
+$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+nothing to commit, working tree clean
+
+
+Inicio.
+
+$ cd ..
+
+$ cd git
+
+$ cd github-course
+
+$ git status
+
+$ git add .
+
+$ git commit -m "Subindo documentação treinamento" # entre aspas apenas comentario.
+
+$ git push origin master
+
+$ git status
+
+Fim.
+

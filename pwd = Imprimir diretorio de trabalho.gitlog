@@ -1,0 +1,45 @@
+
+ls  lista os arquivos
+ls -a 
+ls -1 
+cd  Muda o direito
+ls  lista o conteúdo 
+pwd  Mostra o Caminho
+mkdir  Cria novos diretórios
+cp  Copia
+mv  Move e arquivos
+cat  Concatena arquivos
+touch  Cria um novo arquivo
+rm  Remove/deleta arquivos ou diretorios
+grep  Busca e Mostra Conteúdo de um arquivo
+find  Pesquisa arquivos
+locate  Encontra arquivos
+history  Exibe histórico dos ultimos comandos
+man  Mostra
+free  Exibe a quantidade de memória RAM
+ls ~ Mostra os arquivos que estão em seu diretório pessoal
+ls -hal  mostra os arquivos que estão em seu diretório pessoal
+-c  cria o arquivo
+-v  exibe a ação no terminal
+-z  comprime o arquivo
+-f  comando que permite a nomeação do arquivo
+
+echo "Hello" 
+echo "Hello" > hello.txt         entrada padrão
+cat hello.txt saida padrão
+$ cat oceans.txt > continents.txt      é redirecionada para continents.txt .
+cat glaciers.txt >> rivers.txt       pega a saída padrão do comando à esquerda e acrescenta (adiciona) ao arquivo à direita.
+cat < lakes.txt  <pega a entrada padrão do arquivo à direita e insere no programa à esquerda. 
+cat volcanoes.txt | wc 
+sort lakes.txt          sortpega a entrada padrão e ordena em ordem alfabética para a saída padrão.
+cat lakes.txt | sort > sorted-lakes.txt Aqui, o comando pega a saída padrão cat lakes.txte "canaliza" para sort. 
+uniq deserts.txt = uniqsignifica "exclusivo" e filtra linhas adjacentes e duplicadas em um arquivo
+sort deserts.txt | uniq = Uma maneira mais eficaz de chamar uniqé chamar sortpara alfabetizar um arquivo e "canalizar" a saída padrão para uniq
+grep = grepsignifica "impressão de expressão regular global". Ele procura arquivos por linhas que correspondam a um padrão e retorna os resultados
+grep -i = grep -i permite que o comando seja insensível a maiúsculas e minúsculas
+grep -R = grep -Rprocura todos os arquivos em um diretório e gera nomes de arquivos e linhas contendo resultados correspondentes
+grep -Rl =grep -Rlprocura todos os arquivos em um diretório e gera apenas nomes de arquivos com resultados correspondentes
+sed = sedsignifica "editor de fluxo". Ele aceita entrada padrão e o modifica com base em uma expressão
+s = significa "substituição". é sempre usado ao usar sedpara substituição.
+snow = a string de pesquisa, o texto a ser encontrado.
+rain = a string de substituição, o texto a ser adicionado.

@@ -1,0 +1,21 @@
+
+
+Inicio.
+
+$ cd ..
+
+$ cd git
+
+$ cd github-course
+
+$ git status
+
+$ git add .
+
+$ git commit -m "Subindo documentação treinamento" # entre aspas apenas comentario.
+
+$ git push origin master
+
+$ git status
+
+Fim.

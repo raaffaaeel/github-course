@@ -1,0 +1,208 @@
+DATA FRAME  SPARK
+
+# Trazer o arquivo CSV #
+path = "C:/AULA SPARK/rddExample.csv"
+
+
+spark.read.csv(path=path, sep='|',header=true)
+
+# Metodo 1: Inserir Schema
+from pyspark.sql.functions import *
+from pyspark.sql.types import * 
+schema = StructType(
+	[structfield("id" , IntegerType(), True),
+	[structfield("first" , IntegerType(), True),
+	[structfield("last" , IntegerType(), True),
+	[structfield("email" , StringType(), True),
+	[structfield("gender" , StringType(), True),
+	[structfield("ip_address" , StringType(), True)]
+	
+
+df = spark.read.csv(path=path,schema=schema ,sep='|',header=True)
+
+# Metodo 2: Inserir Schema
+df = spark.read.csv(path=path,inferschema=True ,sep='|', header=True)
+
+# Contar mulher x Homem
+dfGroup = df.groupBy("gender").count()
+dfGroup.show()
+
+# Metodo 2 Contar mulher x Homem
+df.registerTempTable("temp1")
+dfGroup2 = spark.sql("SELECT gender, COUNT(1) FROM temp1 group by gender")
+
+schema = ["TESTE int", "first_name string", "last_name string", "email string", "gender string", "ip_address string"]
+
+
+path = "C:/Users/BlueShift036/Documents/SparkWeek/Dia 1/rddExample.csv"
+
+df = spark.read.csv(path=path, sep='|', header=True)
+
+
+#METODO 1:
+from pyspark.sql.types import *
+schema = StructType([
+    StructField("id", IntegerType(), True),
+    StructField("first_name", StringType(), True),
+    StructField("last_name", StringType(), True),
+    StructField("email", StringType(), True),
+    StructField("gender", StringType(), True),
+    StructField("ip_address", StringType(), True)]
+    )
+
+df = spark.read.csv(path=path,schema=schema ,sep='|', header=True)
+
+# METODO 2
+
+df = spark.read.csv(path=path,inferSchema=True ,sep='|', header=True)
+
+# METODO 1
+dfGroup = df.groupBy("Gender").count()
+
+# METODO 2
+df.registerTempTable("temp1")
+dfGroup2 = spark.sql("SELECT Gender, COUNT(1) FROM temp1 group by gender")
+
+
+
+#############################
+from pyspark.sql.functions import *
+from pyspark.sql.types import * 
+
+# Inserir novo arquvo no DATA FRAME #
+path = "C:/AULA SPARK/"
+pathMovies = path + "movies.csv"
+pathRatings = path + "ratings.parquet"
+pathUsers = path + "users.orc"
+
+dfMovies = spark.read.orc(pathMovies)
+
+dfMovies = spark.read.csv(path=pathMovies, sep=";", header=True, inferSchema=True)
+
+# Inserir arquivo ORC #
+dfUsers = spark.read.orc(pathUsers)
+
+# Inserir arquivo PARQUET #
+dfPaequet = spark.read.parquet(pathRatings)
+
+# Mostra a tabela em colunas #
+dfMovies.show()
+
+# Contar as Linhas da tabela Movies #
+dfMovies.count()
+
+dfMovies.show(20,False) ?
+
+dfMovies.registerTempTable("temp1") 
+
+# Apontar Titulos #
+dfMoviesYearRelease = dfMovies.withColumn("releaseYear",
+    dfMovies.Title.substr(-5, 4).cast(IntegerType()))
+
+dfMoviesYearRelease.show()
+
+dfMoviesYearRelease = dfMoviesYearRelease.where(col("releaseYear") >= 1979)
+
+dfMoviesYearRelease.show()
+
+#METODO 1
+dfRatingMeanPerMovie = dfRatings.select("MovieID", dfRatings.Rating.cast(FloatType())).groupBy("MovieID").avg("Rating").withColumn("avg(Rating)", col("avg(Rating)").cast(DecimalType(20,2))).orderBy(desc("avg(Rating)"))
+
+
+# METODO 2
+dfRatingMeanPerMovie = dfRatings.select("MovieID", dfRatings.Rating.cast(FloatType())).groupBy("MovieID").agg(avg("Rating").cast(DecimalType(20,2)).alias("Rating")).sort(col("Rating")
+.desc())
+
+dfRatingsPerUser = dfRatings.select("UserID", dfRatings.Rating.cast(FloatType())).groupBy("UserID").agg(count("Rating").alias("CountRatings")).orderBy(desc("CountRatings"), asc("UserID"))
+
+dfMoviesYearRelease = dfMoviesYearRelease.withColumn("MovieID", col("MovieID").cast(IntegerType()))
+
+ dfMoviesYearRelease.show()
+
+dfRatingMeanPerMovie = dfRatingMeanPerMovie.withColumn("MovieID", col("MovieID").cast(IntegerType()))
+
+
+# dfMoviesYearRelease.join(dfRatingMeanPerMovie, dfRatingMeanPerMovie.MovieID == dfMoviesYearRelease.MovieID).show()
+
+dfRatingMeanPerMovie.write.csv(path=path+ "Resultados", mode="overwrite", sep=";", header=True)
+
+## LENDO JSON
+
+dfJson = spark.read.json(path + "JsonExample.json")
+
+dfJson2 = dfJson.select("user.*")
+
+
+# METODO 1
+dfJson3 = dfJson2.withColumn("ip_address", explode_outer("ip_address"))
+
+# METODO 2
+
+dfJson3 = dfJson2.select("email", "first_name", "gender", "id", explode_outer("ip_address").alias("ip_address"), "last_name")
+
+https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/747051138407916/876613454596829/1146427120957741/latest.html
+
+dfUsersJson = spark.read.json("C:/Users/BlueShift036/Documents/SparkWeek/Desafio/users_json.json", multiLine=True)
+
+dfRatingsPerUser = dfUsers.join(dfRatingsPerUser, dfRatingsPerUser.UserID == dfUsers.UserID)
+dfUsersTotalRating dfRatingsPerUser.join(dfUsers, "UserID")
+
+#4 etapa 2. Crie um novo dfUsersTotalRating juntando o dfUsers com o dfTotalRatingPerUser trazendo todos os campos do dfUsers e somente o campo que contém o total de avaliações do dfTotalRatingPerUser.
+
+dfUsersTotalRating = dfRatingsPerUser.join(dfUsers, "UserID")
+display(dfMoviesWithMean)
+
+
+#############################################
+
+#  Comandos Informado pela Rafael Erlachar - Data Bricks#
+
+from pyspark.sql.functions import *
+from pyspark.sql.types import *
+
+# Dataset movies.csv --> Dataframe dfMovies
+# Dataset ratings.parquet --> Dataframe dfRatings
+# Dataset users.orc --> Dataframe dfUsers
+dfMovies = spark.table("movies_orc")
+dfRatings = spark.table("ratings_parquet")
+dfUsers = spark.table("users_orc")
+
+# 2 - Etapa 1 - Gerar um novo dataframe dfMoviesYearRelease de movies acrescentando uma coluna "releaseYear“ contendo o ano informado no campo Title #
+dfMoviesYearRelease = dfMovies.withColumn("releaseYear",
+    dfMovies.Title.substr(-5, 4).cast(IntegerType()))
+
+# 2 - Etapa 2 - Ainda no dataframe dfMoviesYearRelease, filtrar somente os filmes que foram lançados após o ano  de 1979 (“releaseYear” > 1979) - Dica: Utilizar funções .where e col #
+dfMoviesYearRelease = dfMoviesYearRelease.where(col("releaseYear") >= 1979)
+
+# 3 - Etapa 1 - Crie um novo DF com o nome dfRatingMeanPerMovie a partir do dfRating obtendo a media de ratings por filme. Converta para o tipo Decimal com 2 casas decimais e ordene o resultado por media de forma decrescente.
+dfRatingMeanPerMovie = dfRatings.select("MovieID", dfRatings.Rating.cast(FloatType())).groupBy("MovieID").agg(avg("Rating").cast(DecimalType(20,2)).alias("Rating")).sort(col("Rating")
+.desc())
+
+# 3 - Etapa 2 - Crie um novo dfTotalRatingPerUser a partir do dfRating obtendo a quantidade de avaliações por usuário e ordene o resultado por quantidade de avaliações de forma decrescente. Dica: Utilizar funções .groupBy, .agg, count, alias, .orderBy e desc
+dfRatingsPerUser = dfRatings.select("UserID", dfRatings.Rating.cast(FloatType())).groupBy("UserID").agg(count("Rating").alias("CountRatings")).orderBy(desc("CountRatings"), asc("UserID"))
+
+
+
+dfMoviesYearRelease = dfMoviesYearRelease.withColumn("MovieID", col("MovieID").cast(IntegerType()))
+
+dfRatingMeanPerMovie = dfRatingMeanPerMovie.withColumn("MovieID", col("MovieID").cast(IntegerType()))
+
+# 4 - Etapa 1  Crie um novo dfMoviesWithMean juntando o dfMoviesYearRelease com o dfRatingMeanPerMovie trazendo todos os campos do dfMoviesYearRelease somente o campo que contém a media de avaliação do filme do dfRatingMeanPerMovie#
+dfMoviesWithMean = dfMoviesYearRelease.join(dfRatingMeanPerMovie, dfRatingMeanPerMovie.MovieID == dfMoviesYearRelease.MovieID)
+# OU #
+dfMoviesWithMean = dfMoviesYearRelease.join(dfRatingMeanPerMovie, "MovieID")
+
+# 4 - Etapa 2. Crie um novo dfUsersTotalRating juntando o dfUsers com o dfTotalRatingPerUser trazendo todos os campos do dfUsers e somente o campo que contém o total de avaliações do dfTotalRatingPerUser #
+dfUsersTotalRating = dfRatingsPerUser.join(dfUsers, "UserID")
+display(dfMoviesWithMean)
+
+dfMoviesWithMean = dfMoviesYearRelease.join(dfRatingMeanPerMovie, "MovieID")
+
+# 5 - Etapa 2 - Crie um novo dataframe dfBestMoviesPerYear que contenha somente o filme mais bem avaliados por ano de lançamento ordenando pelo ano de lançamento de forma decrescente.
+from pyspark.sql.window import Window
+window = Window.orderBy("Rating").partitionBy("releaseYear")
+dfBestMoviesPerYear = dfMoviesWithMean.withColumn("Ranking", row_number().over(Window.orderBy(desc("Rating")).partitionBy("releaseYear"))).where("Rating = 1")
+display(dfMoviesWithMean)
+
+# GRAVAR O ARQUIVO NO HIVE #
+dfBestMoviesPerYear.write.saveAsTable("dfbestmoviesperyear")
