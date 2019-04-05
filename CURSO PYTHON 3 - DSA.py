@@ -81,3 +81,11 @@ https://docs.python.org/devguide
 
 ####
 
+and > SE AMBOS OPERADORES FOREM TRUE, RETORNA TRUE > EX(x and y)é True
+or  > SE UM DOS OPERADORES FOR TRUE, RETORNA TRUE > EX (x OR y) é True
+Not > Usado para reverter o estado da lógica EX > NOT (x and y) é False
+
+####
+
+
+
