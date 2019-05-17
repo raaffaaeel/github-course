@@ -1,0 +1,30 @@
+### Modelos de tabelas Projeto Boa Vista ###
+
+""" Opções de distribuição da tabela ###
+
+DISTRIBUTION = HASH ( distribution_column_name )
+Atribui cada linha a uma distribuição efetuando hash no valor armazenado em distribution_column_name. O algoritmo é determinístico, ou seja, ele sempre efetua hash no mesmo valor para a mesma distribuição. A coluna de distribuição deve ser definida como NOT NULL porque todas as linhas que tiverem NULL são atribuídas à mesma distribuição.
+
+DISTRIBUTION = ROUND_ROBIN
+Distribui as linhas uniformemente entre todas as distribuições de modo round robin. Esse comportamento é o padrão para SQL Data Warehouse.
+
+DISTRIBUTION = REPLICATE
+Armazena uma cópia da tabela em cada nó de computação. Para o SQL Data Warehouse, a tabela é armazenada em um banco de dados de distribuição em cada nó de computação. Para o Parallel Data Warehouse, a tabela é armazenada em um grupo de arquivos do SQL Server que abrange o nó de computação. Esse comportamento é o padrão para Parallel Data Warehouse.""
+
+
+# Opções de estrutura da tabela #
+
+CLUSTERED COLUMNSTORE INDEX
+Armazena a tabela como um índice columnstore clusterizado. O índice columnstore clusterizado aplica-se a todos os dados da tabela. Esse comportamento é o padrão para SQL Data Warehouse.
+
+HEAP
+Armazena a tabela como um heap. Esse comportamento é o padrão para Parallel Data Warehouse.
+
+CLUSTERED INDEX ( index_column_name [ ,...n ] )
+Armazena a tabela como um índice clusterizado com uma ou mais colunas de chave. Esse comportamento armazena os dados por linha. Use index_column_name para especificar o nome de uma ou mais colunas de chave no índice. Para obter mais informações, confira Tabelas rowstore nos Comentários gerais.
+
+LOCATION = USER_DB
+Essa opção foi preterida. Ela é aceita sintaticamente, mas não é mais necessária e não afeta mais o comportamento.
+
+
+

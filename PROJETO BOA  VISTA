@@ -1,0 +1,163 @@
+> Início Projeto Boa Vista 23.04.2019 <
+
+1 DATA FACTORY
+
+2 Fluxo do projeto.
+
+3 (Fro7d1aG  wifi) - (Senha BitLocker - As65DQ4V)  - (Acessar máquina - tr_pbandeira - senha: inicio@123)  ou yC2f7B+A(v     < Nova senha maquina > Blueshift@321
+
+Montar um fluxo inicial local testando as conexões.
+
+SSIS - Verificação ferramenta se carrega para (Sql serve) as tabelas.
+
+SQL Serve - Como usar essa ferramenta.
+
+NETIZZA - ETL da IBM compreender essa ferramenta.
+
+(Microsoft @Cruze2014)
+
+ACESSO DATA FACTORY - https://portal.azure.com/#@2452f924-eda5-49ee-a059-393ab49c019a/resource/subscriptions/ede7104d-6073-4f27-b151-a953681247ea/resourceGroups/DF-Testes/providers/Microsoft.DataFactory/factories/Blue-agro/overview
+
+( DATA 24/04/2019 ) Quarta Feira.
+
+Instalação:
+Visual Studio 2017 Ok
+Extensão para visual Studio 'SSDT'
+SQL Server Management Studio  Ok
+Instância SQL Server Express
+Sublime (editor)
+
+Acessos:
+Data Factory Integration RunTime na máquina do Marcos  (máquina onde esta instalado o SQL Server)
+SQL Server PDW (sql que vai receber uma cópia do PDW para desenvolvimento)
+Azure DW (liberação de portas).
+Acesso a rede pública (para troca de arquivos).
+Azure Datalake Storage
+
+
+(Ninsoft falta senha para abrir os chamados)
+
+
+( DATA 25/04/2019 ) Quinta feira.
+
+Entrei ao 12:30. Aguardando liberação de senha para abrir os chamados no (Ninsoft) de instalção dos pacotes e acessos.
+
+Reinaldo Damaceno - Ajudando na conexão e instalção do acessos e programas, assim saímos da fila de espera para instalção dos programas no Desktop interno, sendo instalado hoje Visual Studio e o restante dos programas amanhã 26.04.2019.
+
+
+( DATA 26/04/2019 ) Sexta feira.
+
+Reunião das 10:00.
+Participantes Marcelo, Aline, Rafael.
+
+Assuntos;
+
+* Pauta, Alciro assumiu no lugar do Marcelo como primeiro ponto de apoio da Microsoft.
+* Status da semana de 22/04 até 26/04 - informado que estamos aguardando instalção dos programas e obter acessos para iniciar asatividades do projeto.
+
+* Lendo documentação do SQL SERVER DW, para entender a melhor forma usar e criar as tabelas.
+
+
+( DATA 29/04/2019 ) Segunda Feira.
+
+* Versionamento do TFS para intergration service.
+
+* ( https://andyleonard.blog/2019/03/azure-devops-ssis-and-git-part-0-getting-started/ )- (Documentação de como Acessar os pacotes)
+
+*( Azure DevOps, SSIS, and Git Part 0 - Getting Started - AndyLeonard... )
+
+* Para acessar os pacotes vamos utilizar o Visula Studio, no aba intergretion service e conectar com Azure DevOps inserindo a conta e senha se acesso, para abrir os pacotes.
+
+excel scher point
+
+Flow ( NIFI)
+
+
+( DATA 30/04/2019 ) Terça feira.
+
+SENHA PARA ABRIR OS PACOTES - ( senhapdw )
+
+Hoje neste dia foi disponibilizado na pasta publica os pacotes. 
+
+
+Procidores?
+
+
+Foi levantado todos os 19 pacotes colocando no Excel as informações de (DTSX de cada pacote) (OBJETO) (CONEXÃO) (CONTEÚDO) isso foi iniciado as 11:15 e finalizado de todos os pacotes as 18:10.
+
+( DATA 02/05/2019 ) Quinta feira.
+
+* Iremos entender melhor a conexão de cada caixinha de cada pacote.
+ 
+ Reunião com Eder (Microsoft)  Marcos Anizio (Boa Vista) Aline França ( BlueShift)
+
+> Verificar ambiente com DBA Marco Menezes.
+> Melhorar pacote para SQL Server, mas após as tabelas estiverem na nuvem.
+> Verificar com DBA Marco Menezes para enviar as estruturas.
+> Informar a Volumetria dos arquivos.
+> Estimado para cada pacote pequeno 16 Horas.
+> Estimado para cada pacote grande 32 Horas.
+> Não fazer melhorias praticas neste momento.
+> Alterar de Data BAse para Schema, para fazer os testes.
+> Criar 2 Admin no Banco para testar.
+
+> 440 Horas vai ser o prazo de horas dividido por 2 = (220 Horas Aline - 220 Horas Rafael)
+
+( Inicio 13.05 até 18.06 )
+
+
+( DATA 03/05/2019 ) Sexta feira.
+
+Tivemos reunião com Aline, Eder Microsoft e Rafael.
+
+Foi informado nesta reunião que foi enviado ontem as informações e levantamento dos arquivos, para o Marcos.
+
+Ficou do Marco fazer a configuração do Firewell, no Aguardo.
+
+Informado ao Eder que estamos criando os arquivos na mão.
+
+
+
+( DATA 06/05/2019 ) Segunda feira.
+
+Foi finalizado a criação manual dos arquivos .csv que teve inicio na sexta feira 03/05 e o termino hj segunda feira 06/05. 
+
+Começamos a fazer 4 pacotes semanalmente.
+
+Inicio 06/05/2019
+
+(PACOTES)
+
+PF NOTCALL > OK 06/05/19 >ALINE<
+
+PF DADOS CADASTRAIS.
+
+PJ DADOS CADASTRAIS
+
+PJ REPRESENTANTE LEGAL
+
+
+
+( DATA 13/05/2019 ) Segunda feira.
+
+Testando os pacotes;
+
+PJ Sintegra OK --> 10/05/2019 (5 horas)
+
+PJ Faturamento Presumido --13/05/2019 (5 horas)
+
+
+( DATA 14/05/2019 ) Terça feira.
+
+PJ juntas OK --> 10/05/2019 (4 horas)
+
+PJ Receita Federal OK --> 10/05/2019 (4 horas)
+
+
+Quarta feira 15/05/2019 fiquei fora bo Boa vista pois, faltava acesso.
+
+( DATA 16/05/2019 ) Quinta Feira.
+
+Voltei para assinar o contrato, e pegar o crachá novo.
+
+

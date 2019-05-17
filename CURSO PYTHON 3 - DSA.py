@@ -87,5 +87,46 @@ Not > Usado para reverter o estado da lógica EX > NOT (x and y) é False
 
 ####
 
+### AULA STRINGS ####
+
+STINGS são usadas e, Python para gravar informações em formato de texto, como nomes por exemplo. Strings em Python são na verdade uma sequência de caracteres o que significa, basicamente, Python mantém o controle de cada elemento da sequência.
+
+PYTHON entende a string "Olá" como sendo uma sequência de letras em uma ordem específica. Isso significa que vc será capaz de usar a indexação para obter um caracter específico ( como a primeira letra ou a última letra).
+
+INDEXANDO STRINGS.
+Em Python, usamos colchetes [] para representar o indice de um objeto
+--> Em Python, a indexação começa por 0.
+
+EXEMPLO: (Indexando Strings)
+
+texto="Python e Análise de Dados"
+
+texto[0]=P
+texto[1]=Y
+texto[2]=t
+
+Obs: Uma vez criado uma string não pode ser alterado ou modificado.
+
+# FUNÇÕES BUILT-IN DE STRINGS # 
+
+Python é uma linguagem orientada a objeto, sendo assim as estruturas de dados possuem atributos (propriedades) e métodos (rotina associadas às propriedades). Tanto os atributos quanto os métodos são acessados usando ponto(.).
+
+OS MÉTODOS ESTÃO SOB A FORMA;
+
+objeto.atributo
+objeto.método()
+objeto.método(parâmetros)
+
+# Para fazer uma quebra de linha em PYTHON 3 utilizar \n no incio da palavra ou texto #
+
+
+
+
+
+
+
+
+
+
 
 
