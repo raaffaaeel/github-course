@@ -15,6 +15,9 @@ DIA 5: SCALA, PARÂMETROS, CONFIGURAÇÕES, PERFOMANCE IN SPARK, TROUBLESHOOTING
 sc  - Sc para abrir SPARK CONTEXT
 
 
+from pyspark.sql.functions import *
+from pyspark.sql.types import * 
+
 #comandos para ler o arquivo contar as linhas  #
 path = "C:/AULA SPARK/rddExample.csv"
 
@@ -32,7 +35,7 @@ rdd1Total = sc.wholeTextFiles(path) - ler todo arquivo.
 
 rdd1 = sc.textFile(path) - ?
 
-def soma1(x):  - Essa função é para verdadeiro e falso
+def soma1(x):  - # Essa função é para verdadeiro e falso
     return x + 1
 
 soma1(4)
@@ -71,3 +74,4 @@ df.show()
 
 # Traz os nomes das colunas #
 df.printschema()
+

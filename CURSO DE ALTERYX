@@ -1,0 +1,59 @@
+CURSO DE ALTERYX
+
+Conceitos.
+
+SAMPLE - 
+
+POSIÇÃO COMEÇA COM  - 0
+
+TAMANHO COMEÇA COM - 1 
+
+RENAMING FIELDS - 
+
+MULTI - ROW -  MULTI FORMULAS  -  LINHA ANTERIOR VALOR 0 -  CRIAR FORMULAS ENTRE LINHA.
+
+MULTI FIELD ?
+
+Função para ajustar NULL do EXCEL
+IF Isnull([Fund]) THEN [Lastest
+month-end ($mil)] ELSE [Row-1:TypeStock] ENDIF
+
+
+IF IsNull[Fund] THEN [Latest 
+month-end ($mil)] ELSE [Row-1:TypeStock] ENDIF
+
+Rerquest pesquisar
+
+VAriavel tagt --> é um indicador se meu cliente vai me deixar ou não.
+
+Variavél de comportamento --> 
+
+
+
+Brookson ONE --> Pesquisar essa empresa do Reino Unido.
+
+O que é SQUIRRO + ALTERYX + TABLEAU
+
+_____________________________________________________
+
+IGOR PEZZOLI - ACCOUNT EXECUTIVE.
+
+DISCOVER + COLLABORATE
+
+PREP + ANALYZE MODEL
+
+SHARE + SCALE GOVERN
+
+DEPLOY + MANAGE
+
+CONCORRÊNCIA E POSICIONAMENTO
+
+ETL - INFORMATICA, TALEND, PENTAHO, IBM
+
+DATA PREP (POUCO PRESENTE NO BRASIL) - PEXATA, TRIFACTA, DATAMEER)
+
+ADVSNVED ANALYSTICS / DATA SCIENCE ( SAS, IBMS, SPSS, KNIME, RAPID MINER)
+
+RELATÓRIO / VISUALIZAÇÃO (MS POWER BI, TABLEAU, QLIK)
+
+MAIS RECENTE: ML AUTOMATION ( DR, H²O, MS)

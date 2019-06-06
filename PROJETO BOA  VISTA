@@ -85,7 +85,7 @@ Procidores?
 
 Foi levantado todos os 19 pacotes colocando no Excel as informações de (DTSX de cada pacote) (OBJETO) (CONEXÃO) (CONTEÚDO) isso foi iniciado as 11:15 e finalizado de todos os pacotes as 18:10.
 
-( DATA 02/05/2019 ) Quinta feira.
+( DATA 02/05/2019 ) Quinta feira. 
 
 * Iremos entender melhor a conexão de cada caixinha de cada pacote.
  
@@ -103,10 +103,11 @@ Foi levantado todos os 19 pacotes colocando no Excel as informações de (DTSX d
 
 > 440 Horas vai ser o prazo de horas dividido por 2 = (220 Horas Aline - 220 Horas Rafael)
 
-( Inicio 13.05 até 18.06 )
+( Inicio 13.05 até 18.06 )   (Mas passou o inicio para 06/05) 
 
 
-( DATA 03/05/2019 ) Sexta feira.
+
+( DATA 02/05/2019 - 03/05/2019 ) Quinta e sexta feira fizemos apontamento dos caminhos global para o local.
 
 Tivemos reunião com Aline, Eder Microsoft e Rafael.
 
@@ -159,5 +160,134 @@ Quarta feira 15/05/2019 fiquei fora bo Boa vista pois, faltava acesso.
 ( DATA 16/05/2019 ) Quinta Feira.
 
 Voltei para assinar o contrato, e pegar o crachá novo.
+
+
+Quinta Feira 16/05/2019.
+
+Fiquei no Boa vista apenas com o crachá mas sem acesso na máquina pois falta meu o usuário.
+
+
+Sexta Feira 17/05/2019.
+
+Continuo sem acesso na maquina, montando o cronograma de tudo devido muitos atropelamentos.
+
+Anexando no cronograma as novas 10 tabelas.
+
+
+Segunda Feira 20/05/2019.
+
+Estou de Home Office devido não ter usuário criado ainda.
+
+
+Terça Feira 21/05/2019.
+
+Estou em Caieiras devido não ter usuário criado ainda.
+
+
+Quarta feira 22/05/2019.
+
+TREINAMENTO ALTERYX O DIA TODO.
+
+
+Quinta feira 23/05/2019.
+
+TREINAMENTO ALTERYX MANHÃ das 9:00 as 13:00
+
+
+Boa vista voltei 23/05/2019 entrei  as 14:45 -
+
+HOMOLOGAÇÃO DOS PACOTES.
+
+PFBasesCadastrais.dtsx - HOMOLOGAÇÃO OK - 15:10 até 16:35
+PJFaturamentoPresumido.dtsx -HOMOLOGAÇÃO OK - 14:00.
+PJJuntas.dtsx - 
+PJReceitaFederal.dtsx - 
+PJSintegra.dtsx -  
+
+
+Sexta feira 23/05/2019.
+
+foi homologado pacote PJFaturamentoPresumido.dtsx. ok
+
+Enviado cronograma para Pitágoras dos 19 pacotes com entraga neste dia de 5 pacotes.
+
+
+Segunda Feira 20/05/2019.
+
+Homologando os pacotes.
+
+PJJuntas.dtsx -
+PJReceitaFederal.dtsx - 
+PJSintegra.dtsx -
+
+
+================================================================================================
+
+Começamos a homologação dos 11 novos pacotes no dia,  quinta feira - 30/05/2019 e sexta feira - 31/05/2019.
+
+Este dois dias foi utilizado para entender os pacotes para dar início conforme o cronograma que foi de 03/06/2019 até data de entrega 07/06/2019.
+
+Fiz o processo de dois pacotes;
+
+NC_PF_Telefone.dtsx > fiquei travado neste pacote pois a versão utilizada nos pacotes foi 2012 e ficou travado em um problema, de uma Task file system.
+NC_PF_Protocolo.dtsx > fiquei travado neste pacote pois a versão utilizada nos pacotes foi 2012 e ficou travado em um problema, de uma Task file system.
+NC_Executa_Tudo.dtsx
+
+A correção deste problema foi feita tirando a Task, de dentro do Loop e rodando ele fora, assim o processo foi feita e homologado. mas isso foi perdido os dias 03 e 04 segunda e terça.
+
+---------------------------------------------------------------------------------------
+
+Quinta Feira 06/06/2019.
+
+< Inserindo nova VARIAVEL > TELEFONE
+
+strDirRaiz
+
+D:\MarketingServices\Carga\PF\NovaCadastralPF\
+ 
+
+strArquivoCarga
+
+D:\MarketingServices\Carga\PF\NovaCadastralPF\Telefone\telefone_20190214_041147.txt -> @[User::strDirRaiz]+"Telefone\\"+@[User::strNomeArq]
+ 
+
+Loop
+
+D:\MarketingServices\Carga\PF\NovaCadastralPF\Telefone\
+
+@[User::strDirRaiz]+"Telefone\\"
+
+
+Inserimos uma variavel > strNomeArq < > telefone_20190214_041147.txt
+E incluimos a expressão na linha strArquivoCarga > @[User::strDirRaiz]+"Telefone\\"+@[User::strNomeArq]
+
+----------------------------------------------------------------------------------------
+
+< Inserindo nova VARIAVEL > PROTOCOLO
+ 
+
+strDirRaiz
+D:\MarketingServices\Carga\PF\NovaCadastralPF\
+
+strArquivoCarga
+D:\MarketingServices\Carga\PF\NovaCadastralPF\Protocolo\protocolo_20190213_120636.txt -> @[User::strDirRaiz]+"Protocolo\\"+@[User::strNomeArq]
+
+Loop
+D:\MarketingServices\Carga\PF\NovaCadastralPF\Protocolo\
+
+@[User::strDirRaiz]+"Protocolo\\"
+
+ 
+
+Inserimos uma variavel > strNomeArq < > protocolo_20190213_120636.txt
+E incluimos a expressão na linha strArquivoCarga > @[User::strDirRaiz]+"Protocolo\\"+@[User::strNomeArq]
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 
 

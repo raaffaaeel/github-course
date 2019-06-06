@@ -1,6 +1,6 @@
  # DSA - CURSO EM PYTHON 3 #
 
- ### 3 modos de executar PYTHON ###
+  3 modos de executar PYTHON 
 
  #MODO SHELL
  #MODO SCRIPT (arquivos com extenção.py)
@@ -10,23 +10,23 @@
  
  serie sirie com vale
 
-"""  DICAS
+  DICAS
 Clareza é importante. Mantenha seu código limpo e organizado.
 Código esparso é melhor que código denso.
 Sempre documente seu código.
 Siga os padrões não para criar complexidade, mas para manter a regra.
 Erros nunca serão silenciosos, a menos que propositalmente.
 Simples é melhor que complexo e complexo é melhor que complicado.
-Não se sinta obrigado a criar classes sem uma boa razão"""
+Não se sinta obrigado a criar classes sem uma boa razão
 
 # Python possui 2 tipos de números principais:
-""" 
+ 
 INT --> números inteiros, positivos ou negativos. Ex:-7 e 7
 FLOT --> números fracionário, positivo ou negativos. Ex: 7.1 e 7.1
 
 Podemos usar a função type(), para saber qual é o tipo de número usado.
 
-### Funções Built-in ###
+ Funções Built-in 
 #  https://docs.python.org/3/library/index.html #
 
 Operador 	Significado	Exemplo
@@ -46,10 +46,10 @@ FLOT()	CONVERTE PARA FLOAT	FLOAT(2) =2.0
 >= MAIOR QUE OU IGUAL A
 <= MENOR QUE OU IGUAL A
 
-### lINK PARA ACESSAR GITHUB ###
+ lINK PARA ACESSAR GITHUB 
 # https://github.com/dsacademybr #
 
-### PARA ACESSAR GITHUB DA DSA ###
+ PARA ACESSAR GITHUB DA DSA 
 
 > NO PROMPT DIGITE <
 
@@ -63,7 +63,7 @@ C:\Users\BlueShift\Desktop\DSA\PythonFundamentos-master>cd Cap02
 
 C:\Users\BlueShift\Desktop\DSA\PythonFundamentos-master\Cap02>jupyter notebook
 
-### VARIAVEIS E OPERADORES ###
+ VARIAVEIS E OPERADORES 
 
 ""
 EXISTEM ALGUMAS REGRAS QUE DEVEM SER SEGUIDAS AO DEFINIR NOMES DE VARIÁVEIS
@@ -79,15 +79,15 @@ VISITE O SITE:
 https://www.python.org/dev
 https://docs.python.org/devguide
 
-####
+#
 
 and > SE AMBOS OPERADORES FOREM TRUE, RETORNA TRUE > EX(x and y)é True
 or  > SE UM DOS OPERADORES FOR TRUE, RETORNA TRUE > EX (x OR y) é True
 Not > Usado para reverter o estado da lógica EX > NOT (x and y) é False
 
-####
+#
 
-### AULA STRINGS ####
+ AULA STRINGS #
 
 STINGS são usadas e, Python para gravar informações em formato de texto, como nomes por exemplo. Strings em Python são na verdade uma sequência de caracteres o que significa, basicamente, Python mantém o controle de cada elemento da sequência.
 
@@ -120,6 +120,34 @@ objeto.método(parâmetros)
 # Para fazer uma quebra de linha em PYTHON 3 utilizar \n no incio da palavra ou texto #
 
 
+Função para colocar o texto em Maiusculo --> s.upper()
+
+Função para colocar o texto em minusculo -->  s.lower()
+
+
+Quando se tem uma lista e precisamos fazer o Backup desta lista utilizamos --> 
+
+Ex:
+old_list = [1,2,5,10]
+
+Nem List []
+
+for item in old_list:
+    new_list.append(item)
+
+
+Fim 
+
+Como inserir endereço das redes sociais.
+ Obrigado - Data Science Academy - <a href="http://facebook.com/dsacademybr">facebook.com/dsacademybr</a>  #
+
+
+
+
+
+--> Lista são criadas com COUCHETES []
+
+--> Diciónarios criamos com CHAVES {}
 
 
 
