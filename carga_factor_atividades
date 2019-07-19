@@ -1,0 +1,78 @@
+http://www.vitorbritto.com.br/blog/agendando-tarefas-com-crontab/
+
+crontab -e: editar o arquivo atual ou criar um, caso não exista
+crontab -l: listar suas tarefas programadas
+crontab -r: remover uma tarefa programada
+
+# O formato para o crontab é o seguinte: Campo Função Valores
+
+1 Minuto 0-59
+2 Hora 0-23
+3 Dia do mês 1-31
+4 Mês 1-12
+5 Dia da semana 0-6
+6 Programa para execução comando ou script
+
+# Cada linha representa uma tarefa no crontab
+00 6 * * 1 /caminho/para/script/status.sh
+00 12 5 * * /caminho/para/script/temp.sh
+30 23 * * * /caminho/para/script/backup.sh
+
+-------------------------------------------------------------------------
+
+Executar arquivo sh pelo terminal
+
+# Dá permissão de execução
+chmod +x filename.sh
+
+# Abre o instalador
+sudo ./filename.sh
+
+# Executa arquivos sh
+sh filename.sh
+
+--------------------------------------------------------------------------
+
+Transferir arquivo Windows -> Linux
+
+No Linux:
+
+SSH instalado?
+/etc/init.d/ssh status
+
+No Windows:
+
+Baixar pscv.exe
+
+pscp arquivo usuario@ip:/tmp
+ou
+pscp -P porta arquivo usuario@ip:/tmp
+
+--------------------------------------------------------------------------
+
+From Postgre to csv file
+
+Copy (Select * From foo) To '/tmp/test.csv' With CSV DELIMITER ',';
+ou
+$ ssh psqlserver.example.com 'psql -d mydb "COPY (select id, name from groups) TO STDOUT WITH CSV HEADER"' > groups.csv
+ou
+\copy (select * from my_table limit 10) TO '~/Downloads/export.csv' CSV HEADER
+
+If you just want a CSV dump of an entire table and order is not important, then run
+psql -c "COPY TABLE_NAME TO STDOUT WITH CSV HEADER " > CSV_FILE.csv
+
+If you can also dump the results of a more complicated query as follows
+psql -c "COPY ( QUERY ) TO STDOUT WITH CSV HEADER " > CSV_FILE.csv
+
+where QUERY is the query you wish to dump. E.g
+psql -c "COPY ( SELECT * FROM TABLE ORDER BY id limit 10 ) TO STDOUT WITH CSV HEADER " > CSV_FILE.csv
+
+
+
+
+
+
+
+
+
+

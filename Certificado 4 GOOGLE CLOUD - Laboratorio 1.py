@@ -752,4 +752,61 @@ for pid in TensorBoard.list()['pid']:
 
     --------------------------------------------------------------------------------------
 
-# LABORATORIO 6 #
+
+> CURSO 6 > Preparing for the Google Cloud Professional Data Engineer Exam <
+
+# LABORATORIO 1 #
+
+# Primeira consulta
+Crie uma consulta que produza o tempo médio de viagem para viagens com origem no aeroporto de Frankfurt, 
+na Alemanha (FRA) e destinado ao aeroporto em Kuala Lumpur, na Malásia (KUL), e agrupe os resultados por companhia aérea.
+Os tempos médios resultantes devem ser semelhantes.
+
+SELECT
+   airline,
+   AVG(CAST(SUBSTR(duration, 1, 2) AS NUMERIC)) AS MEDIA
+FROM
+  `qwiklabs-gcp-2dd9af1f9e125121.JasmineJasper.triplog`
+  WHERE
+  origin='FRA' and destination='KUL'
+  GROUP BY airline;
+
+-----------------------------------------------------------------------
+  
+# Segunda consulta
+#Crie uma consulta que produza o tempo médio de viagem para viagens com origem no Aeroporto de Londres Heathrow, Reino Unido (LHR)
+#e destinado ao aeroporto em Kuala Lumpur, Malásia (KUL), e agrupe os resultados por companhia aérea e encomende do menor para o maior.
+#rápidos do aeroporto de Heathrow.
+
+  SELECT
+   airline,
+   AVG(CAST(SUBSTR(duration, 1, 2) AS NUMERIC)) AS MEDIA
+FROM
+  `qwiklabs-gcp-2dd9af1f9e125121.JasmineJasper.triplog`
+  WHERE
+  origin='LHR' and destination='KUL'
+  GROUP BY airline
+  ORDER BY MEDIA ASC;
+
+
+
+  SELECT
+   airline,
+   AVG(CAST(SUBSTR(duration, 1, 2) AS NUMERIC)) AS MEDIA,
+   AVG(CAST(SUBSTR(duration, 4, 2) AS NUMERIC)) AS MEDIA_MINUTO
+FROM
+  `qwiklabs-gcp-2dd9af1f9e125121.JasmineJasper.triplog`
+  WHERE
+  origin='FRA' and destination='KUL'
+  GROUP BY airline;
+
+
+
+SELECT
+   airline,
+   CONVERT(STRING, CAST(AVG(CAST(CAST(duration AS DATETIME) AS DECIMAL(10,5))) AS DATETIME), 108) AS media
+ FROM
+  `qwiklabs-gcp-2dd9af1f9e125121.JasmineJasper.triplog`
+  WHERE
+  origin='FRA' and destination='KUL'
+  GROUP BY airline;

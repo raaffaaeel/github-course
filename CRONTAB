@@ -1,0 +1,149 @@
+CRONTAB
+
+COMO USAR O CRON
+ 
+
+O primeiro passo é abrir o crontab. Para isso, você pode usar editores de textos como vi e o emacs. Também é possível digitar o comando "crontab -e" para editar o arquivo exclusivo de seu usuário. Neste caso, a edição é feita como se você estivesse usando o vi. 
+
+O crontab tem o seguinte formato: 
+
+[minutos] [horas] [dias do mês] [mês] [dias da semana] [usuário] [comando] 
+
+O preenchimento de cada campo é feito da seguinte maneira:
+Minutos: informe números de 0 a 59;
+Horas: informe números de 0 a 23;
+Dias do mês: informe números de 1 a 31;
+Mês: informe números de 1 a 12;
+Dias da semana: informe números de 0 a 7;
+Usuário: é o usuário que vai executar o comando (não é necessário especificá-lo se o arquivo do próprio usuário for usado);
+Comando: a tarefa que deve ser executada.
+
+Repare que a ordem desses valores indica o nome correspondente do campo. Por exemplo, no campo mês, 1 a 12 quer dizer de "Janeiro a Dezembro". No caso de dias da semana, 0 a 6 quer dizer de "Domingo a Sábado". Note que o número 7 também pode ser usado. Neste caso, assim como o número 0, o 7 equivale ao dia de "Domingo". 
+
+
+Como adicionar / editar o Crontab
+Para adicionar ou atualizar o trabalho no crontab, use o comando abaixo. Ele irá abrir o arquivo crontab no editor, onde um trabalho pode ser adicionado / atualizado.
+
+$crontab -e
+Por padrão, ele irá editar as entradas do crontab do usuário logado atual. Para editar outro comando crontab use como abaixo
+
+$crontab -u username -e
+Altere a variável de ambiente EDITOR para alterar seu editor padrão.
+
+Como listar Crontab
+Para visualizar as entradas do crontab do usuário atual, use o seguinte comando.
+
+$crontab -l
+Use -u seguido do nome de usuário para visualizar as entradas crontab do usuário especificado.
+
+$crontab -u username -l
+20 Exemplos úteis de Crontab
+Aqui está a lista de exemplos para agendar a tarefa cron em um sistema Linux usando o crontab.
+
+1. Programe um cron para executar às 2 da manhã diariamente.
+Isso será útil para agendar o backup do banco de dados diariamente.
+
+$0 2 * * * / bin / sh backup.sh
+O asterisco (*) é usado para correspondência de todos os registros.
+2. Agende um cron para executar duas vezes por dia.
+Abaixo do exemplo, o comando será executado às 5 da manhã e 5 da tarde diariamente. Você pode especificar vários registros de data e hora separados por vírgulas.
+
+$0 5,17 * * * /scripts/script.sh
+3. Agende um cron para ser executado a cada minuto.
+Geralmente, não exigimos que qualquer script seja executado a cada minuto, mas em alguns casos, talvez seja necessário configurá-lo.
+
+$* * * * * /scripts/script.sh
+4. Agende um cron para executar todos os domingos às 17:00.
+Este tipo de cron é útil para tarefas semanais, como a rotação de logs, etc.
+
+$0 17 * * sun /scripts/script.sh
+5. Agende um cron para ser executado a cada 10 minutos.
+Se você quiser executar seu script em intervalos de 10 minutos, pode configurar como abaixo. Esses tipos de crons são úteis para monitoramento.
+
+$* / 10 * * * * /scripts/monitor.sh
+$* / 10: significa rodar a cada 10 minutos. O mesmo que se você quiser executar a cada 5 minutos, use * / 5.
+
+6. Programe um cron para executar nos meses selecionados.
+Às vezes, é necessário programar uma tarefa para ser executada apenas por meses selecionados. O script de exemplo abaixo será executado nos meses de janeiro, maio e agosto.
+
+$* * * jan, may, aug * /script/script.sh
+7. Programe um cron para executar em dias selecionados.
+Se você precisou programar uma tarefa para ser executada apenas por dias selecionados. Abaixo exemplo será executado em cada domingo e sexta-feira às 17:00.
+
+$0 17 * * dom, sex / script / script.sh
+8. Agende um cron para executar no primeiro domingo de cada mês.
+Para agendar um script para executar um script no primeiro domingo só não é possível pelo parâmetro de tempo, mas podemos usar a condição em campos de comando para fazê-lo.
+
+$0 2 * * sun [$ (date +% d) -le 07] && /script/script.sh
+9. Programe um cron para executar a cada quatro horas.
+Se você quiser executar um script no intervalo de 4 horas. Pode ser configurado como abaixo.
+
+$0 * / 4 * * * /scripts/script.sh
+10. Programe um cron para executar duas vezes em todos os domingos e segundas-feiras.
+Para agendar uma tarefa para executar duas vezes apenas aos domingos e segundas-feiras. Use as seguintes configurações para fazer isso.
+
+$0 4,17 * * sun, mon /scripts/script.sh
+11. Programe um cron para executar a cada 30 segundos.
+Para agendar uma tarefa para executar a cada 30 segundos não é possível por parâmetros de tempo, mas isso pode ser feito por cronograma mesmo cron duas vezes como abaixo.
+
+$* * * * * /scripts/script.sh
+$* * * * * dormir 30; /scripts/script.sh
+12. Programe várias tarefas no cron único.
+Para configurar várias tarefas com cron único, pode ser feito separando as tarefas pelo ponto-e-vírgula (;).
+
+$* * * * * /scripts/script.sh; /scripts/scrit2.sh
+13. Agendar tarefas para executar anualmente (@ ano).
+O carimbo de data e hora do @yearly é semelhante a “0 0 1 1 *”. Executará tarefa no primeiro minuto de todo ano Pode ser útil para enviar saudações de ano novo🙂
+
+@yearly /scripts/script.sh
+14. Agendar tarefas para executar mensalmente (@monthly).
+O timestamp @monthly é semelhante a “0 0 1 * *”. Ele executará uma tarefa no primeiro minuto do mês. Pode ser útil fazer tarefas mensais, como pagar as contas e faturar para os clientes.
+
+@monthly /scripts/script.sh
+15. Agendar tarefas para executar em Weekly (@weekly).
+O carimbo de data e hora @weekly é semelhante a "0 0 1 * mon". Ele executará uma tarefa no primeiro minuto da semana. Pode ser útil fazer tarefas semanais, como a limpeza do sistema, etc.
+
+@weekly /bin/script.sh
+16. Programar tarefas para serem executadas diariamente (@ diariamente).
+O timestamp diário é semelhante a "0 0 * * *". Ele irá executar uma tarefa no primeiro minuto de cada dia, pode ser útil para fazer tarefas diárias.
+
+@daily /scripts/script.sh
+17. Programar tarefas para serem executadas de hora em hora (@ hora).
+O timestamp @hourly é semelhante a "0 * * * *". Ele irá executar uma tarefa no primeiro minuto de cada hora, pode ser útil para fazer tarefas por hora.
+
+@hourly /scripts/script.sh
+18. Programar tarefas para serem executadas na reinicialização do sistema (@reboot).
+@reboot é útil para as tarefas que você deseja executar na inicialização do seu sistema. Será o mesmo que os scripts de inicialização do sistema. É útil para iniciar tarefas em segundo plano automaticamente.
+
+@reboot /scripts/script.sh
+19. Redirecionar os resultados Cron para a conta de email especificada.
+Por padrão, o cron envia detalhes para o usuário atual em que o cron está agendado. Se você quiser redirecioná-lo para sua outra conta, pode ser feito pela variável de configuração MAIL como abaixo
+
+# crontab -l
+CORREIO = bob
+$0 2 * * * /script/backup.sh
+20. Fazendo backup de todos os crons para arquivo de texto simples.
+Eu recomendo manter um backup de todas as entradas de trabalho em um arquivo. Isso ajudará você a recuperar crons em caso de exclusão acidental.
+
+Verifique o cron agendado atual:
+
+# crontab -l
+CORREIO = rahul
+0 2 * * * /script/backup.sh
+Cron de backup para arquivo de texto:
+
+# crontab -l> cron-backup.txt
+# cat cron-backup.txt
+CORREIO = rahul
+0 2 * * * /script/backup.sh
+Removendo o cron planejado atual:
+
+# crontab -r
+# crontab -l
+sem crontab para raiz
+Restaurar crons do arquivo de texto:
+
+# crontab cron-backup.txt
+# crontab -l
+CORREIO = rahul
+0 2 * * * /script/backup.sh
