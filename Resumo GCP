@@ -1,0 +1,567 @@
+Resumo GCP
+----------
+
+Cloud SQL
+
+O Cloud SQL é um serviço de banco de dados totalmente gerenciado que facilita a configuração, a manutenção, o gerenciamento e a administração de bancos de dados relacionais PostgreSQL, MySQL e SQL Server na nuvem. O Cloud SQL oferece altos níveis de desempenho, escalonabilidade e praticidade. Hospedado no Google Cloud Platform, o Cloud SQL disponibiliza uma infraestrutura de banco de dados para aplicativos executados em qualquer lugar.
+
+Escalonabilidade
+Faça o escalonamento vertical de até 64 núcleos de processadores e mais de 400 GB de RAM com facilidade e execute o escalonamento horizontal rapidamente com réplicas de leitura
+
+Alto desempenho
+Desenvolvido para o escalonamento de pequenas tarefas de desenvolvimento a cargas de trabalho que exigem alto desempenho.
+
+Integrado
+As instâncias do Cloud SQL podem ser acessadas a partir de qualquer aplicativo e em qualquer lugar. Conecte-se com facilidade por meio do App Engine, do Compute Engine e da sua estação de trabalho.
+
+Proteção da disponibilidade
+A migração em tempo real torna a manutenção da nossa infraestrutura transparente. Para isolamento de falhas, a alta disponibilidade fornece verificação de integridade contínua e faz o failover automaticamente quando uma instância não está íntegra.
+
+Totalmente gerenciado
+Replicado, gerenciado e com backup para que você faça o melhor uso do seu tempo.
+
+APIs padrão
+O Cloud SQL oferece bancos de dados MySQL, PostgreSQL e SQL Server padrão. Assim, você cria e implanta mais rapidamente na nuvem. Use drivers de conexão padrão e ferramentas de migração integradas para começar rapidamente.
+
+Segurança
+Os dados do Cloud SQL são criptografados quando estão em redes internas do Google e quando são armazenados em tabelas de bancos de dados, arquivos temporários e backups. O Cloud SQL é compatível com nuvem privada virtual (VPC, na sigla em inglês), e todas as instâncias do Cloud SQL incluem um firewall de rede. Dessa forma, você controla o acesso da rede pública à sua instância do banco de dados.
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+Cloud Spanner
+
+https://cloud.google.com/spanner/
+
+Serviço de banco de dados relacional sem concessões
+O Cloud Spanner é o único serviço de banco de dados de nível empresarial altamente consistente e globalmente distribuído criado para a nuvem com o objetivo específico de combinar os benefícios da estrutura de banco de dados relacional com a escala horizontal não relacional. Essa combinação resulta em transações de alto desempenho e alta consistência entre linhas, regiões e continentes. Tudo isso com o melhor SLA do mercado, que oferece 99,999% de disponibilidade, segurança de nível empresarial e sem inatividade planejada. O Cloud Spanner chegou para revolucionar a administração e o gerenciamento dos bancos de dados, além de aumentar a eficiência do desenvolvimento de aplicativos.
+
+Chega de escolher uma vantagem
+A maioria dos bancos de dados atuais exige que você opte por escala ou consistência. Com o Cloud Spanner, você tem acesso ao melhor da estrutura de banco de dados relacional e da escala não relacional, além de um desempenho externo altamente consistente entre linhas, regiões e continentes.
+
+O Cloud Spanner faz escalonamento horizontal e disponibiliza dados com baixa latência. Além disso, ele tem consistência transacional e disponibilidade de 99,999% (cinco noves), a maior do mercado. Isso significa que ele tem menos de cinco minutos de inatividade por ano — 10 vezes menos do que serviços com disponibilidade de quatro noves. O Cloud Spanner ajuda você a preparar o back-end do seu banco de dados para o futuro. Ele pode fazer escalonamentos arbitrariamente para bancos de dados grandes, o que evita a necessidade de regravações e migrações. O uso de bancos de dados múltiplos ou fragmentados como solução alternativa resulta em complexidade e custos desnecessários.
+
+Menos tarefas ingratas
+Os administradores de TI e de bancos de dados estão sempre cheios de tarefas ingratas. Com o Cloud Spanner, em vez de se concentrar nas tarefas de manutenção, você pode se dedicar à geração de valor e à implementação de inovações. Agora bastam alguns cliques para criar ou escalonar um banco de dados replicado globalmente para apps essenciais.
+
+Em vez de serem complementos caros, a maior disponibilidade do mercado e a segurança do nível Google são o padrão desse serviço e ajudam a garantir que seus apps continuem on-line e protegidos. O Cloud Spanner tem um modelo de faturamento simples para a arquitetura de apps. Não há cobrança adicional relativa às suas escolhas de disponibilidade, replicação ou à garantia de dados mais seguros e altamente consistentes.
+
+Agilize os lançamentos
+O Cloud Spanner é um banco de dados com uma semântica totalmente relacional que processa alterações de esquema como operações on-line sem inatividade planejada. Reutilize habilidades de SQL existentes para consultar dados no Cloud Spanner com o ANSI 2011 SQL, que já é conhecido e é o padrão do setor.
+
+Segurança e controle abrangentes
+A segurança com a qualidade do Google inclui criptografia em trânsito e em repouso por padrão, gerenciamento granular de acesso e identidade, geração de registros de auditoria abrangente, hardware de fabricação personalizada, rastreamento e descarte de hardware e a rede global de propriedade e controle do Google. Saiba mais sobre a arquitetura de segurança abrangente do Google Cloud Platform.
+
+Escala global
+Totalmente gerenciado
+Semântica relacional
+Compatível com várias linguagens
+Consistência transacional
+Segurança de nível empresarial
+Altamente disponível
+
+----------------------------------------------------------------------------------------------------------------------------------
+
+BigQuery
+
+O BigQuery é um armazenamento de dados na nuvem, sem servidor, altamente escalonável e econômico com BI Engine na memória e machine learning integrado.
+
+O BigQuery é o armazenamento de dados empresariais altamente escalonável e sem servidor do Google, desenvolvido para tornar os analistas de dados mais produtivos, com um custo-benefício incomparável. Como não há infraestrutura para gerenciar, concentre-se em gerar insights significativos com um SQL conhecido, sem a necessidade de ter um administrador de banco de dados.
+
+Analise todos os seus dados em lote e de streaming por meio da criação de um armazenamento de dados lógico a partir do armazenamento gerenciado em colunas, bem como de dados do armazenamento de objetos e de planilhas. Crie painéis e relatórios incrivelmente rápidos com o BI Engine na memória. Crie e operacionalize soluções de machine learning ou realize análises geoespaciais usando um SQL simples. Compartilhe insights com segurança, dentro e fora da sua organização, em formatos de conjuntos de dados, consultas, planilhas e relatórios. Com o processamento avançado de streaming do BigQuery, é possível capturar e analisar dados em tempo real para garantir insights sempre atuais. Além disso, você tem até 1 TB gratuito de dados analisados por mês e 10 GB de dados armazenados.
+
+Concentre-se na análise e não na infraestrutura
+
+Escalonamento sem problemas
+O BigQuery separa armazenamento e computação para ativar o escalonamento elástico que simplifica o planejamento da capacidade de armazenamento de dados.
+
+Insights mais rápidos, com análises avançadas
+
+Proteja os dados e os investimentos da sua empresa
+O BigQuery oferece um SLA de 99,9% sujeito aos termos descritos aqui e obedece aos princípios do Privacy Shield.
+
+Controle os custos e reduza o TCO
+Pague somente pelos recursos de armazenamento e computação que usar, graças à arquitetura sem servidor do BigQuery. A separação de armazenamento e computação do BigQuery facilita o escalonamento independente e contínuo sob demanda, resultando em baixo custo e armazenamento mais econômico. Com o BigQuery, você reduz o custo total de propriedade em 56% a 88%.
+
+Integração do ecossistema de Big Data
+Em conjunto com o Cloud Dataproc e o Cloud Dataflow, o BigQuery oferece integração com o ecossistema de Big Data do Apache, permitindo que suas cargas de trabalho atuais do Hadoop/Spark e do Beam leiam ou gravem dados diretamente a partir do BigQuery.
+
+Escala de petabytes	
+Consiga um excelente desempenho dos seus dados, além de contar com a capacidade de escalonamento para armazenar e analisar mais petabytes sem precisar comprar mais armazenamento.
+
+Monitoramento e criação de registros avançados com o Stackdriver 
+O BigQuery oferece recursos avançados de monitoramento, criação de registros e alertas por meio dos registros de auditoria do Stackdriver e pode operar como repositório para registros de qualquer aplicativo ou serviço que use o Stackdriver Logging.
+
+--------------------------------------------------------------------------------------------------------------
+BigTable
+
+Latência baixa, massivamente escalável NoSQL
+Latência consistente abaixo de 10 ms
+A replicação fornece maior disponibilidade, maior durabilidade e resiliência em face de falhas zonais
+Ideal para tecnologia de anúncios, Fintech e IoT
+Mecanismo de armazenamento para aplicativos de aprendizado de máquina
+Integração fácil com ferramentas de big data de código aberto
+
+Rápido e de alto desempenho
+Use o Cloud Bigtable como o mecanismo de armazenamento para aplicativos de grande escala e baixa latência, bem como processamento e análise de dados com processamento intensivo.
+
+Escalonamento e replicação sem emenda.
+Forneça e dimensione para centenas de petabytes e lide com milhões de operações por segundo. As alterações na configuração de implantação são imediatas, portanto, não há tempo de inatividade durante a reconfiguração. A replicação adiciona alta disponibilidade para aplicativos de veiculação ativos e isolamento de carga de trabalho para veiculação versus analítica.
+
+Simples e integrado
+O Cloud Bigtable integra-se facilmente a ferramentas populares de big data, como o Hadoop, o Cloud Dataflow e o Cloud Dataproc. Além disso, o Cloud Bigtable é compatível com a API HBase de padrão de mercado de código aberto, o que facilita o início das equipes de desenvolvimento.
+
+Totalmente gerenciado
+Como gerenciamos o banco de dados e lidamos com a configuração e o ajuste, você pode se concentrar no desenvolvimento de aplicativos.
+
+-------------------------------------------------- -------------------------------------------------- ----------------------
+
+DATASTORE DA NUVEM
+O Cloud Datastore é um banco de dados NoSQL altamente escalável para seus aplicativos da Web e móveis
+
+Banco de dados NoSQL altamente escalável
+O Cloud Datastore é um banco de dados NoSQL altamente escalável para seus aplicativos. O Cloud Datastore lida automaticamente com fragmentação e replicação, fornecendo um banco de dados altamente disponível e durável que é dimensionado automaticamente para lidar com a carga de seus aplicativos. O Cloud Datastore fornece uma infinidade de recursos, como transações ACID, consultas semelhantes a SQL, índices e muito mais.
+
+Simples e Integrado
+Com a interface RESTful do Cloud Datastore, os dados podem ser acessados facilmente por qualquer destino de implantação. Você pode criar soluções que abrangem o App Engine e o Compute Engine e contam com o Cloud Datastore como ponto de integração.
+Rápido e altamente escalonável
+
+Concentre-se na criação de seus aplicativos sem se preocupar com provisionamento e antecipação de carga. O Cloud Datastore é dimensionado de maneira simples e automática com seus dados, permitindo que os aplicativos mantenham um alto desempenho à medida que recebem mais tráfego.
+
+Linguagem de consulta fácil de usar
+O Datastore é um banco de dados sem esquema, que permite que você se preocupe menos com alterações na estrutura de dados subjacente à medida que seu aplicativo evolui. O Datastore fornece um poderoso mecanismo de consulta que permite pesquisar dados em várias propriedades e classificar conforme necessário.
+
+// Listar empresas do Google com menos de 400 funcionários.
+var companies = query.filter ('name =', 'Google'). filter ('tamanho <', 400);
+
+-------------------------------------------------- -------------------------------------------------- -----------------------
+
+Serviço de transferência de armazenamento
+
+Transferir seus dados de uma nuvem para outra
+
+O Storage Transfer Service permite que você importe rapidamente dados on-line para o Cloud Storage. Você também pode configurar uma programação repetida para transferir dados, bem como transferir dados no Cloud Storage, de um depósito para outro.
+
+-------------------------------------------------- -------------------------------------------------- ------------------------
+Aparelho de transferência
+Rack, capture e envie seus dados para o Google Cloud
+
+Transferências de dados offline
+O Transfer Appliance é um servidor de armazenamento seguro e de alta capacidade que você instalou no seu datacenter. Você preenche os dados e os envia para um local onde os dados são enviados para o Google Cloud Storage. Seus dados são criptografados automaticamente e permanecem seguros até você descriptografá-los. Escolha entre 100 TB ou 480 TB de capacidade bruta por appliance para mover seus dados para o Google Cloud rapidamente.
+Passo 1
+
+Solicitar um appliance de transferência
+Envie uma solicitação online. Trabalharemos com você em tamanho e número apropriados.
+
+Passo 2
+Receba o aparelho
+O aparelho é enviado através de transportadores comuns em um caso inviolável.
+
+Passo 4
+Envie o appliance de volta ao Google
+Use a etiqueta de devolução fornecida e envie o appliance de volta ao Google.
+
+Passo 5
+Google envia dados para a nuvem
+O Google notificará você quando seus dados estiverem prontos.
+
+Passo 6
+Acesse e coloque seus dados
+Faça login no seu console para descriptografar seus dados e escolha um intervalo de armazenamento.
+
+Passo 7
+O Google apaga com segurança o appliance
+O Google apaga o appliance para os padrões NIST-800-88.
+
+Rápido
+Mover grandes quantidades de dados com segurança com o Transfer Appliance pode ser significativamente mais rápido do que carregar esses dados pela rede. Você pode mover até um petabyte de dados em um único appliance de transferência mais de 1.000 dias mais rápido do que com uma conexão de 100 Mbps.
+
+-------------------------------------------------- -------------------------------------------------- --------------------------
+
+Transferência on-line
+
+Use sua rede para mover dados para o Google Cloud Storage. Explore as ferramentas de inserção arrastar e soltar gsutil e JSON API.
+
+-------------------------------------------------- -------------------------------------------------- --------------------------
+
+Serviço de transferência do BigQuery
+
+Programe e automatize seus dados de seus aplicativos SaaS para o Cloud BigQuery
+
+-------------------------------------------------- -------------------------------------------------- --------------------------
+
+Produtos de aprendizagem de IA e máquina
+
+Vista
+
+Visão AI
+Analise imagens na nuvem ou na borda
+O Google oferece duas maneiras de obter insights sobre a riqueza de conhecimento oculta em suas imagens. Nossos poderosos modelos de API de visão pré-treinados classificam rapidamente as imagens em milhares de categorias (como “veleiro” ou “Torre Eiffel”) e reconhecem objetos, rostos e palavras individuais. Você também pode usar o AutoML Vision para criar e treinar modelos personalizados com facilidade para atender às suas necessidades específicas, mesmo que você não tenha experiência significativa em aprendizado de máquina.
+
+Video AI
+Análise de vídeo precisa - até o quadro
+Esses dois produtos de inteligência artificial completos tornam sua biblioteca de vídeos mais pesquisável e valiosa. Os modelos pré-treinados da API do Video Intelligence extraem metadados, identificam substantivos-chave e anotam conteúdo de vídeo. O AutoML Video Intelligence permite treinar modelos personalizados para projetos que não são cobertos pela API pré-treinada. E experimente os dois produtos juntos para obter os resultados mais sofisticados.
+
+-----------------------------------------------------------------
+
+Língua
+
+Linguagem Natural
+Processamento multimídia e multilíngue
+A linguagem natural usa aprendizado de máquina para revelar a estrutura e o significado do texto. Você pode extrair informações sobre pessoas, lugares e eventos; entender melhor o sentimento da mídia social e as conversas do call center; e integrar o texto analisado ao seu arquivo de documentos no Google Cloud Storage. O AutoML Natural Language permite construir e treinar facilmente seus próprios modelos ML. E os modelos pré-treinados da API da Linguagem Natural oferecem recursos de compreensão da linguagem, incluindo classificação de conteúdo e análise de sentimento, entidade e sintaxe.
+
+Tradução
+Tradução rápida e dinâmica adaptada ao seu conteúdo
+Com a tradução, você pode traduzir rapidamente entre os idiomas, usando o melhor modelo para suas necessidades de conteúdo. Se você quiser que seu website e aplicativos possam traduzir instantaneamente textos, você pode usar a tradução de máquina neural pré-treinada da Translation API para fornecer resultados rápidos e dinâmicos para mais de cem idiomas. E os desenvolvedores e especialistas em localização com conhecimento limitado em aprendizado de máquina podem criar rapidamente modelos personalizados de alta qualidade prontos para produção com o AutoML Translation. Você pode até usar traduções de modelo personalizadas com a API, simplificando seu fluxo de trabalho na mesma biblioteca de clientes.
+
+----------------------------------------------------------------
+
+Conversação
+
+API de fala para texto em nuvem
+Reconhecimento de fala em 120 idiomas
+O Speech-to-Text da nuvem permite que os desenvolvedores convertam áudio em texto aplicando modelos de rede neural em uma API fácil de usar. A API reconhece 120 idiomas e variantes para oferecer suporte à sua base de usuários global. Você pode ativar o comando e controle de voz, transcrever áudio de call centers e muito mais. Pode processar streaming em tempo real ou áudio pré-gravado usando a tecnologia de aprendizado de máquina do Google.
+
+API de conversão de texto em fala em nuvem
+Interações text-to-speech realistas
+O Text-to-Speech em nuvem aplica a pesquisa inovadora do DeepMind na WaveNet e nas redes neurais do Google para permitir que os desenvolvedores sintetizem voz natural com 32 vozes em
+
+
+vários idiomas e variantes, com a maior fidelidade possível. Com esta API fácil de usar, você pode criar interações realistas com seus usuários em vários aplicativos e dispositivos.
+
+-------------------------------------------------- --------------
+
+Tabelas AutoML
+Construa modelos ML de última geração em dados estruturados
+O AutoML Tables permite que cientistas de dados, analistas e desenvolvedores criem e implementem facilmente modelos de aprendizado de máquina de última geração em dados estruturados a uma velocidade e escala massivamente aumentadas. Coloque seus próprios dados corporativos no trabalho para lidar com tarefas de missão crítica, como gerenciamento da cadeia de fornecimento, detecção de fraude, otimização da conversão de leads e aumento do valor do tempo de vida do cliente.
+
+API de inferência de nuvem
+Executar correlações em larga escala em conjuntos de dados de série de tempo digitados
+A Cloud Inference API permite que você reúna insights em tempo real a partir de seus conjuntos de dados datados da série temporal. Os casos de uso mais populares incluem a análise do tráfego de pedestres e a conversão para varejistas, a detecção de anomalias de dados, a identificação de correlações em tempo real através de dados de sensores ou a geração de recomendações de alta qualidade.
+
+-------------------------------------------------- --------------
+
+Cloud AutoML
+
+Treine modelos ML personalizados de forma rápida e fácil
+O Cloud AutoML é um conjunto de produtos de aprendizado de máquina que permite que os desenvolvedores com conhecimento limitado em ML treinem modelos de alta qualidade específicos para suas necessidades. O Cloud AutoML usa mais de dez anos de tecnologia proprietária do Google Research para ajudar seus modelos de aprendizado de máquina a alcançar um desempenho mais rápido e previsões mais precisas
+--------------------------------------------------
+DataFlow
+
+Fluxo simplificado e processamento de dados em lote, com igual confiabilidade e expressividade
+
+O Cloud Dataflow é um serviço totalmente gerenciado para transformar e enriquecer dados em modos de fluxo (tempo real) e em lote (histórico) com igual confiabilidade e expressividade - sem soluções ou compromissos mais complexos. E com sua abordagem sem servidor de provisionamento e gerenciamento de recursos, você tem acesso à capacidade praticamente ilimitada de resolver seus maiores desafios de processamento de dados, pagando apenas pelo que você usa.
+
+O Cloud Dataflow desbloqueia casos de uso transformacionais em vários setores, incluindo:
+
+Análise de fluxo de cliques, ponto de venda e segmentação no varejo
+Detecção de fraudes em serviços financeiros
+Experiência de usuário personalizada em jogos
+Análise de IoT em manufatura, saúde e logística
+
+Acelerar o desenvolvimento para lote e streaming
+O Cloud Dataflow oferece suporte ao desenvolvimento rápido e simplificado de pipeline por meio de APIs SQL, Java e Python expressivas no Apache Beam SDK, que fornece um conjunto avançado de primitivas de análise de janelas e sessão, bem como um ecossistema de conectores de origem e de coletor. Além disso, o modelo de desenvolvimento unificado exclusivo da Beam permite reutilizar mais códigos em pipelines de streaming e em lote.
+
+Simplifique as operações e o gerenciamento
+A abordagem sem servidor do GCP remove a sobrecarga operacional com desempenho, dimensionamento, disponibilidade, segurança e conformidade manipulados automaticamente para que os usuários possam se concentrar na programação em vez de gerenciar os clusters de servidores. A integração com o Stackdriver, a solução de monitoramento e registro unificada do GCP, permite monitorar e solucionar problemas em seus pipelines enquanto eles estão em execução. A visualização avançada, o registro em log e o alerta avançado ajudam você a identificar e responder a possíveis problemas.
+
+Construa sobre uma base para aprendizado de máquina
+Use o Cloud Dataflow como um ponto de integração conveniente para levar a análise preditiva à detecção de fraudes, personalização em tempo real e casos de uso semelhantes, adicionando modelos e APIs do Cloud Machine Learning baseados em TensorFlow aos seus pipelines de processamento de dados.
+
+Use suas ferramentas favoritas e familiares
+O Cloud Dataflow integra-se perfeitamente aos serviços do GCP para fluxo contínuo de processamento de eventos (Cloud Pub / Sub), data warehousing (BigQuery), aprendizado de máquina (Cloud Machine Learning) e muito mais. O SDK baseado em feixe também permite que os desenvolvedores criem extensões personalizadas e até mesmo escolham
+
+mecanismos de execução alternativos, como o Apache Spark por meio do Cloud Dataproc ou no local. Para usuários do Apache Kafka, um conector do Cloud Dataflow facilita a integração com o GCP.
+
+CARACTERÍSTICAS DO FLUXO DE DADOS EM NUVEM
+
+Gerenciamento automatizado de recursos
+O Cloud Dataflow automatiza o provisionamento e o gerenciamento de recursos de processamento para minimizar a latência e maximizar a utilização; não mais girar as instâncias manualmente ou reservá-las.
+
+Reequilíbrio Dinâmico de Trabalho
+O particionamento de trabalho automatizado e otimizado reequilibra dinamicamente o trabalho atrasado. Não há necessidade de perseguir "teclas de atalho" ou pré-processar seus dados de entrada.
+
+Confiável e Consistente Exatamente uma vez Processamento
+Fornece suporte integrado para execução tolerante a falhas que seja consistente e correta, independentemente do tamanho dos dados, do tamanho do cluster, do padrão de processamento ou da complexidade do pipeline.
+
+Escalonamento automático horizontal
+O escalonamento automático horizontal de recursos do funcionário para resultados de produtividade otimizados resulta em melhor preço global para o desempenho.
+
+Modelo unificado de programação
+O SDK do Apache Beam oferece operações semelhantes às do MapReduce, janelas de dados poderosas e controle preciso de correção para dados de fluxo e lote.
+
+Inovação orientada pela comunidade
+Os desenvolvedores que desejam estender o modelo de programação do Cloud Dataflow podem bifurcar e / ou contribuir para o Apache Beam.
+
+Preços flexíveis de programação de recursos para processamento em lote
+Para processamento com flexibilidade no tempo de agendamento de trabalho, como trabalhos noturnos, o agendamento flexível de recursos oferece um preço menor para o processamento em lote. Esses trabalhos flexíveis são colocados em uma fila com a garantia de que eles serão recuperados para execução em uma janela de seis horas.
+
+
+Cloud Dataflow vs. Cloud Dataproc: qual você deve usar?
+
+O Cloud Dataproc e o Cloud Dataflow podem ser usados para processamento de dados e há sobreposição nos recursos de lote e streaming. Como você decide qual produto é mais adequado ao seu ambiente?
+
+Dependências Apache Hadoop / Spark? Cloud Datarpoc
+Aprendizado prático / DevOps para operações? Cloud Dataproc
+Hands-off / Serveless um? Cloud Dataflow
+
+O Cloud Dataproc é bom para ambientes dependentes de componentes específicos do ecossistema de big data do Apache:
+Ferramentas / Pacotes
+Pipelines
+Conjuntos de habilidades de recursos existentes
+
+X
+
+O Cloud Dataflow é geralmente a opção preferida para ambientes greenfield:
+Menos sobrecarga operacional
+Abordagem unificada para desenvolvimento de pipelines em lote ou streaming
+Usa o feixe do Apache
+Suporta a portabilidade de pipeline no Cloud Dataflow, Apache Spark e Apache Flink como tempos de execução
+
+Processamento de fluxo (ETL) -> fluxo de dados em nuvem
+Processamento em lote (ETL) -> Fluxo de dados Cloud Dataproc e Cloud
+Processamento iterativo e notebooks -> Cloud Dataproc
+Aprendizado de máquina com Spark ML -> Cloud Dataproc
+Pré-processamento para aprendizado de máquina -> Cloud dataflow (com o Cloud ML Engine)
+
+Cloud Dataproc
+
+Uma maneira mais rápida, mais fácil e econômica de executar o Apache Spark e o Apache Hadoop
+
+Apache Hadoop nativo da nuvem e Apache Spark
+O Cloud Dataproc é um serviço de nuvem rápido, fácil de usar e totalmente gerenciado para executar os clusters Apache Spark e Apache Hadoop de maneira mais simples e econômica. As operações que costumavam levar horas ou dias levam segundos ou minutos, e você paga apenas pelos recursos usados (com faturamento por segundo). O Cloud Dataproc também se integra facilmente a outros serviços do Google Cloud Platform (GCP), oferecendo uma plataforma completa e poderosa para processamento de dados, análise e aprendizado de máquina.
+
+Processamento de dados rápido e escalável
+Crie clusters do Cloud Dataproc rapidamente e redimensione-os a qualquer momento - de três a centenas de nós - para que você não precise se preocupar com o fato de seus pipelines de dados estarem superando seus clusters. Você tem mais tempo para se concentrar em insights, com menos tempo perdido em infraestrutura - cada ação de cluster leva menos de 90 segundos em média.
+
+Preços Acessíveis
+Ao adotar os princípios de precificação do Google Cloud Platform, o Cloud Dataproc tem uma estrutura de preços de baixo custo e fácil de entender, com base no uso real, medido pelo segundo. Além disso, os clusters do Cloud Dataproc podem incluir instâncias preemptivas de custo mais baixo, oferecendo clusters poderosos com um custo total ainda menor.
+
+Ecossistema de código aberto
+Você pode usar ferramentas, bibliotecas e documentação do Spark e do Hadoop com o Cloud Dataproc. O Cloud Dataproc fornece atualizações frequentes para versões nativas do Spark, Hadoop, Pig e Hive, para que você possa começar sem a necessidade de aprender novas ferramentas ou APIs e mover projetos existentes ou pipelines ETL sem redesenvolvimento.
+
+RECURSOS DO CLOUD DATAPROC
+O Cloud Dataproc é um serviço Apache Spark e Apache Hadoop gerenciado que é rápido, fácil de usar e de baixo custo.
+
+Gerenciamento automatizado de cluster
+
+A implantação, o registro e o monitoramento gerenciados permitem que você se concentre em seus dados, não em seu cluster. Os clusters do Cloud Dataproc são estáveis, escaláveis e rápidos.
+
+Clusters redimensionáveis
+Crie e dimensione clusters rapidamente com vários tipos de máquinas virtuais, tamanhos de disco, número de nós e opções de rede.
+
+Integrado
+Integração integrada com o Cloud Storage, o BigQuery, o Bigtable, o Stackdriver Logging e o Stackdriver Monitoring, oferecendo uma plataforma de dados completa e robusta.
+
+Versão
+O controle de versão de imagem permite alternar entre diferentes versões do Apache Spark, Apache Hadoop e outras ferramentas.
+
+Altamente disponível
+Execute clusters com vários nós principais e defina tarefas para reiniciar em caso de falha, para garantir que seus clusters e tarefas estejam altamente disponíveis.
+
+Ferramentas de desenvolvimento
+Várias maneiras de gerenciar um cluster, incluindo uma interface da Web fácil de usar, o Cloud SDK, APIs RESTful e acesso SSH.
+
+Ações de inicialização
+Execute ações de inicialização para instalar ou personalizar as configurações e bibliotecas necessárias quando o cluster é criado.
+
+Configuração Automática ou Manual
+O Cloud Dataproc configura automaticamente o hardware e o software em clusters para você, além de permitir o controle manual.
+
+Máquinas Virtuais Flexíveis
+Os clusters podem usar tipos de máquina personalizados e máquinas virtuais preemptivas para que eles tenham o tamanho ideal para suas necessidades.
+
+
+O recurso Baldes representa um intervalo no Google Cloud Storage. Existe um único namespace global compartilhado por todos os buckets. Para mais informações, consulte Requisitos de nome do intervalo.
+Os buckets contêm objetos que podem ser acessados por seus próprios métodos. Além da propriedade acl, os buckets contêm bucketAccessControls, para uso na manipulação refinada dos controles de acesso de um bucket existente.
+Um bucket é sempre de propriedade do grupo de proprietários da equipe do projeto.
+
+Armazenamento na núvem
+4 classes diferentes: Mult-Regional, Regional, Nearline, Coldline
+
+Multi-regional: o armazenamento multi-regional é geo-redundante, o que significa que o armazenamento em nuvem armazena seus dados de forma redundante em pelo menos dois locais geográficos separados por pelo menos 100 milhas dentro do local multi-regional do bucket. A redundância geográfica ocorre de forma assíncrona, mas os dados de armazenamento multi-regional são redundantes em pelo menos um local geográfico, assim que você faz o upload. Como todos os dados do Cloud Storage, ele também é imediatamente acessível em todo o mundo.
+
+Regional: o armazenamento regional permite que você armazene dados a um custo mais baixo, com a compensação de dados sendo armazenados em um local regional específico, em vez de ter redundância distribuída em uma área geográfica grande.
+
+Nearline: o Google Cloud Storage Nearline é um serviço de armazenamento de baixo custo e altamente durável para armazenar dados acessados com pouca frequência. O Nearline Storage é uma opção melhor que o Armazenamento Multi-Regional ou o Armazenamento Regional em cenários em que a disponibilidade ligeiramente inferior, uma duração mínima de armazenamento de 30 dias e os custos de acesso a dados são compensações aceitáveis para reduzir os custos de armazenamento.
+
+Coldline: o Google Cloud Storage Coldline é um serviço de armazenamento de baixo custo e altamente durável para arquivamento de dados, backup online e recuperação de desastres. Ao contrário de outros serviços de armazenamento "frios", seus dados estão disponíveis em milissegundos, não em horas ou dias.
+
+CONTROLE DE ACESSO A BUCKETS:
+O controle de acesso pode ser feito de duas maneiras:
+
+IAM: Papeis padrões que podem ser dados a usuários, grupos de usuários, contas de serviços a nível de projeto ou bucket.
+o	Roles
+	roles/storage.objectCreator: Pode criar objetos novos
+	roles/storage.objectViewer: Pode ver objetos e metadados. Exceto ACL’s
+	roles/storage.objectAdmin: Controle total dos objetos(listagem, criação, visualização e exclusão). Não dá acesso a visualização e edição de buckets metadata.
+	roles/storage.admin: Acesso total aos buckets e objetos. Quando aplicado a um bucket específico, o controle se aplica somente a este bucket e aos objetos dentro dele.  
+	Viewer: Pode somente ver o metadado do bucket ao listar os buckets, exceto ACL’s. Essa role só pode ser aplicada ao projeto 
+	Editor: Crud, menos ACL’s. Só pode ser aplicada ao projeto.
+	Owner: Mesmo que viewer + Editor ! e só pode ser aplicado ao projeto. 
+
+•	ACL: Access Control List. Possui entries. Cada entry corresponde a uma permission (o que pode fazer ) e um scope (quem pode fazer) 
+o	Permissoes exclusivas para buckets e objetos dentro dos buckets. As permissões são:
+	READER: listar buckets e fazer download de objetos exceto ACL’s 
+	WRITER: listar, criar, overwrite e deletar objetos
+	OWNER:  reader + writer + bucket metadata + ACL’s
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+Dataprep
+
+https://cloud.google.com/dataprep/
+Preparação Inteligente de Dados
+O Cloud Dataprep by Trifacta é um serviço de dados inteligente para explorar visualmente, limpar e preparar dados estruturados e não estruturados para análise, relatórios e aprendizado de máquina. Como o Cloud Dataprep não tem servidor e funciona em qualquer escala, não há infraestrutura para implantar ou gerenciar. Sua próxima transformação de dados ideal é sugerida e prevista com cada entrada da interface do usuário, para que você não precise escrever código. Com esquemas automáticos, tipos de dados, possíveis junções e detecção de anomalias, você pode ignorar o demorado perfil de dados e focar na análise de dados.
+
+Simplicidade sem servidor
+O Cloud Dataprep é um serviço de parceiro integrado operado pela Trifacta e baseado em sua solução de preparação de dados líder do setor, a Trifacta Wrangler. O Google trabalha em estreita colaboração com a Trifacta para fornecer uma experiência de usuário perfeita que elimina a necessidade de instalação inicial de software, custos de licenciamento separados ou sobrecarga operacional contínua. O Cloud Dataprep é totalmente gerenciado e dimensionado sob demanda para atender às crescentes necessidades de preparação de dados para que você possa se concentrar na análise.
+
+Exploração rápida e detecção de anomalias
+Entenda e explore dados instantaneamente com distribuições visuais de dados. O Cloud Dataprep detecta automaticamente esquemas, tipos de dados, possíveis junções e anomalias, como valores ausentes, valores discrepantes e duplicados, para que você ignore o trabalho demorado de criar perfis de seus dados e vá direto para a exploração e a análise.
+
+Preparação de dados fácil e poderosa
+Com cada gesto na interface do usuário, o Cloud Dataprep sugere e prevê automaticamente sua próxima transformação de dados ideal. Depois de definir sua sequência de transformações, o Cloud Dataprep usa o Cloud Dataflow sob controle, permitindo que você processe conjuntos de dados estruturados ou não estruturados de qualquer tamanho com a facilidade de cliques, não de código.
+
+Transformação preditiva
+O Cloud Dataprep usa um algoritmo de inferência proprietário para interpretar a intenção de transformação de dados da seleção de dados de um usuário. Um conjunto classificado de sugestões e padrões para as seleções a serem correspondidas é gerado automaticamente.
+
+Parametrização
+Execute uma receita em várias instâncias de conjuntos de dados idênticos parametrizando uma variável para substituir as partes do caminho do arquivo que são alteradas a cada atualização. Essa variável pode ser modificada conforme necessário no tempo de execução da tarefa.
+
+Colaboração
+Em ambientes de equipe, pode ser útil ter vários usuários trabalhando nos mesmos ativos ou criar cópias de trabalho de boa qualidade para servir como modelos para outras pessoas. O Cloud Dataprep permite que os usuários colaborem nos mesmos objetos de fluxo em tempo real ou criem cópias para outros usarem para trabalhos independentes.
+
+
+Correspondência de padrões
+Utilize a correspondência de padrões colunares para identificar padrões de dados de interesse para você e exibi-los na interface para uso na criação de suas receitas. Além disso, nas etapas da sua receita, você pode aplicar expressões regulares ou padrões do Cloud Dataprep para localizar padrões e transformar os dados correspondentes em seus conjuntos de dados.
+
+Perfil visual
+Veja e explore seus dados por meio de distribuições visuais interativas de seus dados para ajudar na descoberta, limpeza e transformação. As representações visuais ajudam a interpretar grandes volumes de dados, e as técnicas inovadoras de criação de perfis do Cloud Dataprep visualizam informações estatísticas importantes em um formato dinâmico e fácil de consumir.
+
+Amostragem
+Para otimização de desempenho, o Cloud Dataprep gera automaticamente uma ou mais amostras dos dados para exibição e manipulação no aplicativo cliente. No entanto, você pode alterar facilmente o tamanho das amostras, o escopo da amostra e o método pelo qual a amostra é criada.
+
+Agendamento
+Programe a execução de receitas em seus fluxos de forma recorrente ou conforme a necessidade. Quando a tarefa agendada for executada com sucesso, você poderá coletar a saída processada no local de saída especificado, onde ela estará disponível no formulário publicado que você especificar.
+
+Correspondência alvo
+Defina esquemas de destino, por meio de conjuntos de dados importados ou criados, e atribua a uma receita existente para sistematizar e acelerar seus esforços de organização. Os destinos aparecem na página do Transformer e podem ser aplicados a todo o conjunto de dados ou a colunas selecionadas do conjunto de dados que você precisa reunir.
+
+Tipos de dados comuns
+Transforme conjuntos de dados estruturados ou não estruturados, armazenados em formatos CSV, JSON ou de tabelas relacionais, de qualquer tamanho - megabytes a petabytes - com a mesma facilidade e simplicidade.
+
+Integrado com o Google Cloud Platform
+Processe os dados armazenados no Cloud Storage, no BigQuery ou na sua área de trabalho e exporte os dados refinados para o BigQuery ou o Cloud Storage para armazenamento, análise, visualização ou aprendizado de máquina.
+
+
+O acesso do usuário e a segurança de dados são gerenciados com facilidade com o Cloud Identity e o Access Management.
+
+
+
+
+
+
+
+-------------------------------------------------- -------------------------------------------------- ----------------------------
+
+Data Studio
+
+https://cloud.google.com/data-studio/?hl=pt-br
+
+O Google Data Studio transforma os dados em painéis e os relatórios que facilitam, compartilham e totalmente personalizáveis. O painel de controle pode ser usado para facilitar as decisões de negócios.
+
+Colocar todos os dados para trabalhar
+Acesse todas as fontes de dados que você precisa para entender e obter melhores empresas.
+
+Transformar os dados
+Transform os dados brutos em dimensões, métricas e cálculos de que você precisa. Não há código de programação nem consultas.
+
+Criar visualizações engajadas
+O Data Studio oferece uma possibilidade de criar gráficos que dão vida aos dados.
+
+Aproveitar um trabalho em equipe que funciona
+Aproveite a consciência coletiva da equipe. Compartilhe e colabore em tempo real. Trabalhe em conjunto rapidamente, em qualquer lugar.
+
+Conexões de dados
+Transformação de dados
+Compartilhamento e colaboração
+Modelos de relatório
+Visualização de dados
+Personalização do relatório
+Administração de usuários
+
+Pub/Sub
+
+https://cloud.google.com/pubsub/
+
+Global messaging and event ingestion made simple.
+Ingerir eventos em qualquer escala
+O processamento de dados é a base para análise e aprendizado de máquina, independentemente de você estar criando pipelines de fluxo, lote ou unificado. O Cloud Pub / Sub fornece um local de preparação simples e confiável para os dados do evento em sua jornada em direção ao processamento, armazenamento e análise.
+
+Com o Cloud Pub / Sub, os engenheiros de dados podem:
+Escala sem provisionamento, particionamento ou isolamento de carga preocupa
+Expanda seus aplicativos e pipelines para novas regiões simplesmente com tópicos globais
+Enriqueça, desduplique, ordene, agregue e poupe eventos usando o Cloud Dataflow
+Combine o processamento em lote e em tempo real por meio do armazenamento durável do Cloud Pub / Sub
+
+Simplifique o desenvolvimento de microsserviços baseados em eventos
+Se você está apenas começando sua jornada para microsserviços assíncronos orientados a eventos ou migrando um sistema existente, tornar seus eventos acessíveis por meio do middleware de mensagens é uma etapa inicial essencial. Os desenvolvedores de aplicativos do GCP confiam no Cloud Pub / Sub para entregar de forma confiável cada evento a todos os serviços que precisam reagir a ele.
+
+Após a publicação do evento no Cloud Pub / Sub:
+Inscrições por push entregam o evento a aplicativos sem servidor em execução no Cloud Functions, App Engine ou Cloud Run
+As assinaturas pull permitem que ele seja disponibilizado para serviços com estado mais complexos em execução no Google Kubernetes Engine ou no Cloud Dataflow
+
+Ambientes multirregionais operam perfeitamente devido à natureza global do Cloud Pub / Sub
+
+Seja produção pronta desde o primeiro dia
+O Cloud Pub / Sub foi projetado como um serviço premium que permite que os usuários do Google Cloud se concentrem na lógica do aplicativo, independentemente do local ou da escala. O serviço é mínimo e fácil de começar, mas também elimina as surpresas operacionais, de dimensionamento, conformidade e segurança que inevitavelmente se revelam em projetos de software.
+
+É por isso que o Cloud Pub / Sub inclui esses recursos sempre ativos:
+Criptografia de ponta a ponta, IAM e registro de auditoria
+NoOps, escalonamento e provisionamento totalmente automatizados com rendimento virtualmente ilimitado
+Durabilidade e disponibilidade de dados extremos com replicação de zona cruzada síncrona
+Bibliotecas do cliente nativo nos principais idiomas e uma API de serviço aberto
+
+Entrega pelo menos uma vez
+A replicação síncrona de mensagens entre zonas e o acompanhamento de recebimento por mensagem garantem entrega pelo menos uma vez em qualquer escala.
+
+Abrir
+APIs abertas e bibliotecas de clientes em sete idiomas oferecem suporte a implantações híbridas e em nuvem.
+
+Exatamente uma vez processamento
+O Cloud Dataflow oferece suporte ao processamento confiável, expressivo e exato de streams do Cloud Pub / Sub.
+
+Global por padrão
+Publique em qualquer lugar do mundo e consuma a partir de qualquer lugar, com latência consistente. Nenhuma replicação necessária.
+
+Nenhum provisionamento, auto-tudo
+O Cloud Pub / Sub não possui fragmentos ou partições. Basta definir sua cota, publicar e consumir.
+
+Conformidade e segurança
+
+
+O Cloud Pub / Sub é um serviço compatível com HIPAA, oferecendo controles de acesso refinados e criptografia de ponta a ponta.
+
+Integrado
+Aproveite as integrações com vários serviços, como os eventos de atualização do Cloud Storage e do Gmail, e o Cloud Functions para computação orientada a eventos sem servidor.
+
+Procure e reproduza
+Retroceda o seu backlog para qualquer ponto no tempo ou um instantâneo, dando a capacidade de reprocessar as mensagens. Avanço rápido para descartar dados desatualizados.
+
+https://cloud.google.com/pubsub/docs/ordering
+
+O que é ordem?
+Na superfície, a ideia de que as mensagens estão em ordem é simples. A imagem a seguir mostra uma visão geral do que parece para uma mensagem fluir por um serviço de entrega de mensagens:
+
+Editora -> (Tópico) -> Serviço de Entrega de Mensagens -> (Assinatura) -> Assinante
+
+Seu editor envia uma mensagem sobre um tópico para o Cloud Pub / Sub. A mensagem é então entregue ao seu assinante através de uma assinatura. Na presença de um único publicador síncrono, um único assinante síncrono e um único servidor de entrega de mensagens síncronas - todos executados em uma camada de transporte síncrona - a noção de ordem parece simples: as mensagens são ordenadas quando o publicador as publica com sucesso, por alguns medida do tempo absoluto ou sequência.
+
+Mesmo neste caso simples, a ordenação garantida de mensagens colocaria severas restrições na taxa de transferência. A única maneira de realmente garantir a ordem das mensagens seria que o serviço de entrega de mensagens entregasse as mensagens uma de cada vez ao assinante, esperando para entregar a próxima mensagem até que o serviço saiba que o assinante recebeu e processou a mensagem atual (geralmente via uma confirmação enviada do assinante ao serviço). A taxa de transferência de uma mensagem para o assinante por vez não é escalonável. O serviço pode, em vez disso, garantir apenas que a primeira entrega de qualquer mensagem esteja em ordem, permitindo que as tentativas de reenvio ocorram a qualquer momento. Isso permitiria que muitas mensagens fossem enviadas ao assinante de uma só vez. No entanto, mesmo que as restrições de ordenação sejam flexibilizadas dessa maneira, a "ordem" faz menos sentido à medida que você se afasta do único publicador / serviço de entrega de mensagens / caso do assinante.
+
+IAM - Gerenciamento de identidade e acesso
+
+https://cloud.google.com/iam/docs/overview
+
+
+
