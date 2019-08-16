@@ -299,9 +299,66 @@ E incluimos a expressão na linha strArquivoCarga > @[User::strDirRaiz]+"Protoco
 
 ---------------------------------------------------------------------------------------------------------------------------
 
+Reunião 14/08/19
+
+SQL DW - Tem tabela Mestre?
+R: Reconstruindo todos os dias em carga FULL. ( Colocar na rotina ).
+
+DW - Verificar se possivel usar outra instancia fora do pais?
+
+Caso tenha restrição, será necessario criar novo DW.
+
+O restante do Netezza vai para onde?
+R: Marcos, vai para Big Data a/c Renan.
+
+
+Os pipelines?
+
+Azure DevOps está usando?
+R: Não
+
+
+* O que falta é testar as conexões apontando as origens sql server 2000 e 2012.
+
+* 
+
+
+========================================================================
+
+Reunião
+
+TEMA: Teste de Performace.
+
+INTEGRANTES: Aline, Rafael, Marcos, Silvio.
+
+
+PONTOS ACERTADOS;
+
+ 
+* Marcar reunião com os DBA Boa Vista para apresentar o desenvolvimento do projeto NETEZZA. * Reunião agendada para segunda feira 19.08.2019 > Jorge e Giroto.
+
+
+* Marcar reunião com o Gabriel Martins responsavel pelo ambiente da nuvem sobre suporte de produção  * Aline está resolvendo melhor data com ele.
+
+ 
+* Estimar esforço da nova atividade, que seria migrar os dados do comportamental para Oracle exadata * ???
 
 
 
+Gabriel Martins ( Nuvem)
+
+(Conversar sobre suporte de produção)
+
+========================================================================
+
+Para criação do novo detalhe de criar mais uma conecxão do Data factory para exadata (Oracle)
+
+1 - Marcos inserir o arquivo no DataFactory criando conexão.
+
+2 - Solicitar criação das tabelas aos DBA, SQL Server e SQL DW.
+
+3 - 
 
 
 
+=======================================================================
