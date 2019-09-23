@@ -75,3 +75,6 @@ df.show()
 # Traz os nomes das colunas #
 df.printschema()
 
+
+
+

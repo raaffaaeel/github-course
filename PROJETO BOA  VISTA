@@ -357,7 +357,58 @@ Para criação do novo detalhe de criar mais uma conecxão do Data factory para 
 
 2 - Solicitar criação das tabelas aos DBA, SQL Server e SQL DW.
 
-3 - 
+3 - Estimar o tempo par executar este trabalho
+
+
+
+=======================================================================
+
+19.08.2019 Segunda Feira.
+
+Conforme solicitado na quinta-feira, segue horas estimadas para migrar os dados do comportamental para o Oracle Exadata:
+
+
+-> 160h  <- 80 horas para cada sendo 40 horas por semana, total de 2 semanas.
+
+
+Atividades:
+ 
+
+- Criar uma nova origem (File System), o Work Loader deverá entregar o arquivo no 10.20.30.23.
+
+- Criar um novo destino (no Oracle) para cada Pipelines existentes (11).
+
+
+Obs.:
+ 
+
+Para iniciarmos as atividades, precisamos:
+
+ 
+
+- Ter acesso ao Exadata; -> DBA
+
+- Criar as tabelas; -> DBA
+
+- Configurar a ‘connection’ no Data Factory; -> Marcos Anizio.
+
+- Novo arquivo disponibilizado no 10.20.30.23; -> Marcos Anizio.
+
+
+=======================================================================
+
+21.08.2019
+
+Reunião com Gabriel Martins para apresentar projeto para sustentação, feita e apresentada. ok
+
+
+=======================================================================
+
+26.08.2019
+
+Comecei a entrar as 7:00 para sair as 16:00 nesta data.
+
+Estamos com projeto parado no aguardo de definição do Boa vista para começar apontar os arquivos no DataFactory	para o Exadata ( Oracle )
 
 
 
