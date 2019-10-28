@@ -41,3 +41,4 @@ arm_list = generate_arm(df_ETPKc_PETP_with_id)
 df_ARM_ONLY = spark.createDataFrame(
     data=arm_list, schema=['ARM', 'row_id'])
 df_ARM = df_ETPKc_PETP_with_id.join(df_ARM_ONLY, 'row_id').drop('row_id')
+

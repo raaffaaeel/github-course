@@ -1,0 +1,64 @@
+XP Investimentos
+
+Neste projeto iremos importar Scripts em Python e Sql que estão rodando na AMAZON e iremos enviar para AZURE.
+
+
+
+MODELOS PRIORIDADES.
+
+ 1 > .XPY - >OK< Fernando Favoretti
+
+
+
+ 2 > MENTIROSOS OK (inicio 03/10 - fim 07/10 = 3 dias.) Bruno e Thaina
+
+
+
+ 3 > WEBLIFT OK (inicio 04/10 - fim 07/10 = 2 dias.)
+
+ 	>>> query_athena.ipynb (OK -Rafael)
+
+ 	>>> web_navigation_interest.ipynb ( OK arquivo com ligação com (query_athena.ipynb) já finalizado )
+
+ 	>>> send2salesforce.ipynb ( OK arquivo xpsf não mexer )
+
+
+
+
+ 4 > PRODUTO SCORING
+
+ 		 5 > VENCIMENTOS RF
+
+ 		 6 > COMPETITIVIDADE RF
+
+
+
+
+ 7 > HATCHERY  (API) **
+
+
+
+
+ 8 > SERVICES 
+
+
+
+
+ 9 > PALANTIR 
+
+ 
+
+
+
+-------------------
+
+PRODUTOS 
+
+SIMULADOR B2b
+
+> MODULO API
+
+
+
+
+

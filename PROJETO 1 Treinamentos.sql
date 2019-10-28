@@ -94,3 +94,69 @@ INSERT INTO `Products` (`product_id`,`description`,`stock_quantity`,`unit_price`
 INSERT INTO `Products` (`product_id`,`description`,`stock_quantity`,`unit_price`,`provider`) VALUES (91,"Desc1",21,"59.80","Adobe"),(92,"Desc1",126,"59.80","Yahoo"),(93,"Desc6",337,"59.80","Macromedia"),(94,"Desc8",389,"59.80","Google"),(95,"Desc5",20,"59.80","Lavasoft"),(96,"Desc4",289,"59.80","Yahoo"),(97,"Desc4",679,"59.80","Apple Systems"),(98,"Desc9",141,"59.80","Cakewalk"),(99,"Desc4",516,"59.80","Apple Systems"),(100,"Desc4",882,"59.80","Apple Systems");
 
 SELECT * FROM products;
+
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+CREATE TABLE ods.o_pedidos (
+region TEXT,
+country TEXT,
+item_type TEXT,
+sales_channel TEXT,
+order_priority TEXT,
+order_date TEXT,
+order_id TEXT,
+ship_date TEXT,
+units_sold TEXT,
+unit_price TEXT,
+unit_cost TEXT,
+total_revenue TEXT,
+total_cost TEXT,
+total_profit TEXT)
+ENGINE=INNODB DEFAULT CHARSET=utf8;
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+INSERT INTO FlowFiles (region, country, item_type, sales_channel, order_priority, order_date, order_id, ship_date, units_sold, unit_price, unit_cost, total_revenue, total_cost, total_profit) 
+VALUES ( '$ {region}', '$ {country}', '$ {item_type}', '$ {sales_channel}', '$ {order_priority}', '$ {order_date}', '$ {order_id}', '$ {ship_date}', '$ {units_sold}', '$ {unit_price}', '$ {unit_cost}', '$ {total_revenue}', '$ {total_cost}', '$ {total_profit}')
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+create table stage.fato (order_id int NOT NULL AUTO_INCREMENT,
+FOREIGN KEY(id_region) REFERENCES stage.region(id),
+FOREIGN KEY(id_country) REFERENCES stage.country(id),
+FOREIGN KEY(id_sales_channel) REFERENCES stage.sales_channel(id),
+item_type TEXT,
+order_priority CHAR,
+order_date DATE,
+ship_date DATE,
+units_sold INT,
+unit_price FLOAT,
+unit_cost FLOAT,
+total_revenue FLOAT,
+total_cost FLOAT,
+total_profit TEXT, 
+PRIMARY KEY (order_id));
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+select sum(a.total_revenue) as total, c.region, d.country from dw.ft_orders a 
+    inner join (select max(left(order_date,4)) as order_date from dw.ft_orders)b on left(a.order_date,4) =  b.order_date
+    inner join dw.dim_region c on a.region_id = c.region_id
+    inner join dw.dim_country d on a.country_id = d.country_id
+group by c.region, d.country order by sum(a.total_revenue) desc;
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+SELECT * FROM ods.orders
+WHERE id > (SELECT count(*) FROM stage.o_pedidos);
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+

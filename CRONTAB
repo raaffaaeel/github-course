@@ -1,6 +1,9 @@
-CRONTAB
+ BAIXAR PUTTY e USAR CRONTAB
 
-COMO USAR O CRON
+Baixar PUTTY --> https://www.techtudo.com.br/tudo-sobre/putty.html
+
+
+COMO USAR O CRONtab.
  
 
 O primeiro passo é abrir o crontab. Para isso, você pode usar editores de textos como vi e o emacs. Também é possível digitar o comando "crontab -e" para editar o arquivo exclusivo de seu usuário. Neste caso, a edição é feita como se você estivesse usando o vi. 

@@ -254,7 +254,7 @@ O Cloud Dataflow é um serviço totalmente gerenciado para transformar e enrique
 O Cloud Dataflow desbloqueia casos de uso transformacionais em vários setores, incluindo:
 
 Análise de fluxo de cliques, ponto de venda e segmentação no varejo
-Detecção de fraudes em serviços financeiros
+Detecção de fraudes em serviços financeiros  
 Experiência de usuário personalizada em jogos
 Análise de IoT em manufatura, saúde e logística
 
@@ -272,7 +272,7 @@ O Cloud Dataflow integra-se perfeitamente aos serviços do GCP para fluxo contí
 
 mecanismos de execução alternativos, como o Apache Spark por meio do Cloud Dataproc ou no local. Para usuários do Apache Kafka, um conector do Cloud Dataflow facilita a integração com o GCP.
 
-CARACTERÍSTICAS DO FLUXO DE DADOS EM NUVEM
+CARACTERÍSTICAS DO FLUXO DE DADOS EM NUVEM.
 
 Gerenciamento automatizado de recursos
 O Cloud Dataflow automatiza o provisionamento e o gerenciamento de recursos de processamento para minimizar a latência e maximizar a utilização; não mais girar as instâncias manualmente ou reservá-las.

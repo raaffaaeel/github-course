@@ -69,7 +69,7 @@ display(dfcsvclockify)
 
 #10# Fazer o select das colunas necessarias.
 
-
+dfclockify = pd.read_excel('/dbfs/mnt/clockify/2019/clockify_report_04-01-2019_to_04-30-2019.xlsx', 'Clockify report', index_col=None)
 
 
 
