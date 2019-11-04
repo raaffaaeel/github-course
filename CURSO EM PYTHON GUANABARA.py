@@ -188,3 +188,75 @@ print(lista.split())
 
 >>>>>>>>>> Curso Python #10 - Condições (Parte 1) <<<<<
 
+# Condição
+
+tempo = int(input('Quantos anos tem seu carro?  '))
+if tempo <=3:
+    print('Carro novo')
+else:
+    print('carro velho')
+    print('--FIM--')
+
+
+tempo = int(input('Quantos anos tem seu carro?  '))
+print('Carro novo' if tempo <=3 else'carro velho')
+print('--FIM--')
+
+----------------------------------------------------
+
+nome = str(input('Qual é o seu nome? '))
+if nome == 'Arthur':
+    print('Que nome lindo você tem!!! ')
+print('Bom dia, {}!!'.format(nome))
+
+# CONDIÇÃO SIMPLIFICADA #
+n1 = float(input('Digite nota 1 '))
+n2 = float(input('digite nota 2 '))
+m = (n1 + n2)/2
+print('A sua média foi {:.1f}'.format(m))
+#print('PARABENS' if m >=6 else 'ESTUDE MAIS')
+if m>=6.0:
+    print('Sua média foi boa!! PARABÉNS!! ')
+else:
+    print('Sua média foi ruim!!! ESTUDE MAIS!!!')
+
+
+
+
+ >>>>>>>>>>  Curso Python #11 - Cores no Terminal <<<<<
+
+nome = 'Rafael'
+cores = {'limpa':'\033[m',
+         'azul':'\033[34m',
+         'amarelo':'\033[3m',
+         'retoebranco':'\33[7:30'}
+print('Olá!! Muito prazer em te onhecer, {}{}{}!!'.format(cores['amarelo'], nome, cores['limpa'])))
+
+11 > VIDEOS 
+35 > EXERCICIOS
+
+>>>>> FINALIZADO PRIMEIRO MUNDO PYTHON 3 <<<<<
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+
+>>>>>> INICIO MUNDO 2 PYTHON 3 <<<<<<
+
+( MUNDO 2 >> AULA 12 >> Condições Aninhadas )
+
+# estrutura condicional aninhada.
+nome = str(input('Qual seu nome? '))
+if nome =='Arthur':
+    print('Que nome bonito!')
+elif nome == 'Pedro' or nome == 'Maria' or nome == 'Paulo':
+    print('Seu nome é em popular no Brasil. ')
+elif nome in 'Evelyn Lucia Claudia Lina':
+    print('Belo nome feminino')
+else:
+    print('Seu nome é bem normal.')
+print('Tenha um bom, {}!!'.format(nome))
+
+---------------------------------------------------------------
+
+( MUNDO 2 >> AULA 13 >>  )
+
