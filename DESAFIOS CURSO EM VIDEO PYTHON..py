@@ -567,3 +567,130 @@ cores = {'limpa':'\033[m',
          'amarelo':'\033[3m',
          'pretoebranco':'\33[7:30'}
 print('Olá!! Muito prazer em te conhecer, {}{}{}!!'.format(cores['azul'], nome, cores['limpa']))
+
+
+
+(DESAFIO 36.a)
+# de uma casa. o programa vai perguntar o valor da casa, o salário do comprador
+# e em quantos anos ele vai pagar.
+#Calcule o valor da prestação mensal, sabendo que elea não pode exceder 30%
+# do saláriou então o emprestimoseá negado.
+
+casa = float(input('Qual valor da casa? R$ '))
+salário = float(input( 'Qual o valor do seu salario? '))
+anos = int(input('Em quantos anos você que pagar a casa? '))
+prestação = casa /(anos * 10)
+minimo = salário * 30 / 100
+
+print(' Para pagar uma casa de R%{:.2f}) em {} anos'.format(casa, anos), end='')
+print('A prestação será de R${:.2f}'.format(prestação))
+if prestação <= minimo:
+    print('Emprestimo pode ser consedido!!!!')
+else:
+    print('Empréstimo NEGADO!!! ')
+
+
+
+(DESAFIO 37)
+# Escreva um programa que leia um número inteiro qualquer e peça para o
+# usuario escolher qual será abase de convrsão:
+#-1 para binário
+#-2 para octal
+#-3 para hexadecimal
+
+num = int(input(' Digite um numero inteiro: '))
+print('''Escolha uma das bases para conversão: 
+ [1] converter para BIANRIO
+ [2] converter para OCTAL     
+ [3] converter para HEXADECIMAl ''')
+
+opção = int(input(' Sua opcão: '))
+if opção == 1:
+    print('{} convertido para BINARIO é igual a {}'.format(num, bin(num)))
+elif opção == 2:
+    print('{} convertido para OCTAL é igual a {}'.format(num, oct(num)))
+elif opção == 3:
+    print('{} convertido para HEXADECIMAL é igual a {}'.format(num, hex(num)))
+else:
+    print('Opção invalida. Tente novamente  ')    
+
+
+(DESAFIO 38)
+# ESCREVA UM PROGRAMA QUE LEIA DOIS NUMEROS INTEIROS E COMPARE-OS
+# MOSTRANDO NA TELA UMA MENSAGEM:
+# O PRIMEIRO VALOR É MENOR
+# O SEGUNDO VALOR É MAIOR
+# NÃ0 EXISTE VALOR MAIOR, OS DOIS SÃO IGUAIS
+
+n1 = int(input('Digite um numero inteiro: '))
+n2 = int(input('Digite o outro numero inteiro: '))
+if n1 > n2:
+    print('O PRIMEIRO valor é maior')
+elif n2 > n1:
+    print('O SEGUNDO valor é maior ')
+else:
+    print('Os dois valores são iguais ')
+
+
+
+(DESAFIO 39)
+#FAÇA UM PROGRAMA QUE LEIA O ANO DE NASCIMENTO DE UM JOVEM E INFORME DE ACORDO COM SUA IDADE
+# SE ELE AINDA VAI SE ALISTAR O SERVIÇO MILITAR
+# SE ´A HORA DE SE ALISTAR
+# SE JÁ PASSOU DO TEMPO DO ALISTAMENTO
+# SEU PROGRAMA TBM DEVERÁ MOSTRAR O TEMPO QUE FALTA OU QUE PASSOU O PRAZO.
+
+from datetime import date
+atual = date.today().year
+nasc = int(input('Ano de nascimento: '))
+idade = atual - nasc
+print('Quem nasceu em {} tem {} anos em {}.'.format(nasc, idade, atual))
+if idade == 18:
+    print('Você tem que se alistar IMEDIATAMENTE!!')
+elif idade < 18:
+    saldo = 18 - idade
+    print('Ainda faltam {} anos para o alistamento'.format(saldo))
+    ano = atual + saldo
+    print('Seu alistamento será em {}'.format(ano))
+elif idade > 18:
+    saldo = idade - 18
+    print('Voce já deveria ter se alistado há {} anos .'.format(saldo))
+    ano = atual - 18
+    print ('Seu alistamento foi em {}'.format(ano))
+
+
+
+(DESAFIO 40)
+# CRIE UM PROGRAMA QUE LEIA DUAS NOTAS DE UM ALUNO E CALCULE SUA MEDIA,
+# MOSTRANDO UMA MENSAGEM NO FINAL DE ACORDO COM A MEDIA ATINGIDA:
+## MEDIA ABAIXO DE 5.0: REPROVADO
+## MEDIA ENTRE 5.0 E 6.9: RECUPERAÇÃO
+## MEDIA 7.0 OU SUPERIOR: APROVADO
+
+n1 = float(input('Digite a primeira nota: '))
+n2 = float(input('Digite a segunda nota: '))
+media = (n1 + n2) / 2
+print('Tirando  {:.1f} e {:.1f}, a média do aluno será {:.1f}'.format(n1, n2, media))
+if 7 > media >= 5:
+    print('O Aluno está em RECUPERAÇÃO ')
+elif media < 5:
+    print('O aluno está REPROVADO ')
+elif media >=7:
+    print('O aluno está APROVADO, parabens !!!!!')
+
+#############################################################
+
+nota1 = float(input('Primeira nota: '))
+nota2 = float(input('Segunda nota: '))
+média = (nota1 + nota2) / 2
+print('Tirando {:.1f} e {:.1f}, a média do aluno é {:.1f}'.format(nota1, nota2, média))
+if 7 > média >= 5:
+    print('O aluno está em RECUPERACÃO. ')
+elif média < 5:
+    print('O aluno está REPROVADO.')
+elif média >= 7:
+    print('O aluno está APROVADO.')
+
+
+(DESAFIO 41)    
+

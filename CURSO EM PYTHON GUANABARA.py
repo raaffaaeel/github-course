@@ -256,6 +256,7 @@ else:
     print('Seu nome é bem normal.')
 print('Tenha um bom, {}!!'.format(nome))
 
+
 ---------------------------------------------------------------
 
 ( MUNDO 2 >> AULA 13 >>  )
