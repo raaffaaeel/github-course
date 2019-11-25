@@ -4,7 +4,7 @@
 
 #Python program to print Fizz Buzz 
 #loop for 100 times i.e. range 
-for fizzbuzz in range(100): 
+for fizzbuzz in range(): 
 
 	if fizzbuzz % 15 == 0: 
 		print("FizzBuzz")										 

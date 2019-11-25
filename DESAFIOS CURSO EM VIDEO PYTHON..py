@@ -70,6 +70,20 @@ print('Dentro dessa metragem existem {} centímetros e {} milímetros' .format(c
 # e mostre na tela a sua tabuada.
 
 # MODELO 1
+valor = int(input('Choose a number: '))
+lista2 = [1,2,3,4,5,6,7,8,9,10]
+for i in lista2:
+    total = valor * i
+    print("{} x {} = {}".format(str(valor), str(i), str(total) ))
+
+    valor = int(input('Choose a number: '))
+    lista2 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    for i in lista2:
+          total = valor * i
+          print("{} x {} = {}".format(str(valor).rjust(2, "0"), str(i).rjust(2, "0"), str(total).rjust(2, "0")))
+
+
+# MODELO 2
 n1 = int(input('Digite um número? '))
 print(f'O numero digitado = {n1}\nSegue abaixo sua tabuada \n'
       f'{n1} x 1 = {n1 * 1} \n{n1} x 2 = {n1 * 2} \n{n1} x 3 = {n1 * 3} \n'
@@ -77,7 +91,7 @@ print(f'O numero digitado = {n1}\nSegue abaixo sua tabuada \n'
       f'{n1} x 7 = {n1 * 7} \n{n1} x 8 = {n1 * 8} \n{n1} x 9 = {n1 * 9} \n'
       f'{n1} x 10 = {n1 * 10}')
 
-# MODELO 2
+# MODELO 3
 num = int(input('Digite um numero para ver sua tabuada de mutiplicar: '))
 print('-' * 12)
 print('{} x {:2} = {}'.format(num, 1, num*1))
@@ -93,7 +107,7 @@ print('{} x {:2} = {}'.format(num, 10, num*10))
 print('{} x {:2} = {}' .format(num, 11, num*11))
 print('-' * 12)
 
-# MODELO 3
+# MODELO 4
 num = int(input('Digite um numero para ver sua tabuada de menos: '))
 print('{} - {:2} = {}'.format(num, 1, num-1))
 print('{} - {:2} = {}'.format(num, 2, num-2))

@@ -4,7 +4,7 @@
 segundos_str = input("Por favor, entre com número de segundos que deseja converter: ")
 total_segs = int(segundos_str)
 
-dia = total_segs // 86400
+dia = segs_restantes_final // 1440
 horas = total_segs // 3600
 segs_restantes = total_segs % 3600
 minutos = segs_restantes // 60
