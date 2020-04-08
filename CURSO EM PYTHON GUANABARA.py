@@ -1,4 +1,4 @@
-CURSO EM PYTHON GUANABARA
+CURSO EM PYTHON GUANABARA -
 
 nome = 'Guanabara'
 idade = 25

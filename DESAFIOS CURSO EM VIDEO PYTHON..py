@@ -1,6 +1,6 @@
 DESAFIOS CURSO EM VIDEO PYTHON.
 
-(DESAFIO 5)
+(DESAFIO 5))
 # Faça um programa que leia um número inteiro e mostre
 # na tela o seu  sucessor e seu antecessor.
 
