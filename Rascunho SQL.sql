@@ -1,0 +1,1877 @@
+
+-- RODAR TODOS OS ANOS E CONVERTER YEAR PARA VARCHAR E DATE --
+SELECT * 
+FROM [DBO].[VW_FATO_VENDAS]  -- PARTICAO_ANUAL_2011_2018
+WHERE YEAR(CAST(CAST("DATA DA VENDA (BDT)" AS VARCHAR(15)) AS DATE)) BETWEEN 2011 AND 2018
+
+-- MODELO DE QUERY USADO NA PARTIÇÃO PARA AS CARGAS DE ANO --
+SELECT COUNT(1) FROM [DBO].[VW_FATO_VENDAS] -- NOME DA PARTICAO: PARTICAO_2011
+WHERE YEAR(CAST(CAST("DATA DA VENDA (BDT)" AS VARCHAR(15)) AS DATE)) = 2011 
+
+-- MODELO DE QUERY USADO NA PARTIÇÃO PARA AS CARGAS DE MÊS --
+SELECT * FROM [DBO].[VW_FATO_VENDAS]   -- NOME DA PARTICAO: PARTICAO_201901
+WHERE "DATA DA VENDA (BDT)" BETWEEN 20190101 AND 20190131
+
+
+Rascunhos 
+------------------------------------------------
+
+PIVOT e UNPIVOT
+
+select top 20 * into #TMPESTNORMALIZADA from stg.GAN_TMPEST_FULL where filial = '66' and codpro = '1GGA00439BPTOB'
+
+
+select * from #TMPESTNORMALIZADA
+
+
+SELECT 
+	filial, 
+	codpro, 
+	jit,
+	foramix,
+	rep,
+	upper(right(trim(rua),1)) as rua, 
+	valor_rua,	
+	valor_entrada,
+	valor_saida
+INTO #TMPESTNORMALIZADA
+FROM
+    (
+		SELECT filial, codpro, jit, foramix, rep,
+			coalesce(trim(rua_i), '0.0') as rua_i, coalesce(trim(rua_a), '0.0') as rua_a, coalesce(trim(rua_j), '0.0') as rua_j, coalesce(trim(rua_k), '0.0') as rua_k, coalesce(trim(rua_p), '0.0') as rua_p, coalesce(trim(rua_q), '0.0') as rua_q, coalesce(trim(rua_b), '0.0') as rua_b, coalesce(trim(rua_t), '0.0') as rua_t, coalesce(trim(rua_m), '0.0') as rua_m, coalesce(trim(rua_d), '0.0') as rua_d,
+			coalesce(trim(sai_i), '0.0') as sai_i, coalesce(trim(sai_a), '0.0') as sai_a, coalesce(trim(sai_j), '0.0') as sai_j, coalesce(trim(sai_k), '0.0') as sai_k, coalesce(trim(sai_p), '0.0') as sai_p, coalesce(trim(sai_q), '0.0') as sai_q, coalesce(trim(sai_b), '0.0') as sai_b, coalesce(trim(sai_t), '0.0') as sai_t, coalesce(trim(sai_m), '0.0') as sai_m, coalesce(trim(sai_d), '0.0') as sai_d,
+			coalesce(trim(ent_i), '0.0') as ent_i, coalesce(trim(ent_a), '0.0') as ent_a, coalesce(trim(ent_j), '0.0') as ent_j, coalesce(trim(ent_k), '0.0') as ent_k, coalesce(trim(ent_p), '0.0') as ent_p, coalesce(trim(ent_q), '0.0') as ent_q, coalesce(trim(ent_b), '0.0') as ent_b, coalesce(trim(ent_t), '0.0') as ent_t, coalesce(trim(ent_m), '0.0') as ent_m, coalesce(trim(ent_d), '0.0') as ent_d
+		FROM STG.GAN_TMPEST_FULL
+	) p
+UNPIVOT
+	(
+		valor_rua FOR rua IN (rua_i, rua_a, rua_j, rua_k, rua_p, rua_q, rua_b, rua_t, rua_m, rua_d)
+	) AS u
+UNPIVOT
+	(
+		valor_saida FOR saida IN (sai_i, sai_a, sai_j, sai_k, sai_p, sai_q, sai_b, sai_t, sai_m, sai_d)
+	) AS s
+UNPIVOT
+	(
+		valor_entrada FOR entrada IN (ent_i, ent_a, ent_j, ent_k, ent_p, ent_q, ent_b, ent_t, ent_m, ent_d )
+	) AS e
+WHERE 
+	RIGHT(trim(saida),1) = RIGHT(trim(rua),1) and
+	RIGHT(trim(entrada),1) = RIGHT(trim(rua),1)
+
+
+
+INSERT INTO FAT.BFS_ESTOQUE
+	SELECT  
+		TAB_SK_LOJA,
+		EST_SK_DAT_REFERENCIA_ESTOQUE,
+		EST_SK_ORIGEM_ENTREGA,
+		PRD_SK_PRODUTO,
+		RUA_SK_RUA,
+		EST_ST_JUST_IN_TIME,
+		EST_ST_MIX_LOJA,
+		EST_NU_VLR_REPOSICAO,
+		EST_NU_QTE_ESTOQUE,
+		EST_NU_QTE_ENTRADA,
+		EST_NU_QTE_SAIDA,
+		EST_DT_PROCESSAMENTO
+	
+	FROM WRK.BFS_FAT_ESTOQUE
+
+
+CREATE VIEW VW_FATO_ESTOQUE
+AS
+SELECT 
+	 TAB_SK_LOJA AS 'SK LOJA'
+	,EST_SK_DAT_REFERENCIA_ESTOQUE AS 'SK REFERENCIA ESTOQUE'
+	,EST_SK_ORIGEM_ENTREGA AS 'SK ORIGEM ENTREGA'
+	,PRD_SK_PRODUTO AS 'SK PRODUTO'
+	,RUA_SK_RUA 'SK RUA'
+	,EST_ST_JUST_IN_TIME AS 'JUST IN TIME (JIT)'
+	,EST_ST_MIX_LOJA AS 'MIX LOJA (FORAMIX)'
+	,EST_NU_VLR_REPOSICAO AS 'VALOR REPOSICAO (REP)'
+	,EST_NU_QTE_ESTOQUE AS 'QUANTIDADE ESTOQUE'
+	,EST_NU_QTE_ENTRADA AS 'QUANTIDADE ENTRADA'
+	,EST_NU_QTE_SAIDA AS 'QUANTIDADE SAIDA'
+	,EST_DT_PROCESSAMENTO 'DATA PROCESSAMENTO REGISTRO'
+FROM FAT.BFS_ESTOQUE
+
+
+SELECT TOP 10 * FROM VW_FATO_ESTOQUE
+
+------------------------------------------------------------------
+
+--> Usar query abaixo para verificar quantidade que rodou no dia <-- 
+
+select * from adm.CONTROLE_CARGA
+where data_carga_inicio >= '2019-12-09' and DATA_CARGA_INICIO < '2019-12-10'
+
+
+------------------------------------------------------------------
+
+--> Usar query abaixo para verificar quantidade que ro
+
+select * from adm.CONTROLE_CARGA
+where data_carga_inicio >= '2019-12-09' and DATA_CARGA_INICIO < '2019-12-10' and tabela = 'STG.GAN_TMPFAB'
+
+-- CONTAR QT TABELA --
+select count (*) from STG.GAN_TMPFAB
+
+
+
+--> Exemplos de analisar tudo que rodou <--
+select * from adm.CONTROLE_CARGA
+where data_carga_inicio >= '2019-12-09' and DATA_CARGA_INICIO < '2019-12-10'
+and DATEPART(hour, data_carga_inicio) between 18 and 20
+and tabela = 'STG.GAN_SCADGER'
+
+
+
+-- CONSULTAR QUANTIDADE DE COLUNAS --
+select * from INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'NOME DA TABELA'
+
+
+select * from INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = LIKE '%cubo%'
+
+-- Consultar tabelas carregadas --
+select * from adm.CONTROLE_CARGA
+where DATEPART(day, data_carga_inicio) = 11
+--and DATEPART(hour, data_carga_inicio) between 18 and 20
+and tabela LIKE '%cubo%'
+ORDER BY data_carga_inicio DESC
+
+--------------------------------------------
+
+select * from adm.CONTROLE_CARGA
+where DATEPART(day, data_carga_inicio) = 12
+--and DATEPART(hour, data_carga_inicio) between 16 and 20
+and tabela LIKE '%fat.%hora%'
+ORDER BY data_carga_inicio DES
+
+
+-------------------------------------------
+
+-- VISUALIZAÇÃO PROCESSO DO CUBO GERADOS NO DIA --
+
+select * from adm.CONTROLE_CARGA
+where DATEPART(day, data_carga_inicio) = 19
+--and DATEPART(hour, data_carga_inicio) between 18 and 20
+and tabela LIKE '%cubo%'
+--and STATUS_CARGA = 'erro'
+
+-------------------------------------------
+
+
+-- CONSULTA DE CAMPO COM ALGUM ERRO  --
+SELECT * FROM STG.GAN_ESTOQLOC
+WHERE ISNUMERIC (LQTE_INI) = 0
+
+-------------------------------------------
+
+
+SELECT DISTINCT
+--CAST(NDTC AS DATETIME) 
+NDTNF,
+COALESCE(TRY_CAST(NDTNF AS DATETIME), '19000101')  --The conversion of a varchar data type to a datetime data type resulted in an out-of-range value.
+--,CAST(NDTCANC AS DATETIME) 
+--,CAST(NDTREM AS DATETIME) 
+--,CAST(NDTFECH AS DATETIME) 
+--,CAST(NDT_EMAIL AS DATETIME) 
+--,CAST(NDTNFDV AS DATETIME) 
+--,CAST(NDTD5 AS DATETIME) 
+--,CAST(NDTR4 AS DATETIME) 
+--,CAST(NDTD4 AS DATETIME) 
+--,CAST(NDTE AS DATETIME) 
+--,CAST(NDTEMISNF AS DATETIME) 
+--,CAST(NDTAF AS DATETIME) 
+--,CAST(NDTAD AS DATETIME) 
+--,CAST(NDTAUT AS DATETIME) 
+--,CAST(NDTMAIL AS DATETIME) 
+FROM STG.GAN_LSTCASAM
+WHERE TRY_CAST(NDTNF AS DATETIME) IS NULL 
+
+
+-------------------------------------------
+
+
+case when coluna  = 'T' then 1 else 0 end
+
+
+-------------------------------------------
+
+Exemplo de como usar COALESCE.
+
+SELECT
+	COALESCE(NOME, NOMEMEIO, SOBRENOME, 'INDIGENTE') AS TESTENOME
+FROM
+(SELECT
+	'JESSICA' AS NOME,
+	NULL AS NOMEMEIO,
+	'CARVALHO' AS SOBRENOME,
+	27 AS IDADE
+UNION
+SELECT
+	'ALINE' AS NOME,
+	'GUIMARAES' AS NOMEMEIO,
+	NULL AS SOBRENOME,
+	22 AS IDADE
+UNION
+SELECT
+	NULL AS NOME,
+	NULL AS NOMEMEIO,
+	'MACEDO' AS SOBRENOME,
+	37 AS IDADE
+UNION
+SELECT
+	NULL AS NOME,
+	NULL AS NOMEMEIO,
+	NULL AS SOBRENOME,
+	37 AS IDADE ) AS T1
+
+
+--------------------------------------------------
+
+Saber quantidade de caracter em um campo.
+
+select max(len(PUNC)) from STG.GAN_JCOMP
+
+--------------------------------------------------
+
+C:\Users\BlueShift\source\repos\BI_FAST_SHOP_CUBOS
+
+
+--------------------------------------------------
+
+
+ SELECT TOP 10 *
+	FROM STG.GAN_LSTCASAM
+	WHERE TRY_CAST(NNF AS FLOAT) IS NULL OR
+	  TRY_CAST(NPRECO AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NNFREM AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NQTE AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NENC_CP AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NNFDV AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NPORC_DESC AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NPRTAB AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NPED AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NICM AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NNFD5 AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NCODLST AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NNFR4 AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NNFD4 AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NAF AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NSEQ AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NAUTDEV AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NSEQGERAL AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NCODSITE AS FLOAT) IS NULL OR 
+ 	  TRY_CAST(NSEQSITE AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NCODMENS AS FLOAT) IS NULL OR 
+ 	  TRY_CAST(SR_RECNO AS FLOAT) IS NULL OR
+ 	  TRY_CAST(NVRFRETE AS FLOAT) IS NULL 
+
+
+
+	  SELECT TOP 10 * FROM STG.GAN_LSTCASAM
+	  WHERE ISNUMERIC (NVRFRETE) = 0
+
+	  ---------------------------------------------
+
+(Achar erro nos campos FLOAT)
+
+
+	  select top 10 NSEQGERAL,*
+		from STG.GAN_LSTCASAM
+		where (isnumeric(NNF) = 0 and NNF is not null) or
+(isnumeric(NPRECO) = 0 and NPRECO is not null) or
+(isnumeric(NNFREM) = 0 and NNFREM is not null) or
+(isnumeric(NQTE) = 0 and NQTE is not null) or
+(isnumeric(NENC_CP) = 0 and NENC_CP is not null) or
+(isnumeric(NNFDV) = 0 and NNFDV is not null) or
+(isnumeric(NPORC_DESC) = 0 and NPORC_DESC is not null) or
+(isnumeric(NPRTAB) = 0 and NPRTAB is not null) or
+(isnumeric(NPED) = 0 and NPED is not null) or
+(isnumeric(NICM) = 0 and NICM is not null) or
+(isnumeric(NNFD5) = 0 and NNFD5 is not null) or
+(isnumeric(NCODLST) = 0 and NCODLST is not null) or
+(isnumeric(NNFR4) = 0 and NNFR4 is not null) or
+(isnumeric(NNFD4) = 0 and NNFD4 is not null) or
+(isnumeric(NAF) = 0 and NAF is not null) or
+(isnumeric(NSEQ) = 0 and NSEQ is not null) or
+(isnumeric(NAUTDEV) = 0 and NAUTDEV is not null) or
+(isnumeric(NSEQGERAL) = 0 and NSEQGERAL is not null) or
+(isnumeric(NCODSITE) = 0 and NCODSITE is not null) or
+(isnumeric(NSEQSITE) = 0 and NSEQSITE is not null) or
+(isnumeric(NCODMENS) = 0 and NCODMENS is not null) or
+(isnumeric(SR_RECNO) = 0 and SR_RECNO is not null) or
+(isnumeric(NVRFRETE) = 0 and NVRFRETE is not null)
+
+
+ ---------------------------------------------
+
+
+select top 10 ISNULL(VND_ST_VENDAREMOTA,0) 
+from fat.BFS_VENDAS
+WHERE VND_ST_VENDAREMOTA IS NOT NULL
+
+---------------------------------------------
+MODELO PARA TRAZER OS TIPOS E NOMES DE CAMPO DA TABELA
+
+SELECT
+    c.name 'Column Name',
+	'FAT' 'Fonte de dados',
+	o.name 'Tabela Origem',
+    --t.Name 'Data type',
+	c.name 'Campo Origem',
+	t.Name + case when t.name in ('char','varchar') then '('+convert(varchar,c.max_length)+')'
+					when t.name in ('numeric', 'decimal') then '('+convert(varchar,c.precision)+','+convert(varchar,c.scale)+')'
+				else ''
+				end 'Data type'--,
+				--c.max_length 'Max Length',
+    --c.precision ,
+    --c.scale ,
+    --c.is_nullable,
+    --ISNULL(i.is_primary_key, 0) 'Primary Key'
+FROM
+    sys.columns c
+INNER JOIN
+	sys.objects o on c.object_id = o.object_id
+INNER JOIN
+    sys.types t ON c.user_type_id = t.user_type_id
+LEFT OUTER JOIN
+    sys.index_columns ic ON ic.object_id = c.object_id AND ic.column_id = c.column_id
+LEFT OUTER JOIN
+    sys.indexes i ON ic.object_id = i.object_id AND ic.index_id = i.index_id
+WHERE
+    o.name = 'BFS_LSTCASAM'
+
+
+    ---------------------------------------------
+
+TESTE DE EVOLUÇÃO DO CUBO 
+
+select * from adm.CONTROLE_CARGA
+where data_carga_inicio >= '2019-12-27' and data_carga_inicio < '2019-12-28'
+and tabela LIKE '%CUBO%'
+--and status_carga = 'erro'
+ORDER BY data_carga_inicio DESC
+
+
+ ---------------------------------------------
+
+
+ select   * 
+from VW_FATO_VENDAS_HORA
+where [DATA DA VENDA (BDT)] < convert(varchar(10),getdate(), 112)
+
+
+
+
+select top 10 * 
+from VW_FATO_VENDAS_HORA
+
+
+select top 10 * from VW_FATO_VENDAS_HORA f
+	where f.[DATA DA VENDA (BDT)] >= (select min(cal_da_id) from dim.BFS_CALENDARIO where cal_nu_ano = 2019 and CAL_NU_MES = 1)
+	and f.[DATA DA VENDA (BDT)] <=  (select max(cal_da_id) from dim.BFS_CALENDARIO where cal_nu_ano = 2019 and CAL_NU_MES = 3)
+
+
+
+-----------------------------------------------
+
+testar cubo de rodou
+
+select * from adm.CONTROLE_CARGA
+where data_carga_inicio >= '2019-12-30' and data_carga_inicio < '2019-12-31'
+and tabela LIKE '%CUBO%'
+--and status_carga = 'erro'
+ORDER BY data_carga_inicio DESC
+
+---------------------------------------------
+
+QUERY PARA DELETAR ALGUM MODELO COM ERRO 
+
+SELECT * FROM ADM.CONTROLE_CARGA WHERE data_carga_inicio >= '2020-01-02' and data_carga_inicio < '2020-01-03' AND STATUS_CARGA = 'EM ANDAMENTO'
+
+DELETE FROM ADM.CONTROLE_CARGA WHERE data_carga_inicio >= '2020-01-02' and data_carga_inicio < '2020-01-03' AND STATUS_CARGA = 'EM ANDAMENTO'
+
+----------------------------------------------
+
+
+SELECT TOP 10 NSEQGERAL,*
+FROM STG.GAN_FRSAID
+WHERE (ISNUMERIC(SCANC) = 0 AND SCANC IS NOT NULL) OR 
+(ISNUMERIC(SMOVST) = 0 AND SMOVST IS NOT NULL) OR 
+(ISNUMERIC(SPONTE) = 0 AND SPONTE IS NOT NULL) OR 
+(ISNUMERIC(SCOLETA) = 0 AND SCOLETA IS NOT NULL) OR 
+(ISNUMERIC(SPGCOMIS) = 0 AND SPGCOMIS IS NOT NULL) OR 
+(ISNUMERIC(SPROFORMA) = 0 AND SPROFORMA IS NOT NULL) OR 
+(ISNUMERIC(SREVENDA) = 0 AND SREVENDA IS NOT NULL) 
+
+---------------------------------------------------------------------------
+
+-- patrtição mensal 
+
+PARTICAO_MENSAL_201912
+select * from VW_FATO_VENDAS
+WHERE [DATA DA VENDA (BDT)] BETWEEN 20191001 AND 20191231
+
+
+-- patrtição mensal
+Partição anual 
+PARTICAO_ANUAL_2011_2018
+select * from VW_FATO_VENDAS
+WHERE [DATA DA VENDA (BDT)] BETWEEN 20110101 AND 20181231
+
+--------------------------------------------------------------------------
+
+
+METRICAS EM DAX - ANALYSIS SERVECES 
+
+-- METRICAS CUBO FATO VENDAS --
+
+RECEITA DE FRETE:= DIVIDE(sum('FATO VENDAS'[VALOR FRETE (BFRETE)]);sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);0)
+
+MARGEM:= DIVIDE(sum('FATO VENDAS'[VALOR MARGEM BRUTA (BMB2)]);sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);0)
+
+TICKET MEDIO:= DIVIDE(sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);sum('FATO VENDAS'[QUANTIDADE (BQTE)]);0)
+
+
+FAT PRODUTOS:= CALCULATE(sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);LINHA[LINHA (BLINHA)]<>"Y")
+
+FAT SERVICOS:= CALCULATE(sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);LINHA[LINHA (BLINHA)]="Y")
+
+
+-- METRICAS CUBO FATO VENDAS HORA --
+
+RECEITA DE FRETE HORA HORA:= DIVIDE(sum('FATO VENDAS'[VALOR FRETE (BFRETE)]);sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);0)
+
+MARGEM HORA HORA:= DIVIDE(sum('FATO VENDAS'[VALOR MARGEM BRUTA (BMB2)]);sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);0)
+
+TICKET MEDIO HORA:= DIVIDE(sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);sum('FATO VENDAS'[QUANTIDADE (BQTE)]);0)
+
+
+FAT PRODUTOS HORA:= CALCULATE(sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);LINHA[LINHA (BLINHA)]<>"Y")
+
+FAT SERVICOS HORA:= CALCULATE(sum('FATO VENDAS'[VALOR NOTA FISCAL (BVRNF)]);LINHA[LINHA (BLINHA)]="Y")
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+  SELECT
+  ([VALOR NOTA FISCAL (BVRNF)])
+FROM
+  [VW_FATO_VENDAS]
+WHERE
+  ([VALOR NOTA FISCAL (BVRNF)]) = 'Y'
+
+
+
+  --somar valor de uma coluna --
+
+  SELECT SUM ([VALOR NOTA FISCAL (BVRNF)])
+FROM VW_FATO_VENDAS
+
+--------------------------------------------
+
+-- SABER QUANTAS LINHAS FOI AFETADA --
+exec sp_spaceused 'dbo.tmpvm'
+
+sp_spaceused 'dbo.tmpvm'
+
+
+-- VERIFICAR AS EXCUÇÃO FEITAS NO BANCO --
+exec sp_WhoIsActive
+
+--------------------------------------------
+
+-- INFORMANDO O SCHEMA E A TABELA + (FN +ALT F1) MOSTRA OS VALORES E CAMPOS DA TABELA.
+
+[FAT].[BFS_VENDAS] 
+
+
+--------------------------------------------
+
+--SOMAR O VALOR DO CAMPO 
+
+SELECT SUM ([VALOR NOTA FISCAL (BVRNF)]) 
+FROM VW_FATO_VENDAS
+WHERE LEFT ([DATA DA VENDA (BDT)],4) = 2019
+
+
+-------------------------------------------
+
+--SOMAR AS QUANTIDADE DE UMA COLUNA ENTRE UMA DATA E OUTRA --
+
+SELECT SUM ([APP_NU_VISUALIZADOS]) 
+FROM FAT.BFS_APPVENDEDOR
+WHERE [CAL_DA_ID] BETWEEN '20191230' AND '20200105'
+
+
+-------------------------------------------
+
+-- VERIFICAR TODAS AS CARGAS SE RODOU COM SUCESSO OU ERRO --
+
+select * from adm.CONTROLE_CARGA
+where data_carga_inicio >= '2020-01-27' and data_carga_inicio < '2020-01-28'
+and tabela LIKE '%VENDAS%'
+and status_carga = 'erro'
+ORDER BY data_carga_inicio DESC
+
+
+-------------------------------------------
+
+
+select * from adm.CONTROLE_CARGA
+where data_carga_inicio >= '2020-01-28' and data_carga_inicio < '2020-01-29'
+and tabela LIKE '%VENDAS%'
+--and status_carga = 'erro'
+ORDER BY data_carga_inicio DESC
+
+
+
+ --SELECT * FROM ADM.CONTROLE_CARGA WHERE data_carga_inicio >= '2020-01-06' and data_carga_inicio < '2020-01-07' AND STATUS_CARGA = 'EM ANDAMENTO'
+
+-- DELETE FROM ADM.CONTROLE_CARGA WHERE data_carga_inicio >= '2020-01-06' and data_carga_inicio < '2020-01-07' AND STATUS_CARGA = 'EM ANDAMENTO'
+
+select top 10 * 
+from VW_DIM_LINHA 
+where [LINHA (BLINHA)] = 'Y'
+
+
+SELECT TOP 10 *
+FROM VW_FATO_VENDAS_HORA
+
+
+SELECT SUM ([VALOR NOTA FISCAL (BVRNF)])
+FROM VW_FATO_VENDAS_HORA
+
+
+SELECT TOP 1 * FROM FAT.FAT_ROF_DRE_ORC_REL
+
+SELECT TOP 2 * FROM DIM.DIM_CLIENTE
+
+SELECT DISTINCT
+    DAT_NASCIMENTO  
+FROM
+  DIM.DIM_PERIODO
+--WHERE
+  --DAT_PROCESSAMENTO < '1900-01-01'
+  ORDER BY 1 
+
+
+  SELECT TOP 10 * FROM [FAT].[FAT_LANCAMENTO]
+
+  SELECT TOP 10 * FROM DIM.DIM_PERIODO
+
+  SELECT * FROM [VW_FATO_VENDAS]
+  WHERE ([VALOR NOTA FISCAL (BVRNF)])
+
+
+  SELECT
+  ([VALOR NOTA FISCAL (BVRNF)])
+FROM
+  [VW_FATO_VENDAS]
+WHERE
+  ([LINHA (BLINHA)]) = 'Y'
+
+
+select distinct [LINHA (BLINHA)]
+from vw_dim_linha
+where left( [LINHA (BLINHA)], 1) = 'y'
+
+
+select top 10 * from  [FAT].[FAT_ROF_DRE_ORC_REL]
+
+select top 10 * from DIM.DIM_CENARIO_VENDA
+
+select top 10 * from DIM.DIM_MEIO_PAGAMENTO
+
+select * from DIM.DIM_HIERARQUIA_DRE
+
+SELECT TOP 10 * FROM DIM.DIM_RUA_ESTOQUE
+
+SELECT TOP 10 * FROM DIM.DIM_TIPO_ESTOQUE
+
+select top 10 * from [STG].[GAN_VMBASE]
+
+SELECT TOP 10 * FROM STG.FAMILIA_PIRAMIDE
+
+
+SELECT COUNT (*)
+FROM FAT.FAT_ROF_DRE
+WHERE YEAR(DAT_PROCESSAMENTO) >=2020 AND YEAR(DAT_PROCESSAMENTO) < 2021
+
+SELECT COUNT(*) FROM FAT.FAT_ROF_DRE
+
+
+-- TRAZER APENAS A COLUNA ABAIXO NÃO TENHA NULO --
+SELECT TOP 10 BEMP FROM [STG].[GAN_TMPVM]
+WHERE BEMP IS NOT NULL
+
+
+SELECT TOP 10 
+BEMP,
+BLJP,
+BLJA,
+BGN,
+FROM [STG].[GAN_TMPVM]
+
+-- MODELO DE ALTERAR NO DE UM CAMPO --
+EXEC sp_rename 'FAT.BFS_VENDAS.VND_ST_BPROM_CPG', 'CPG_SK_FORMAPGTOPROMOCIONAL', 'COLUMN'; 
+
+
+exec sp_spaceused 'FAT.BFS_VENDAS'
+
+
+SELECT SUM ([VALOR NOTA FISCAL (BVRNF)]) 
+FROM VW_FATO_VENDAS
+WHERE LEFT ([DATA DA VENDA (BDT)],4) = 2019
+
+select top 10 * from [FAT].[BFS_APPVENDEDOR]
+
+SELECT SUM ([APP_NU_VISUALIZADOS]) 
+FROM FAT.BFS_APPVENDEDOR
+WHERE [CAL_DA_ID] BETWEEN '20191230' AND '20200105'
+
+
+SELECT TOP 10 * FROM FAT.BFS_VENDAS
+
+
+--------------------------------------------------
+
+SELECT COUNT (*)
+FROM fat.bfs_vendas
+
+exec sp_spaceused 'dbo.tmpvm'
+exec sp_spaceused 'fat.bfs_vendas'
+
+FAT_ROF_DRE_ORC_REL
+
+
+select top 2 * from [FAT].[FAT_ROF_DRE_ORC_REL]
+
+exec sp_spaceused 'STG.FAT_ROF_DRE_ORC_REL'
+exec sp_spaceused 'FAT.FAT_ROF_DRE_ORC_REL'
+
+
+SELECT ([VALOR NOTA FISCAL (BVRNF)]
+FROM FAT.BFS_VENDAS
+WHERE [RATEIO_PROP (RATEIO_PROP)
+
+
+SELECT SUM ([VALOR NOTA FISCAL (BVRNF)]) 
+FROM VW_FATO_VENDAS
+WHERE LEFT ([DATA DA VENDA (BDT)],4) = 2019
+
+
+--------------------------------------------------
+-- NESTE SELECT ELE TRAZ NA ONDE O CAMPO (MTD) DA TABELA CALENDARIO TEM ALGUM VALOR 'LY-MTD' OU 'MTD' OU 'LM-MTD'
+SELECT
+ ([MTD]) 
+FROM
+  [dbo].[VW_DIM_CALENDARIO]
+WHERE
+ ([MTD]) = 'LY-MTD'
+
+
+ SELECT
+ ([MTD]) 
+FROM
+  [dbo].[VW_DIM_CALENDARIO]
+WHERE
+ ([MTD]) = 'MTD'
+
+  SELECT
+ ([MTD]) 
+FROM
+  [dbo].[VW_DIM_CALENDARIO]
+WHERE
+ ([MTD]) = 'LM-MTD'
+
+
+--CONTAR DUPLICIDADE NA COLUNA
+ SELECT
+ ([ID DATA]), COUNT (*)
+FROM 
+  [dbo].[VW_DIM_CALENDARIO]
+ GROUP BY [ID DATA]
+ HAVING COUNT (*) > 1
+
+
+  SELECT
+ [CODIGO LOJA (TABELA)], COUNT (*)
+FROM 
+  [dbo].[VW_DIM_LOJA]
+ GROUP BY [CODIGO LOJA (TABELA)]
+ HAVING COUNT (*) > 1
+
+ --------------------------
+
+-- MODELO PARA CONTAR DUPLICIDADE ENTRE CAMPO E OUTRO
+ SELECT 
+	CONCAT(CONVERT(VARCHAR, HI.DATA, 112),url_produto) AS SK_RELACAO,
+	BU.DATA AS BU_DATA,
+	COUNT(1)
+FROM 
+	AUX.TBL_PR_HISTORICO_BUSCAPE HI
+LEFT JOIN 
+	[dbo].[VW_PR_IC_BUSCAPE] BU
+ON CONCAT(CONVERT(VARCHAR, HI.data, 112), HI.url_produto ) = CONCAT(CONVERT(VARCHAR, BU.DATA, 112), BU.[URL PRODUTO])
+WHERE BU.DATA IS NOT NULL
+GROUP BY CONCAT(CONVERT(VARCHAR, HI.DATA, 112),url_produto),BU.DATA 
+HAVING COUNT(*) > 1
+--------------------------------------------------------
+
+-- NESTE SELECT ELE VAI CONTAR A QT DE LINHAS NA ONDE NA ESQUERDA DO CAMPO DATA (BDT) TRAZ NO FORMATO ANO,MES,DIA COM 6 DIGITOS DA ESQUERDA >=201912
+
+select count(1) from tmpvm
+where left(convert(varchar, BDT,112), 6) >= 201912
+
+
+--------------------------------------------------------
+
+-- INSERIR DIAS DA SEMANA.
+
+CASE
+		WHEN ()= 1 THEN 'DOMINGO' 
+		WHEN ()= 2 THEN 'SEGUNDA FEIRA' 
+		WHEN ()= 3 THEN 'TERCA FEIRA' 
+		WHEN ()= 4 THEN 'QUARTA FEIRA' 
+		WHEN ()= 5 THEN 'QUINTA FEIRA' 
+		WHEN ()= 6 THEN 'SEXTA FEIRA' 
+		WHEN ()= 7 THEN 'SABADO'  
+		END 
+		AS DESCRICAO_DIA_SEMANA 
+
+		------------------------------------------------
+
+
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	1,	1839455.84);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	2,	1948988.60);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	3,	2946160.64);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	4,	2232047.12);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	5,	1571238.10);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	6,	1251238.59);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	7,	2038979.28);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	8,	2446107.55);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	9,	2216285.64);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	10,	2992204.94);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	11,	5877547.46);
+INSERT INTO AUX.META_PAINEL_O2 (ANO, MES, META)
+VALUES (2019,	12,	3661785.41)
+
+------------------------------------------------
+
+-- INSERIR CAMPO URL_PRODUTO + DATA 
+,CONCAT(CONVERT(VARCHAR, DATA, 112),url_produto) AS SK_RELACAO
+
+
+-----------------------------------------------
+
+	CASE
+		WHEN TAB_DS_ESTADO = 'AC' THEN 'Acre'
+		WHEN TAB_DS_ESTADO = 'AL' THEN 'Alagoas'
+		WHEN TAB_DS_ESTADO = 'AP' THEN 'Amapa' 
+		WHEN TAB_DS_ESTADO = 'AM' THEN 'Amazonas'
+		WHEN TAB_DS_ESTADO = 'BA' THEN 'Bahia'
+		WHEN TAB_DS_ESTADO = 'CE' THEN 'Ceara' 
+		WHEN TAB_DS_ESTADO = 'DF' THEN 'Distrito Federal' 
+		WHEN TAB_DS_ESTADO = 'ES' THEN 'Espirito Santo' 
+		WHEN TAB_DS_ESTADO = 'GO' THEN 'Goias' 
+		WHEN TAB_DS_ESTADO = 'MA' THEN 'Maranhao' 
+		WHEN TAB_DS_ESTADO = 'MT' THEN 'Mato Grosso' 
+		WHEN TAB_DS_ESTADO = 'MS' THEN 'Mato Grosso' 
+		WHEN TAB_DS_ESTADO = 'MG' THEN 'Minas' 
+		WHEN TAB_DS_ESTADO = 'PA' THEN 'Para' 
+		WHEN TAB_DS_ESTADO = 'PB' THEN 'Paraiba' 
+		WHEN TAB_DS_ESTADO = 'PR' THEN 'Parana' 
+		WHEN TAB_DS_ESTADO = 'PE' THEN 'Pernambuco' 
+		WHEN TAB_DS_ESTADO = 'PI' THEN 'Piaui' 
+		WHEN TAB_DS_ESTADO = 'RJ' THEN 'Rio de Janeiro' 
+		WHEN TAB_DS_ESTADO = 'RN' THEN 'Rio Grande do Norte' 
+		WHEN TAB_DS_ESTADO = 'RS' THEN 'Rio Grande do Sul' 
+		WHEN TAB_DS_ESTADO = 'RO' THEN 'Rondonia' 
+		WHEN TAB_DS_ESTADO = 'RR' THEN 'Roraima' 
+		WHEN TAB_DS_ESTADO = 'SC' THEN 'Santa Catarina' 
+		WHEN TAB_DS_ESTADO = 'SP' THEN 'Sao Paulo' 
+		WHEN TAB_DS_ESTADO = 'SE' THEN 'Sergipe' 
+		WHEN TAB_DS_ESTADO = 'TO' THEN 'Tocantins' 
+		END 
+		AS ESTADO
+
+
+		------------------------------------------------
+
+-- TRAZER APENAS 2 CAMPOS DA ESQUERDA DA COLUNA
+
+		LEFT(VND_DS_CLASSE,2) AS 'CLASSE 2 (BCLASSE)'
+
+		-------------------------------------------------
+
+		CREATE VIEW [dbo].[VW_DIM_LOJA]
+AS
+SELECT
+	 TAB_SK_TABELA AS 'SK LOJA'
+	,CASE WHEN TAB_CO_TABELA IS NULL OR UPPER(TAB_CO_TABELA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_CO_TABELA END AS 'CODIGO LOJA (TABELA)'
+	,CASE WHEN TAB_CO_FILIAL IS NULL OR  UPPER(TAB_CO_FILIAL) IN ('', 'NULL')  THEN 'N/A' ELSE TAB_CO_FILIAL END AS 'FILIAL (FILIAL)'
+	,CASE WHEN TAB_DS_CENTRODECUSTO IS NULL OR UPPER(TAB_DS_CENTRODECUSTO) IN ('', 'NULL') THEN 'N/A'ELSE TAB_DS_CENTRODECUSTO END AS 'CENTRO CUSTO (CENTRO DE CUSTO)'
+	,CASE WHEN TAB_DS_PDV IS NULL OR TAB_DS_PDV = '' THEN 'N/A' ELSE TAB_DS_PDV END AS 'PDV (PDV)'
+	,TAB_DS_ESTADO AS 'ESTADO (Estado)'
+	,CASE WHEN TAB_DS_BAUMEDIDA IS NULL OR UPPER(TAB_DS_BAUMEDIDA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_BAUMEDIDA END AS 'BAU MEDIDA (BAU/MEDIDA)'
+	,CASE WHEN TAB_TP_TIPOLOJA IS NULL OR UPPER(TAB_TP_TIPOLOJA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_TP_TIPOLOJA END AS 'TIPO LOJA (TIPO DE LOJA)'
+	,CASE WHEN TAB_DS_CANALI IS NULL OR UPPER(TAB_DS_CANALI) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALI END AS 'CANAL I (CANAL I)'
+	,CASE WHEN TAB_DS_CANALII IS NULL OR UPPER(TAB_DS_CANALII) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALII END AS 'CANAL II (CANAL II)'
+	,CASE WHEN TAB_DS_REGIONALI IS NULL OR UPPER(TAB_DS_REGIONALI) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALI END AS 'REGIONAL I (REGIONAL I)'
+	,CASE WHEN TAB_DS_REGIONALII IS NULL OR UPPER(TAB_DS_REGIONALII) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALII END AS 'REGIONAL II (REGIONAL II)'
+	,CASE WHEN TAB_DS_NOVAREGIAO IS NULL OR UPPER(TAB_DS_NOVAREGIAO) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_NOVAREGIAO END AS 'NOVA REGIAO (NOVA_REGIAO)'
+	,CASE WHEN TAB_DS_REGIONALI1 IS NULL OR UPPER(TAB_DS_REGIONALI1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALI1 END AS 'REGIONAL I1 (REGIONAL I1)'
+	,CASE WHEN TAB_DS_REGIAOLOGISTICA IS NULL OR UPPER(TAB_DS_REGIAOLOGISTICA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIAOLOGISTICA END AS 'REGIAO LOGISTICA (REGIAO LOGISTICA)'
+	,CASE WHEN TAB_DS_MUNICIPIO IS NULL OR UPPER(TAB_DS_MUNICIPIO) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_MUNICIPIO END AS 'MUNICIPIO (MUNICIPIO)'
+	,CASE WHEN TAB_ST_ABERTAFECHADA IS NULL OR UPPER(TAB_ST_ABERTAFECHADA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_ST_ABERTAFECHADA END AS 'ABERTA FECHADA (ABERTA/FECHADA)'
+	,TAB_NU_ANOABERTURA AS 'ANO ABERTURA (ANO DE ABERTURA)'
+	,TAB_NU_MESABERTURA AS 'MES ABERTURA (Mês de Abertura)'
+	,CASE WHEN TAB_CO_LOJA1 IS NULL OR UPPER(TAB_CO_LOJA1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_CO_LOJA1 END AS 'LOJA 1 (TABELA1)'
+	,CASE WHEN TAB_CO_FILIAL1 IS NULL OR UPPER(TAB_CO_FILIAL1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_CO_FILIAL1 END AS 'FILIAL 1 (FILIAL1)'
+	,CASE WHEN PDV_CO_LOJA1 IS NULL OR UPPER(PDV_CO_LOJA1) IN ('', 'NULL') THEN 'N/A' ELSE PDV_CO_LOJA1 END AS 'TABELA PDV (PDV1)'
+	,CASE WHEN TAB_DS_ESTADO1 IS NULL OR UPPER(TAB_DS_ESTADO1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_ESTADO1 END AS 'ESTADO 1 (Estado1)'
+	,CASE WHEN TAB_TP_TIPOLOJA1 IS NULL OR UPPER(TAB_TP_TIPOLOJA1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_TP_TIPOLOJA1 END AS 'TIPO LOJA 1 (TIPO DE LOJA1)'
+	,CASE WHEN TAB_DS_CANALI1 IS NULL OR UPPER(TAB_DS_CANALI1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALI1 END AS 'CANALI I1 (CANAL I1)'
+	,CASE WHEN TAB_DS_CANALII1 IS NULL OR UPPER(TAB_DS_CANALII1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALII1 END AS 'CANAL II1 (CANAL II1)'
+	,CASE WHEN TAB_DS_REGIONALI2 IS NULL OR UPPER(TAB_DS_REGIONALI2) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALI2 END AS 'REGIONAL I2 (REGIONAL I2)'
+	,CASE WHEN TAB_DS_REGIONALII1 IS NULL OR UPPER(TAB_DS_REGIONALII1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALII1 END AS 'REGIONAL II1 (REGIONAL II1)'
+	,CASE WHEN TAB_DS_PDV2 IS NULL OR UPPER(TAB_DS_PDV2) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_PDV2 END AS 'PDV2 (PDV2)'
+	,CASE WHEN TAB_DS_FORMATOGERAL IS NULL OR UPPER(TAB_DS_FORMATOGERAL) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_FORMATOGERAL END AS 'FORMATO GERAL (TABELA_Formato_geral)'
+	,TAB_DT_PROCESSAMENTO AS 'DATA PROCESSAMENTO REGISTRO'
+	,CASE
+		WHEN TAB_DS_ESTADO = 'AC' THEN 'Acre'
+		WHEN TAB_DS_ESTADO = 'AL' THEN 'Alagoas'
+		WHEN TAB_DS_ESTADO = 'AP' THEN 'Amapa' 
+		WHEN TAB_DS_ESTADO = 'AM' THEN 'Amazonas'
+		WHEN TAB_DS_ESTADO = 'BA' THEN 'Bahia'
+		WHEN TAB_DS_ESTADO = 'CE' THEN 'Ceara' 
+		WHEN TAB_DS_ESTADO = 'DF' THEN 'Distrito Federal' 
+		WHEN TAB_DS_ESTADO = 'ES' THEN 'Espirito Santo' 
+		WHEN TAB_DS_ESTADO = 'GO' THEN 'Goias' 
+		WHEN TAB_DS_ESTADO = 'MA' THEN 'Maranhao' 
+		WHEN TAB_DS_ESTADO = 'MT' THEN 'Mato Grosso' 
+		WHEN TAB_DS_ESTADO = 'MS' THEN 'Mato Grosso' 
+		WHEN TAB_DS_ESTADO = 'MG' THEN 'Minas' 
+		WHEN TAB_DS_ESTADO = 'PA' THEN 'Para' 
+		WHEN TAB_DS_ESTADO = 'PB' THEN 'Paraiba' 
+		WHEN TAB_DS_ESTADO = 'PR' THEN 'Parana' 
+		WHEN TAB_DS_ESTADO = 'PE' THEN 'Pernambuco' 
+		WHEN TAB_DS_ESTADO = 'PI' THEN 'Piaui' 
+		WHEN TAB_DS_ESTADO = 'RJ' THEN 'Rio de Janeiro' 
+		WHEN TAB_DS_ESTADO = 'RN' THEN 'Rio Grande do Norte' 
+		WHEN TAB_DS_ESTADO = 'RS' THEN 'Rio Grande do Sul' 
+		WHEN TAB_DS_ESTADO = 'RO' THEN 'Rondonia' 
+		WHEN TAB_DS_ESTADO = 'RR' THEN 'Roraima' 
+		WHEN TAB_DS_ESTADO = 'SC' THEN 'Santa Catarina' 
+		WHEN TAB_DS_ESTADO = 'SP' THEN 'Sao Paulo' 
+		WHEN TAB_DS_ESTADO = 'SE' THEN 'Sergipe' 
+		WHEN TAB_DS_ESTADO = 'TO' THEN 'Tocantins' 
+		END 
+		AS ESTADO
+	 FROM DIM.BFS_LOJA
+GO
+
+
+------------------------------------------------------------------------
+
+
+CREATE VIEW [dbo].[VW_PR_IC_BUSCAPE] 
+AS 
+SELECT 
+	 CONVERT(INT,CONVERT(VARCHAR, BU.DATA, 112)) AS 'DATA'  
+	,COALESCE(PROD.PRD_SK_PRODUTO, -1) AS 'SK PRODUTO'
+	,COALESCE(LI.LIN_SK_LINHA, -1) AS 'SK LINHA'
+	,BU.URL_PRODUTO AS 'URL PRODUTO'
+	,BU.DESCRICAO AS 'DESCRICAO'
+	,BU.SKU AS 'SKU'
+	,ISNULL(BU.MEDIA_CONCORRENCIA, 0) AS 'MEDIA CONCORRENCIA' 
+	,ISNULL(BU.MIN_CONCORRENCIA, 0) AS 'MIN CONCORRENCIA' 
+	,ISNULL(BU.MEDIANA_CONCORRENCIA,0) AS 'MEDIANA CONCORRENCIA'
+	,ISNULL(BU.MEDIA_TOP10,0) AS 'MEDIA TOP10'  
+	,ISNULL(BU.MODA_CONCORRENCIA, 0) AS 'MODA CONCORRENCIA'  
+	,ISNULL(BU.DESVPAD_CONCORRENCIA,0) AS 'DESVPAD CONCORRENCIA'  
+	,BU.PRECO_FASTSHOP AS 'PRECO FASTSHOP' 
+	,ISNULL(BU.FAIXA_PRECO_FAST,0) AS 'FAIXA PRECO FAST'
+	,ISNULL(BU.PRECO_PONDERADO,0) AS 'PRECO PONDERADO'
+	,ISNULL(BU.IC_MODA,0) AS 'IC MODA'
+	,ISNULL(BU.IC_MEDIATOP10,0) AS 'IC MEDIA TOP 10'  
+	,ISNULL(BU.BOLETO_FASTSHOP,0) AS 'BOLETO FASTSHOP' 
+FROM	
+	WRK.PR_IC_BUSCAPE BU
+LEFT JOIN 
+	DIM.BFS_PRODUTO PROD
+ON  BU.SKU = PROD.PRD_CO_PRODUTO
+LEFT JOIN	
+	DIM.BFS_LINHA LI
+ON BU.LINHA = LIN_CO_CODIGO
+GO
+
+------------------------------------------------------------------------
+
+
+CREATE VIEW [dbo].[VW_DIM_SUB_LOJA]
+AS
+SELECT
+	 TAB_SK_TABELA AS 'SK LOJA'
+	,CASE WHEN TAB_CO_TABELA IS NULL OR UPPER(TAB_CO_TABELA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_CO_TABELA END AS 'CODIGO LOJA (TABELA)'
+	,CASE WHEN TAB_CO_FILIAL IS NULL OR  UPPER(TAB_CO_FILIAL) IN ('', 'NULL')  THEN 'N/A' ELSE TAB_CO_FILIAL END AS 'FILIAL (FILIAL)'
+	,CASE WHEN TAB_DS_CENTRODECUSTO IS NULL OR UPPER(TAB_DS_CENTRODECUSTO) IN ('', 'NULL') THEN 'N/A'ELSE TAB_DS_CENTRODECUSTO END AS 'CENTRO CUSTO (CENTRO DE CUSTO)'
+	,CASE WHEN TAB_DS_PDV IS NULL OR TAB_DS_PDV = '' THEN 'N/A' ELSE TAB_DS_PDV END AS 'PDV (PDV)'
+	,TAB_DS_ESTADO AS 'ESTADO (Estado)'
+	,CASE WHEN TAB_DS_BAUMEDIDA IS NULL OR UPPER(TAB_DS_BAUMEDIDA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_BAUMEDIDA END AS 'BAU MEDIDA (BAU/MEDIDA)'
+	,CASE WHEN TAB_TP_TIPOLOJA IS NULL OR UPPER(TAB_TP_TIPOLOJA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_TP_TIPOLOJA END AS 'TIPO LOJA (TIPO DE LOJA)'
+	,CASE WHEN TAB_DS_CANALI IS NULL OR UPPER(TAB_DS_CANALI) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALI END AS 'CANAL I (CANAL I)'
+	,CASE WHEN TAB_DS_CANALII IS NULL OR UPPER(TAB_DS_CANALII) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALII END AS 'CANAL II (CANAL II)'
+	,CASE WHEN TAB_DS_REGIONALI IS NULL OR UPPER(TAB_DS_REGIONALI) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALI END AS 'REGIONAL I (REGIONAL I)'
+	,CASE WHEN TAB_DS_REGIONALII IS NULL OR UPPER(TAB_DS_REGIONALII) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALII END AS 'REGIONAL II (REGIONAL II)'
+	,CASE WHEN TAB_DS_NOVAREGIAO IS NULL OR UPPER(TAB_DS_NOVAREGIAO) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_NOVAREGIAO END AS 'NOVA REGIAO (NOVA_REGIAO)'
+	,CASE WHEN TAB_DS_REGIONALI1 IS NULL OR UPPER(TAB_DS_REGIONALI1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALI1 END AS 'REGIONAL I1 (REGIONAL I1)'
+	,CASE WHEN TAB_DS_REGIAOLOGISTICA IS NULL OR UPPER(TAB_DS_REGIAOLOGISTICA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIAOLOGISTICA END AS 'REGIAO LOGISTICA (REGIAO LOGISTICA)'
+	,CASE WHEN TAB_DS_MUNICIPIO IS NULL OR UPPER(TAB_DS_MUNICIPIO) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_MUNICIPIO END AS 'MUNICIPIO (MUNICIPIO)'
+	,CASE WHEN TAB_ST_ABERTAFECHADA IS NULL OR UPPER(TAB_ST_ABERTAFECHADA) IN ('', 'NULL') THEN 'N/A' ELSE TAB_ST_ABERTAFECHADA END AS 'ABERTA FECHADA (ABERTA/FECHADA)'
+	,TAB_NU_ANOABERTURA AS 'ANO ABERTURA (ANO DE ABERTURA)'
+	,TAB_NU_MESABERTURA AS 'MES ABERTURA (Mês de Abertura)'
+	,CASE WHEN TAB_CO_LOJA1 IS NULL OR UPPER(TAB_CO_LOJA1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_CO_LOJA1 END AS 'LOJA 1 (TABELA1)'
+	,CASE WHEN TAB_CO_FILIAL1 IS NULL OR UPPER(TAB_CO_FILIAL1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_CO_FILIAL1 END AS 'FILIAL 1 (FILIAL1)'
+	,CASE WHEN PDV_CO_LOJA1 IS NULL OR UPPER(PDV_CO_LOJA1) IN ('', 'NULL') THEN 'N/A' ELSE PDV_CO_LOJA1 END AS 'TABELA PDV (PDV1)'
+	,CASE WHEN TAB_DS_ESTADO1 IS NULL OR UPPER(TAB_DS_ESTADO1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_ESTADO1 END AS 'ESTADO 1 (Estado1)'
+	,CASE WHEN TAB_TP_TIPOLOJA1 IS NULL OR UPPER(TAB_TP_TIPOLOJA1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_TP_TIPOLOJA1 END AS 'TIPO LOJA 1 (TIPO DE LOJA1)'
+	,CASE WHEN TAB_DS_CANALI1 IS NULL OR UPPER(TAB_DS_CANALI1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALI1 END AS 'CANALI I1 (CANAL I1)'
+	,CASE WHEN TAB_DS_CANALII1 IS NULL OR UPPER(TAB_DS_CANALII1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_CANALII1 END AS 'CANAL II1 (CANAL II1)'
+	,CASE WHEN TAB_DS_REGIONALI2 IS NULL OR UPPER(TAB_DS_REGIONALI2) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALI2 END AS 'REGIONAL I2 (REGIONAL I2)'
+	,CASE WHEN TAB_DS_REGIONALII1 IS NULL OR UPPER(TAB_DS_REGIONALII1) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_REGIONALII1 END AS 'REGIONAL II1 (REGIONAL II1)'
+	,CASE WHEN TAB_DS_PDV2 IS NULL OR UPPER(TAB_DS_PDV2) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_PDV2 END AS 'PDV2 (PDV2)'
+	,CASE WHEN TAB_DS_FORMATOGERAL IS NULL OR UPPER(TAB_DS_FORMATOGERAL) IN ('', 'NULL') THEN 'N/A' ELSE TAB_DS_FORMATOGERAL END AS 'FORMATO GERAL (TABELA_Formato_geral)'
+	,TAB_DT_PROCESSAMENTO AS 'DATA PROCESSAMENTO REGISTRO'
+	,CASE
+		WHEN TAB_DS_ESTADO = 'AC' THEN 'Acre'
+		WHEN TAB_DS_ESTADO = 'AL' THEN 'Alagoas'
+		WHEN TAB_DS_ESTADO = 'AP' THEN 'Amapa' 
+		WHEN TAB_DS_ESTADO = 'AM' THEN 'Amazonas'
+		WHEN TAB_DS_ESTADO = 'BA' THEN 'Bahia'
+		WHEN TAB_DS_ESTADO = 'CE' THEN 'Ceara' 
+		WHEN TAB_DS_ESTADO = 'DF' THEN 'Distrito Federal' 
+		WHEN TAB_DS_ESTADO = 'ES' THEN 'Espirito Santo' 
+		WHEN TAB_DS_ESTADO = 'GO' THEN 'Goias' 
+		WHEN TAB_DS_ESTADO = 'MA' THEN 'Maranhao' 
+		WHEN TAB_DS_ESTADO = 'MT' THEN 'Mato Grosso' 
+		WHEN TAB_DS_ESTADO = 'MS' THEN 'Mato Grosso' 
+		WHEN TAB_DS_ESTADO = 'MG' THEN 'Minas' 
+		WHEN TAB_DS_ESTADO = 'PA' THEN 'Para' 
+		WHEN TAB_DS_ESTADO = 'PB' THEN 'Paraiba' 
+		WHEN TAB_DS_ESTADO = 'PR' THEN 'Parana' 
+		WHEN TAB_DS_ESTADO = 'PE' THEN 'Pernambuco' 
+		WHEN TAB_DS_ESTADO = 'PI' THEN 'Piaui' 
+		WHEN TAB_DS_ESTADO = 'RJ' THEN 'Rio de Janeiro' 
+		WHEN TAB_DS_ESTADO = 'RN' THEN 'Rio Grande do Norte' 
+		WHEN TAB_DS_ESTADO = 'RS' THEN 'Rio Grande do Sul' 
+		WHEN TAB_DS_ESTADO = 'RO' THEN 'Rondonia' 
+		WHEN TAB_DS_ESTADO = 'RR' THEN 'Roraima' 
+		WHEN TAB_DS_ESTADO = 'SC' THEN 'Santa Catarina' 
+		WHEN TAB_DS_ESTADO = 'SP' THEN 'Sao Paulo' 
+		WHEN TAB_DS_ESTADO = 'SE' THEN 'Sergipe' 
+		WHEN TAB_DS_ESTADO = 'TO' THEN 'Tocantins' 
+		END 
+		AS ESTADO
+     	 
+	 FROM DIM.BFS_LOJA
+	 WHERE TAB_CO_TABELA <> '999'
+GO
+
+---------------------------------------------------------------
+
+
+exec sp_whoisactive
+
+kill 132
+
+----------------------------------------------------------------
+
+partição ESTOQUE
+
+
+PARTICAO_DIA
+
+SELECT  * 
+FROM VW_FATO_ESTOQUE
+WHERE [SK REFERENCIA ESTOQUE] > CONVERT(VARCHAR(10),DATEADD(DD,-1,GETDATE()), 112)
+
+----------------------------------
+
+----------------------------------------------------------------------
+
+
+PARTICAO_MENOR_2020
+
+SELECT *
+FROM VW_FATO_ESTOQUE
+WHERE [SK REFERENCIA ESTOQUE] <= 20200214
+
+------------------------------------------------------------------------
+
+
+PARTICAO_2020
+
+SELECT *
+FROM VW_FATO_ESTOQUE
+WHERE [SK REFERENCIA ESTOQUE] > 20200214 AND [SK REFERENCIA ESTOQUE] <= CONVERT(VARCHAR(10),DATEADD(DD,-1,GETDATE()), 112)
+
+
+------------------------------------------------------------------------
+
+
+  SELECT
+ [SK REFERENCIA ESTOQUE], COUNT (*)
+FROM 
+  [dbo].VW_FATO_ESTOQUE
+ GROUP BY [SK REFERENCIA ESTOQUE]
+ ORDER BY [SK REFERENCIA ESTOQUE]
+
+ -----------------------------------------------------------------------
+
+ 28/02/2020
+
+ select top 10 * from dim.bfs_linha
+
+select COUNT(*) 
+from [VW_FATO_VENDAS_HORA] as v
+left join dim.bfs_linha as l
+on v.[SK LINHA] = l.LIN_SK_LINHA
+where l.LIN_CO_CODIGO = 'LA'
+
+
+-- %LIBERAÇÕES:= DIVIDE(SUM('FATO VENDAS HORA'[AUTORIZADOR]);COUNT('FATO VENDAS HORA'[NUMERO NOTA FISCAL (BNF)]);0) 
+
+
+-- = SWITCH ('FATO VENDAS HORA'[RESPONSAVEL DESCONTO (BTX_AUTOR)];"FARAGAO";1; "JEANLSS";1; "MCARMO";1; "SEABRA";1; "CESARAH";1;"EDUARDOA";1; 0)
+
+
+select sum(case when v.[RESPONSAVEL DESCONTO (BTX_AUTOR)] in ('FARAGAO', 'JEANLSS','MCARMO','SEABRA','CESARAH','EDUARDOA') then 1 else 0 end  ) as soma, COUNT(*) as  total_registros
+from [VW_FATO_VENDAS_HORA] as v
+left join dim.bfs_PRODUTO as p
+on v.[SK produto] = p.PRD_SK_PRODUTO
+left join dim.bfs_linha as l
+on p.LIN_SK_LINHA = l.LIN_SK_LINHA 
+where l.LIN_CO_CODIGO = 'LA'
+
+
+
+Select 
+ BDT, BNF as Nota_Fiscal, BSERIE as Serie, BFIL as Filial, BCOD as SKU, BLINHA as Linha, BVEND as Vendedor, BQTE as Quantidade, BVRNF as Faturamento,
+		BFRETE as Frete, BCPG as Cond_Pgto, LEFT(BCLASSE, 2) as Subtabela, BMB2 as Rentabilidade, BRUA as Rua,BTX_AUTOR,
+Case
+	When  BTX_AUTOR = 'FARAGAO' OR BTX_AUTOR = 'JEANLSS' OR BTX_AUTOR = 'MCARMO' OR BTX_AUTOR = 'SEABRA' OR BTX_AUTOR = 'CESARAH'
+		  OR BTX_AUTOR = 'CESARAH' OR BTX_AUTOR = 'EDUARDOA' THEN 1
+	Else 0
+END AS 'Autorizador'
+FROM stg.gan_vmbase
+where Case
+	When  BTX_AUTOR = 'FARAGAO' OR BTX_AUTOR = 'JEANLSS' OR BTX_AUTOR = 'MCARMO' OR BTX_AUTOR = 'SEABRA' OR BTX_AUTOR = 'CESARAH'
+		  OR BTX_AUTOR = 'CESARAH' OR BTX_AUTOR = 'EDUARDOA' THEN 1
+	Else 0
+END = 1
+and blinha = 'LA'
+;
+
+
+select * from stg.GAN_TMPMAT
+where mfab + mcod in (
+
+'999KSTHS12T5BC'
+,'991QQCI078BBBC'
+,'999KSTH18P5VBC'
+,'999KSTK09P5VBC'
+,'99LGS4NQ12JA3W'
+,'99LGS4UQ12JA3W'
+,'99LGS4NW09W5BC'
+,'99LGS4UW09W5BC'
+,'991QQCI075BBBC'
+,'SG24MVSPBGMN2'
+,'SG24MVSPBGMX2'
+,'99COCCN07DBBNA'
+,'999KSTH09P5VBC'
+,'COCCN07DBBNA'
+
+)
+
+select * from dim.bfs_produto 
+where PRD_CO_PRODUTO in 
+(
+
+'999KSTHS12T5BC'
+,'991QQCI078BBBC'
+,'999KSTH18P5VBC'
+,'999KSTK09P5VBC'
+,'99LGS4NQ12JA3W'
+,'99LGS4UQ12JA3W'
+,'99LGS4NW09W5BC'
+,'99LGS4UW09W5BC'
+,'991QQCI075BBBC'
+,'SG24MVSPBGMN2'
+,'SG24MVSPBGMX2'
+,'99COCCN07DBBNA'
+,'999KSTH09P5VBC'
+
+)
+
+
+
+----------------------------------------------------------------
+-- tabela de parametros
+----------------------------------------------------------------
+
+
+CREATE TABLE ADM.PARAMETROS_TEMPO_EXECUCAO(
+	PROCESSO VARCHAR(30),
+	TABELA VARCHAR(50),
+	HORARIO_CHEGADA_ARQUIVO TIME,
+	TEMPO_MEDIO_EXECUCAO TIME
+
+)
+
+--TRUNCATE TABLE ADM.PARAMETROS_TEMPO_EXECUCAO
+
+INSERT INTO ADM.PARAMETROS_TEMPO_EXECUCAO (PROCESSO, TABELA, HORARIO_CHEGADA_ARQUIVO, TEMPO_MEDIO_EXECUCAO)
+VALUES ('CARGA STAGE', 'STG.GAN_TMPTROCA', '20:30:00', '00:02:00')
+
+
+
+-----------------------------------------------------------------------------------------------------
+-- QUERY ERROS
+-----------------------------------------------------------------------------------------------------
+WITH BI_CORP_ERROS
+AS
+(
+	SELECT 
+		*, 
+		ROW_NUMBER() OVER(PARTITION BY PROCESSO, TABELA ORDER BY DATA_CARGA_INICIO DESC) as ROWNUMBER
+	FROM ADM.CONTROLE_CARGA 
+	--WHERE DATA_CARGA_INICIO >= CONVERT(VARCHAR(10), GETDATE(), 23) 
+	WHERE DATA_CARGA_INICIO >= convert(varchar(10), dateadd(hour, -3, getdate() ), 23)
+	AND STATUS_CARGA = 'ERRO'
+	
+)
+
+SELECT 
+	PROCESSO, 
+	TABELA,
+	DATA_CARGA_INICIO,
+	DATA_CARGA_FIM,
+	STATUS_CARGA
+INTO #ERRO_PROCESSAMENTO
+FROM 
+	BI_CORP_ERROS
+WHERE
+	ROWNUMBER = 1 
+	AND (ALERTA_ERRO_PROCESSO IS NULL OR ALERTA_ERRO_PROCESSO = 0)
+
+-- ATUALIZANDO FLAG DE ALERTA
+
+MERGE ADM.CONTROLE_CARGA AS target  
+	USING (
+	SELECT 
+		PROCESSO,
+		TABELA,
+		DATA_CARGA_INICIO,
+		STATUS_CARGA,
+		ALERTA_ERRO_PROCESSO
+	FROM #ERRO_PROCESSAMENTO
+	) AS source 
+	ON (target.PROCESSO = source.PROCESSO AND target.TABELA = source.TABELA AND target.DATA_CARGA_INICIO = source.DATA_CARGA_INICIO)  
+	WHEN MATCHED THEN
+		UPDATE SET	TARGET.ALERTA_ERRO_PROCESSO = 1;
+
+
+SELECT * FROM #ERRO_PROCESSAMENTO 
+
+
+-----------------------------------------------------------------------------------------------------
+-- QUERY DEMORA NA CARGA
+-----------------------------------------------------------------------------------------------------
+WITH BI_CORP_EM_ANDAMENTO
+AS
+(
+	SELECT 
+		*, 
+		ROW_NUMBER() OVER(PARTITION BY PROCESSO, TABELA ORDER BY DATA_CARGA_INICIO DESC) as ROWNUMBER
+	FROM ADM.CONTROLE_CARGA 
+	--WHERE DATA_CARGA_INICIO >= CONVERT(VARCHAR(10), GETDATE(), 23) 
+	WHERE DATA_CARGA_INICIO >= convert(varchar(10), dateadd(hour, -3, getdate() ), 23)
+	AND STATUS_CARGA = 'EM ANDAMENTO'
+)
+
+SELECT 
+	base.PROCESSO, 
+	base.TABELA,
+	base.DATA_CARGA_INICIO,
+	base.DATA_CARGA_FIM,
+	base.TEMPO_TOTAL_CARGA,
+	base.STATUS_CARGA, 
+	par.HORARIO_CHEGADA_ARQUIVO,
+	par.TEMPO_MEDIO_EXECUCAO
+--INTO #ATRASO_PROCESSAMENTO
+FROM ADM.PARAMETROS_TEMPO_EXECUCAO par
+LEFT JOIN BI_CORP_EM_ANDAMENTO base
+ON par.TABELA = base.TABELA
+WHERE
+	ROWNUMBER = 1 
+AND (base.ALERTA_ATRASO_PROCESSO IS NULL OR base.ALERTA_ATRASO_PROCESSO = 0)
+AND base.DATA_CARGA_FIM is null 
+AND dateadd(hour, -3, getdate() ) > cast(CONCAT(CONVERT(VARCHAR(10), dateadd(hour, -3, getdate() ), 23), ' ', replace(cast(par.TEMPO_MEDIO_EXECUCAO as varchar(max)), '.0000000','' ))  + CAST('00:10:00' AS DATETIME) as datetime ) 
+
+
+
+-- ATUALIZANDO FLAG DE ALERTA
+
+MERGE ADM.CONTROLE_CARGA AS target  
+	USING (
+	SELECT 
+		PROCESSO,
+		TABELA,
+		DATA_CARGA_INICIO,
+		TEMPO_TOTAL_CARGA,
+		STATUS_CARGA
+		ALERTA_ATRASO_PROCESSO
+	FROM #ATRASO_PROCESSAMENTO
+	) AS source 
+	ON (target.PROCESSO = source.PROCESSO AND target.TABELA = source.TABELA AND target.DATA_CARGA_INICIO = source.DATA_CARGA_INICIO)  
+	WHEN MATCHED THEN
+		UPDATE SET	TARGET.ALERTA_ATRASO_PROCESSO = 1;
+
+
+SELECT * FROM #ATRASO_PROCESSAMENTO 
+
+
+-----------------------------------------------------------------------------------------------------
+-- QUERY ATRASO INICIO PROCESSAMENTO
+-----------------------------------------------------------------------------------------------------
+
+
+WITH BI_CORP_ATRASO_INICIO
+AS
+(
+	SELECT 
+		*
+	FROM ADM.CONTROLE_CARGA 
+	--WHERE DATA_CARGA_INICIO >= CONVERT(VARCHAR(10), GETDATE(), 23) 
+	WHERE DATA_CARGA_INICIO >= convert(varchar(10), dateadd(hour, -3, getdate() ), 23)
+)
+
+SELECT 
+	base.PROCESSO, 
+	base.TABELA,
+	base.DATA_CARGA_INICIO,
+	base.DATA_CARGA_FIM,
+	base.TEMPO_TOTAL_CARGA,
+	base.STATUS_CARGA, 
+	par.HORARIO_CHEGADA_ARQUIVO,
+	par.TEMPO_MEDIO_EXECUCAO
+FROM ADM.PARAMETROS_TEMPO_EXECUCAO par
+LEFT JOIN BI_CORP_ATRASO_INICIO base
+ON par.TABELA = base.TABELA
+WHERE
+	base.PROCESSO IS NULL
+	AND dateadd(hour, -3, getdate() )  > CAST(CONCAT( CONVERT(VARCHAR(10), dateadd(hour, -3, getdate() ), 23) ,' ', CAST(HORARIO_CHEGADA_ARQUIVO AS VARCHAR(10))) AS datetime) + CAST('00:10:00' AS DATETIME)
+
+
+
+PRC_SEL_ALERTA_ATRASO_INICIO
+PRC_SEL_ALERTA_ATRASO_EXECUCAO
+PRC_SEL_ALERTA_ERRO
+
+
+
+CREATE TABLE [AUX].[TBL_META_DIARIZADA_O2]
+(
+	[PARCEIRO] [NVARCHAR](255) NULL,
+	[DATA] [DATETIME] NULL,
+	[MÊS] [FLOAT] NULL,
+	[ANO] [FLOAT] NULL,
+	[META] [MONEY] NULL,
+	[DIAS_MES] [FLOAT] NULL
+	) ON [PRIMARY]
+GO
+
+
+
+	CREATE TABLE [AUX].[VENDASMKTPLACE]
+(
+	[RECEIPT_ID] [INT] NOT NULL,
+	[DISP_ID] [VARCHAR](15) NOT NULL,
+	[DATE_ENTERED] [DATETIME2](3) NOT NULL,
+	[IDPARTNERMARKETPLACE] [VARCHAR](30) NULL,
+	[NAME] [VARCHAR](60) NOT NULL,
+	[STATUS] [INT] NOT NULL,
+	[BASE_DESCR] [VARCHAR](20) NOT NULL,
+	[TOTAL] [FLOAT] NULL,
+	[SHIP_TOTAL] [FLOAT] NULL,
+	[VLCOMISSAOMARKETPLACE] [FLOAT] NULL,
+	[PAY_METHOD_ID] [INT] NOT NULL,
+	[CCARD_TYPE] [VARCHAR](50) NOT NULL,
+	[RECEIPT_TYPE] [VARCHAR](20) NULL,
+	[PARCELS_NUMBER] [INT] NOT NULL,
+	[PARCELS_VALUE] [FLOAT] NULL,
+	[SKU] [VARCHAR](50) NOT NULL,
+	[PRODUCT_NAME] [VARCHAR](600) NULL,
+	[ADJUSTED_PRICE] [FLOAT] NULL,
+	[ATUALIZADO] [DATETIME] NULL,
+	[IDPRICETABLE] [CHAR](2) NULL
+	)
+	ON [PRIMARY]
+GO
+
+
+
+CREATE VIEW [dbo].[VW_MKTPLACE] 
+AS 
+SELECT
+	COALESCE(LOJA.TAB_SK_TABELA, -1) AS 'SK LOJA' 
+	,CONVERT(INT, MK.RECEIPT_ID) AS 'RECEIPT ID'
+	,CONVERT(SMALLDATETIME, MK.DATE_ENTERED) AS 'DATE ENTERED'
+	,CONVERT(INT, CONVERT(VARCHAR, convert(smalldatetime, MK.DATE_ENTERED), 112)) AS 'ID DATE ENTERED'
+	,MK.IDPARTNERMARKETPLACE AS'IDPARTNERMARKETPLACE'
+	,MK.NAME AS'NAME'
+	,CONVERT(INT,MK.STATUS) AS'STATUS'
+	,MK.BASE_DESCR AS'BASE DESCR'
+	,CONVERT(DECIMAL(22,2), MK.TOTAL) AS'TOTAL'
+	,CONVERT(DECIMAL(22,2), MK.SHIP_TOTAL) AS'SHIP TOTAL'
+	,CONVERT(DECIMAL(22,2), MK.VLCOMISSAOMARKETPLACE) AS'VLCOMISSAOMARKETPLACE'
+	,CONVERT(INT, MK.PAY_METHOD_ID) AS'PAY METHOD_ID'
+	,MK.CCARD_TYPE AS'CCARD TYPE'
+	,MK.RECEIPT_TYPE AS'RECEIPT TYPE'
+	,CONVERT(INT,MK.PARCELS_NUMBER) AS'PARCELS NUMBER'
+	,CONVERT(DECIMAL(22,2),MK.PARCELS_VALUE) AS'PARCELS VALUE'
+	,CONVERT(INT,SKU) AS 'SKU'
+	,MK.PRODUCT_NAME AS'PRODUCT NAME'
+	,CONVERT(DECIMAL(22,2),MK.ADJUSTED_PRICE) AS'ADJUSTED PRICE'
+	,CONVERT(SMALLDATETIME, MK.ATUALIZADO) AS'ATUALIZADO'
+	,MK.IDPRICETABLE AS'IDPRICETABLE'
+FROM 
+	STG.MKTPLACE MK
+LEFT JOIN 
+	DIM.BFS_LOJA LOJA	
+ON MK.IDPRICETABLE = LOJA.TAB_CO_TABELA
+GO
+
+
+ALTER PROCEDURE [dbo].[PRC_INS_WRK_MKTPLACE]
+AS
+
+exec PRC_UPD_TABELACONTROLE 'WRK.BFS_DIM_LINHA','insert','em andamento'
+
+BEGIN TRY
+
+
+	TRUNCATE TABLE WRK.BFS_DIM_LINHA
+	
+	INSERT INTO WRK.BFS_DIM_LINHA
+	SELECT
+		NCOD as 'LIN_CO_CODIGO', 
+		NLINHA as 'LIN_DS_LINHA',
+		NUSER as 'LIN_DS_USUARIO',
+		cast(trim(NCONTROL) as float) as 'LIN_NU_CONTROLE',
+		cast((case when isnumeric(NCLUCRO) = 1 then NCLUCRO else NULL end  )  as bigint ) as 'LIN_CO_LUCRO',
+		NSIGLA as 'LIN_DS_SIGLA',
+		BLINHA as 'LIN_DS_BLINHA',
+		dateadd(hour, -3, getdate())  as 'LIN_DT_PROCESSAMENTO',
+		CASE WHEN A.AUX_CO_LINHA IS NULL THEN 1 ELSE 0 END  FLCARTEIRA ,
+		CASE WHEN S.AUX_CO_LINHA IS NULL THEN 1 ELSE 0 END  FLSUPPLY,
+		CASE  
+         WHEN LEFT(BLINHA,1) = 'Y' THEN 'SERVICOS'
+		 WHEN BLINHA = 'N/A' THEN 'N/A'
+		 WHEN BLINHA = '' THEN ''
+         WHEN BLINHA IS NULL THEN 'NULL' 
+		 ELSE 'PRODUTOS'
+		END as 'LIN_ST_PS' 
+	FROM STG.GAN_TMPLINHA  T
+	LEFT JOIN AUX.TBL_AUX_LINHACARTEIRA A
+		ON T.NCOD = A.AUX_CO_LINHA
+	LEFT JOIN AUX.TBL_AUX_LINHASUPPLY S
+		ON T.NCOD = S.AUX_CO_LINHA
+	ORDER BY LIN_CO_CODIGO
+
+	exec PRC_UPD_TABELACONTROLE 'WRK.BFS_DIM_LINHA','update','SUCESSO'
+
+END TRY
+BEGIN CATCH
+
+	exec PRC_UPD_TABELACONTROLE 'WRK.BFS_DIM_LINHA','update','ERRO'
+
+END CATCH
+
+
+
+
+
+
+CREATE VIEW DBO.VW_TBL_META_DIARIZADA_O2
+AS
+SELECT
+	 PARCEIRO AS 'PARCEIRO'
+	,CONVERT(INT,CONVERT(VARCHAR, DATA, 112)) AS 'DATA'
+	,CONVERT(INT, MÊS) AS 'MES'
+	,CONVERT(INT, ANO) AS 'ANO'
+	,CONVERT(DECIMAL (22,2), META) AS 'META'
+	,CONVERT(INT,DIAS_MES) AS 'DIA MES'
+
+FROM AUX.TBL_META_DIARIZADA_O2
+
+
+CREATE VIEW DBO.VW_PIVA
+AS
+SELECT  
+	 CODLINHA AS 'CODLINHA'
+	,UF AS 'UF'
+	,ANO AS 'ANO'
+	,MES AS 'MES'
+	,SEMANA AS 'SEMANA'
+	,CONVERT(INT,CONVERT(VARCHAR, DATAFIM, 112)) AS 'DATAFIM'
+	,CONVERT(INT,CONVERT(VARCHAR, DATAINICIO, 112)) AS 'DATAINICIO'
+	,CODSKU AS 'CODSKU'
+	,CANAL AS 'CANAL'
+	,QUANTIDADE AS 'QUANTIDADE'
+	,TKM AS 'TKM'
+	,FATURAMENTO AS 'FATURAMENTO'
+	,STATUS AS 'STATUS'
+	,SKU AS 'SKU'
+	,CICLOVIDA AS 'CICLOVIDA'
+	,PIRAMIDE AS 'PIRAMIDE'
+	,CATEGORIA AS 'CATEGORIA'
+	,SUBCATEGORIA AS 'SUBCATEGORIA'
+	,FAMILIA AS 'FAMILIA'
+	,MARGEM AS 'MARGEM'
+	,RENTABILIDADE AS 'RENTABILIDADE'
+	,TIPO AS 'TIPO'
+	,PACOTE AS 'PACOTE'
+	,CONVERT(INT,CONVERT(VARCHAR, DATA, 112)) AS 'DATA'
+	,CODFORNECEDOR AS 'CODFORNECEDOR'
+	,MOVIM AS 'MOVIM'
+
+FROM WRK.PIVA	
+
+
+select 
+ 	[TIPO],
+	[SESSOES],
+	[RECEITA],
+	[PEDIDOS] ,
+	[ANO],
+	[MÊS],
+	[DIA],
+	CONVERT(INT,CONVERT(VARCHAR, DATA, 112)) AS 'DATA'
+	from dbo.[TBL_FLUXO_TOTAL_SITE]
+
+
+CREATE TABLE [AUX].[TBL_FLUXO_TOTAL_SITE]
+(
+	[TIPO] [NVARCHAR](255) NULL,
+	[SESSOES] [FLOAT] NULL,
+	[RECEITA] [FLOAT] NULL,
+	[PEDIDOS] [FLOAT] NULL,
+	[ANO] [NVARCHAR](255) NULL,
+	[MÊS] [NVARCHAR](255) NULL,
+	[DIA] [NVARCHAR](255) NULL,
+	[DATA] [DATETIME] NULL
+ ) ON [PRIMARY]
+
+
+
+
+	COLOCAR RELACIONAMENTO COM PRODUTO 
+
+
+
+	[RECEIPT_ID] [int] NOT NULL,
+	[DISP_ID] [varchar](15) NOT NULL,
+	[DATE_ENTERED] [datetime2](3) NOT NULL,
+	[IDPARTNERMARKETPLACE] [varchar](30) NULL,
+	[NAME] [varchar](60) NOT NULL,
+	[STATUS] [int] NOT NULL,
+	[BASE_DESCR] [varchar](20) NOT NULL,
+	[TOTAL] [float] NULL,
+	[SHIP_TOTAL] [float] NULL,
+	[VLCOMISSAOMARKETPLACE] [float] NULL,
+	[PAY_METHOD_ID] [int] NOT NULL,
+	[CCARD_TYPE] [varchar](50) NOT NULL,
+	[RECEIPT_TYPE] [varchar](20) NULL,
+	[PARCELS_NUMBER] [int] NOT NULL,
+	[PARCELS_VALUE] [float] NULL,
+	[SKU] [varchar](50) NOT NULL,
+	[PRODUCT_NAME] [varchar](600) NULL,
+	[ADJUSTED_PRICE] [float] NULL,
+	[ATUALIZADO] [datetime] NULL,
+	[IDPRICETABLE] [char](2) NULL
+
+
+
+CREATE VIEW [dbo].[VW_MKTPLACE] 
+AS 
+SELECT
+	COALESCE(LOJA.TAB_SK_TABELA, -1) AS 'SK LOJA' 
+	,CONVERT(INT, MK.RECEIPT_ID) AS 'RECEIPT ID'
+	,DISP_ID AS 'DISP_ID'
+	,CONVERT(SMALLDATETIME, MK.DATE_ENTERED) AS 'DATE ENTERED'
+	,CONVERT(INT, CONVERT(VARCHAR, convert(smalldatetime, MK.DATE_ENTERED), 112)) AS 'ID DATE ENTERED'
+	,MK.IDPARTNERMARKETPLACE AS'IDPARTNERMARKETPLACE'
+	,MK.NAME AS'NAME'
+	,CONVERT(INT,MK.STATUS) AS'STATUS'
+	,MK.BASE_DESCR AS'BASE DESCR'
+	,CONVERT(DECIMAL(22,2), MK.TOTAL) AS'TOTAL'
+	,CONVERT(DECIMAL(22,2), MK.SHIP_TOTAL) AS'SHIP TOTAL'
+	,CONVERT(DECIMAL(22,2), MK.VLCOMISSAOMARKETPLACE) AS'VLCOMISSAOMARKETPLACE'
+	,CONVERT(INT, MK.PAY_METHOD_ID) AS'PAY METHOD_ID'
+	,MK.CCARD_TYPE AS'CCARD TYPE'
+	,MK.RECEIPT_TYPE AS'RECEIPT TYPE'
+	,CONVERT(INT,MK.PARCELS_NUMBER) AS'PARCELS NUMBER'
+	,CONVERT(DECIMAL(22,2),MK.PARCELS_VALUE) AS'PARCELS VALUE'
+	,CONVERT(INT,SKU) AS 'SKU'
+	,MK.PRODUCT_NAME AS'PRODUCT NAME'
+	,CONVERT(DECIMAL(22,2),MK.ADJUSTED_PRICE) AS'ADJUSTED PRICE'
+	,CONVERT(SMALLDATETIME, MK.ATUALIZADO) AS'ATUALIZADO'
+	,MK.IDPRICETABLE AS'IDPRICETABLE'
+FROM 
+	STG.MKTPLACE MK
+LEFT JOIN 
+	DIM.BFS_LOJA LOJA	
+ON MK.IDPRICETABLE = LOJA.TAB_CO_TABELA
+
+
+GO
+
+
+CREATE VIEW [dbo].[VW_VENDAS_MKTPLACE] 
+AS 
+SELECT
+	COALESCE(LOJA.TAB_SK_TABELA, -1) AS 'SK LOJA' 
+	,CONVERT(INT, MK.RECEIPT_ID) AS 'RECEIPT ID'
+	,DISP_ID AS 'DISP_ID'
+	,CONVERT(SMALLDATETIME, MK.DATE_ENTERED) AS 'DATE ENTERED'
+	,CONVERT(INT, CONVERT(VARCHAR, convert(smalldatetime, MK.DATE_ENTERED), 112)) AS 'ID DATE ENTERED'
+	,MK.IDPARTNERMARKETPLACE AS'IDPARTNERMARKETPLACE'
+	,MK.NAME AS'NAME'
+	,CONVERT(INT,MK.STATUS) AS'STATUS'
+	,MK.BASE_DESCR AS'BASE DESCR'
+	,CONVERT(DECIMAL(22,2), MK.TOTAL) AS'TOTAL'
+	,CONVERT(DECIMAL(22,2), MK.SHIP_TOTAL) AS'SHIP TOTAL'
+	,CONVERT(DECIMAL(22,2), MK.VLCOMISSAOMARKETPLACE) AS'VLCOMISSAOMARKETPLACE'
+	,CONVERT(INT, MK.PAY_METHOD_ID) AS'PAY METHOD_ID'
+	,MK.CCARD_TYPE AS'CCARD TYPE'
+	,MK.RECEIPT_TYPE AS'RECEIPT TYPE'
+	,CONVERT(INT,MK.PARCELS_NUMBER) AS'PARCELS NUMBER'
+	,CONVERT(DECIMAL(22,2),MK.PARCELS_VALUE) AS'PARCELS VALUE'
+	,COALESCE(PROD.PRD_SK_PRODUTO, -1) AS 'SK PRODUTO'
+	,MK.PRODUCT_NAME AS'PRODUCT NAME'
+	,CONVERT(DECIMAL(22,2),MK.ADJUSTED_PRICE) AS'ADJUSTED PRICE'
+	,CONVERT(SMALLDATETIME, MK.ATUALIZADO) AS'ATUALIZADO'
+	,MK.IDPRICETABLE AS'IDPRICETABLE'
+FROM 
+	AUX.VENDASMKTPLACE MK
+LEFT JOIN 
+	DIM.BFS_LOJA LOJA	
+ON MK.IDPRICETABLE = LOJA.TAB_CO_TABELA
+LEFT JOIN 
+	DIM.BFS_PRODUTO PROD
+ON  MK.SKU = PROD.PRD_CO_PRODUTO
+
+
+CREATE VIEW [dbo].[VW_PR_IC_BUSCAPE] 
+AS 
+SELECT
+	 CONVERT(INT,CONVERT(VARCHAR, BU.DATA, 112)) AS 'DATA'  
+	,COALESCE(PROD.PRD_SK_PRODUTO, -1) AS 'SK PRODUTO'
+	,BU.LINHA AS 'LINHA'
+	,BU.URL_PRODUTO AS 'URL_PRODUTO'
+	,BU.DESCRICAO AS 'DESCRICAO'
+	,CONVERT(DECIMAL(22,2), BU.MEDIA_CONCORRENCIA) AS 'MEDIA CONCORRENCIA' 
+	,CONVERT(DECIMAL(22,2), BU.MIN_CONCORRENCIA) AS 'MIN CONCORRENCIA' 
+	,CONVERT(DECIMAL(22,2), BU.MEDIANA_CONCORRENCIA AS 'MEDIANA CONCORRENCIA'
+	,CONVERT(DECIMAL(22,2), BU.MEDIA_TOP10) AS 'MEDIA TOP10'  
+	,CONVERT(DECIMAL(22,2), BU.MODA_CONCORRENCIA) AS 'MODA CONCORRENCIA'  
+	,CONVERT(DECIMAL(22,2), BU.DESVPAD_CONCORRENCIA) AS 'DESVPAD CONCORRENCIA'  
+	,CONVERT(DECIMAL(22,2), BU.PRECO_FASTSHOP) AS 'PRECO FASTSHOP' 
+	,CONVERT(DECIMAL(22,2), BU.FAIXA_PRECO_FAST AS 'FAIXA PRECO FAST'
+	,CONVERT(DECIMAL(22,2), BU.PRECO_PONDERADO) AS 'PRECO PONDERADO'
+	,CONVERT(DECIMAL(22,2), BU.IC_MODA) AS 'IC MODA'
+	,CONVERT(DECIMAL(22,2), BU.IC_MEDIATOP10) AS 'IC MEDIA TOP 10'  
+	,CONVERT(INT,BU.BOLETO_FASTSHOP) AS 'BOLETO FASTSHOP' 
+FROM	
+	WRK.PR_IC_BUSCAPE BU
+LEFT JOIN 
+	DIM.BFS_PRODUTO PROD
+ON  BU.SKU = PROD.PRD_CO_PRODUTO
+
+
+
+
+CREATE TABLE [AUX].[TBL_PR_HISTORICO_BUSCAPE](
+
+CREATE VIEW [dbo].[VW_TBL_PR_HISTORICO_BUSCAPE] 
+AS 
+SELECT
+	 CONVERT(INT,CONVERT(VARCHAR, DATA, 112)) AS 'DATA' 
+	,CATEGORIA AS 'CATEGORIA'
+	,NOME_PRODUTO AS 'NOME PRODUTO' 
+	,NOME_PRODUTO_NORMALIZADO AS 'NOME PRODUTO NORMALIZADO'
+	,BOLETO_A_VISTA AS 'BOLETO A VISTA' --[BIT] <<<<<
+	,PARCELAMENTO AS 'PARCELAMENTO'
+	,ISNULL(PARCELAS,0) AS 'PARCELAS'
+	,ISNULL(VALOR_PARCELAS,0) AS 'VALOR PARCELAS' 
+	,ISNULL(VALOR_PARCELADO,0) AS 'VALORPARCELADO' 
+	,ISNULL(VALOR_A_VISTA,0) AS 'VALOR A VISTA'
+	,SELLER_NAME AS 'SELLER NAME'
+	,URL_PRODUTO AS 'URL PRODUTO'
+	,SKU_NUMBER AS 'SKU NUMBER' 
+FROM 
+	AUX.TBL_PR_HISTORICO_BUSCAPE	
+
+
+	======================================================================================
+
+21/02/2020 >>> INSERINDO TABELAS NO BI_FAST E POPULANDO ATRAVÉS DO DATA FACTORY.
+
+JARVIS 
+
+
+[dbo].[SELLIN_VERBAS_FIXAS]
+
+[dbo].[SELLIN_VERBAS_PRAZOS] ok
+
+[dbo].[SELLIN_VERBAS_VERBAS_TRANSP_AJUSTE]
+
+[dbo].[SELLIN_VERBAS_BONUS_AGRUP]
+
+
+	CREATE TABLE [dbo].[SELLIN_VERBAS_FIXAS]
+(
+	[CONTRATO] [nvarchar](255) NULL,
+	[INICIO_VALIDADE_CONTR] [nvarchar](255) NULL,
+	[FIM_VALIDADE_CONTR] [nvarchar](255) NULL,
+	[TIPO] [nvarchar](255) NULL,
+	[TIPO_VERBA] [nvarchar](255) NULL,
+	[VALOR_VERBA] [float] NULL,
+	[MES_FECHAMENTO] [date] NULL,
+	[COMPETENCIA] [date] NULL,
+	[TIPO_VERBA_N2] [varchar](23) NULL,
+	[OBSERVACAO] [varchar](89) NULL,
+	[CONTA] [int] NULL,
+	[COD_FORN] [nvarchar](255) NULL
+)
+WITH
+(
+	DISTRIBUTION = ROUND_ROBIN,
+	CLUSTERED COLUMNSTORE INDEX
+)
+GO
+
+
+
+CREATE TABLE [dbo].[SELLIN_VERBAS_PRAZOS](
+	[CONTRATO] [nvarchar](255) NULL,
+	[TIPO_VERBA] [nvarchar](255) NULL,
+	[PRAZO_DIA_DO_MES] [int] NULL,
+	[DIA_UTIL] [bit] NULL,
+	[COMP_ANT] [bit] NULL,
+	[DT_INICIO_VALIDADE] [date] NULL,
+	[DT_FIM_VALIDADE] [date] NULL,
+	[CONTA] [int] NULL
+) ON [PRIMARY]
+GO
+
+
+
+CREATE TABLE [dbo].[SELLIN_VERBAS_VERBAS_TRANSP_AJUSTE]
+(
+	[CONTRATO] [nvarchar](257) NULL,
+	[TIPO] [varchar](10) NULL,
+	[LINHA] [nvarchar](255) NULL,
+	[NOME_FANTASIA] [nvarchar](255) NULL,
+	[REF_SELLIN] [nvarchar](255) NULL,
+	[SELLIN_NET] [float] NULL,
+	[SELLIN_DEVOL] [float] NULL,
+	[INICIO_VALIDADE_CONTR] [datetime] NULL,
+	[FIM_VALIDADE_CONTR] [datetime] NULL,
+	[STATUS_CONTRATO] [nvarchar](15) NULL,
+	[COMPETENCIA] [date] NULL,
+	[MES_FECHAMENTO] [date] NULL,
+	[SELLIN_VERBAS] [numeric](38, 6) NULL,
+	[TX_PRAZO_PGTO] [float] NULL,
+	[VALOR_VERBA] [float] NULL,
+	[TIPO_VERBA] [nvarchar](255) NULL,
+	[TIPO_VERBA_N2] [nvarchar](128) NULL,
+	[NUMERO_ND] [float] NULL,
+	[CODIGO_ND_AJUSTADO] [nvarchar](255) NULL,
+	[CONTA] [int] NULL,
+	[STATUS] [nvarchar](14) NULL,
+	[OBSERVACAO] [nvarchar](108) NULL,
+	[DATA_PRAZO_PROTOCOLO] [datetime] NULL
+)
+WITH
+(
+	DISTRIBUTION = ROUND_ROBIN,
+	CLUSTERED COLUMNSTORE INDEX
+)
+GO
+
+
+
+
+CREATE TABLE [dbo].[SELLIN_VERBAS_BONUS_AGRUP]
+(
+	[CONTRATO] [nvarchar](255) NULL,
+	[INICIO_VALIDADE_CONTR] [nvarchar](255) NULL,
+	[FIM_VALIDADE_CONTR] [nvarchar](255) NULL,
+	[COMPETENCIA] [datetime] NULL,
+	[COMPETENCIA BONUS] [datetime] NULL,
+	[MES_FECHAMENTO] [datetime] NULL,
+	[META] [float] NULL,
+	[NIVEL_1] [float] NULL,
+	[%_BONUS_N1] [float] NULL,
+	[NIVEL_2] [float] NULL,
+	[%_BONUS_N2] [float] NULL,
+	[NIVEL_3] [float] NULL,
+	[%_BONUS_N3] [float] NULL,
+	[NIVEL_4] [float] NULL,
+	[%_BONUS_N4] [float] NULL,
+	[META_DRIVER] [varchar](7) NULL,
+	[NIVEL_5] [float] NULL,
+	[%_BONUS_N5] [float] NULL,
+	[TIPO_VERBA] [varchar](23) NULL,
+	[TIPO_VERBA_N2] [varchar](23) NULL,
+	[NIVEL_6] [float] NULL,
+	[%_BONUS_N6] [float] NULL,
+	[CATEGORIA_BONUS] [nvarchar](255) NULL
+)
+WITH
+(
+	DISTRIBUTION = ROUND_ROBIN,
+	CLUSTERED COLUMNSTORE INDEX
+)
+GO
+
+=================================================================
+
+(Auxiliares) BI_FAST
+
+
+CREATE TABLE [AUX].[SELLIN_VERBAS_FIXAS]
+(
+	[CONTRATO] [NVARCHAR](255) NULL,
+	[INICIO_VALIDADE_CONTR] [NVARCHAR](255) NULL,
+	[FIM_VALIDADE_CONTR] [NVARCHAR](255) NULL,
+	[TIPO] [NVARCHAR](255) NULL,
+	[TIPO_VERBA] [NVARCHAR](255) NULL,
+	[VALOR_VERBA] [FLOAT] NULL,
+	[MES_FECHAMENTO] [DATE] NULL,
+	[COMPETENCIA] [DATE] NULL,
+	[TIPO_VERBA_N2] [VARCHAR](23) NULL,
+	[OBSERVACAO] [VARCHAR](89) NULL,
+	[CONTA] [INT] NULL,
+	[COD_FORN] [NVARCHAR](255) NULL
+) ON [PRIMARY]
+GO
+
+
+
+CREATE TABLE [AUX].[SELLIN_VERBAS_PRAZOS](
+	[CONTRATO] [NVARCHAR](255) NULL,
+	[TIPO_VERBA] [NVARCHAR](255) NULL,
+	[PRAZO_DIA_DO_MES] [INT] NULL,
+	[DIA_UTIL] [BIT] NULL,
+	[COMP_ANT] [BIT] NULL,
+	[DT_INICIO_VALIDADE] [DATE] NULL,
+	[DT_FIM_VALIDADE] [DATE] NULL,
+	[CONTA] [INT] NULL
+) ON [PRIMARY]
+GO
+
+
+
+CREATE TABLE [AUX].[SELLIN_VERBAS_VERBAS_TRANSP_AJUSTE]
+(
+	[CONTRATO] [NVARCHAR](257) NULL,
+	[TIPO] [VARCHAR](10) NULL,
+	[LINHA] [NVARCHAR](255) NULL,
+	[NOME_FANTASIA] [NVARCHAR](255) NULL,
+	[REF_SELLIN] [NVARCHAR](255) NULL,
+	[SELLIN_NET] [FLOAT] NULL,
+	[SELLIN_DEVOL] [FLOAT] NULL,
+	[INICIO_VALIDADE_CONTR] [DATETIME] NULL,
+	[FIM_VALIDADE_CONTR] [DATETIME] NULL,
+	[STATUS_CONTRATO] [NVARCHAR](15) NULL,
+	[COMPETENCIA] [DATE] NULL,
+	[MES_FECHAMENTO] [DATE] NULL,
+	[SELLIN_VERBAS] [NUMERIC](38, 6) NULL,
+	[TX_PRAZO_PGTO] [FLOAT] NULL,
+	[VALOR_VERBA] [FLOAT] NULL,
+	[TIPO_VERBA] [NVARCHAR](255) NULL,
+	[TIPO_VERBA_N2] [NVARCHAR](128) NULL,
+	[NUMERO_ND] [FLOAT] NULL,
+	[CODIGO_ND_AJUSTADO] [NVARCHAR](255) NULL,
+	[CONTA] [INT] NULL,
+	[STATUS] [NVARCHAR](14) NULL,
+	[OBSERVACAO] [NVARCHAR](108) NULL,
+	[DATA_PRAZO_PROTOCOLO] [DATETIME] NULL
+) ON [PRIMARY]
+GO
+
+
+
+
+CREATE TABLE [AUX].[SELLIN_VERBAS_BONUS_AGRUP]
+(
+	[CONTRATO] [NVARCHAR](255) NULL,
+	[INICIO_VALIDADE_CONTR] [NVARCHAR](255) NULL,
+	[FIM_VALIDADE_CONTR] [NVARCHAR](255) NULL,
+	[COMPETENCIA] [DATETIME] NULL,
+	[COMPETENCIA BONUS] [DATETIME] NULL,
+	[MES_FECHAMENTO] [DATETIME] NULL,
+	[META] [FLOAT] NULL,
+	[NIVEL_1] [FLOAT] NULL,
+	[%_BONUS_N1] [FLOAT] NULL,
+	[NIVEL_2] [FLOAT] NULL,
+	[%_BONUS_N2] [FLOAT] NULL,
+	[NIVEL_3] [FLOAT] NULL,
+	[%_BONUS_N3] [FLOAT] NULL,
+	[NIVEL_4] [FLOAT] NULL,
+	[%_BONUS_N4] [FLOAT] NULL,
+	[META_DRIVER] [VARCHAR](7) NULL,
+	[NIVEL_5] [FLOAT] NULL,
+	[%_BONUS_N5] [FLOAT] NULL,
+	[TIPO_VERBA] [VARCHAR](23) NULL,
+	[TIPO_VERBA_N2] [VARCHAR](23) NULL,
+	[NIVEL_6] [FLOAT] NULL,
+	[%_BONUS_N6] [FLOAT] NULL,
+	[CATEGORIA_BONUS] [NVARCHAR](255) NULL
+) ON [PRIMARY]
+GO
+
+
+SELECT TOP 3 * FROM [AUX].[SELLIN_VERBAS_FIXAS]
+
+SELECT TOP 3 * FROM [AUX].[SELLIN_VERBAS_PRAZOS] ok
+
+SELECT TOP 3 * FROM [AUX].[SELLIN_VERBAS_VERBAS_TRANSP_AJUSTE]
+
+SELECT TOP 3 * FROM [AUX].[SELLIN_VERBAS_BONUS_AGRUP]
+
+
+=====================================================================================================================================================
+
