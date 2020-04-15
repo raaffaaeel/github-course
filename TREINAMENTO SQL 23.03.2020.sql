@@ -687,3 +687,11 @@ YoY 2 = DIVIDE([Total Vendas]-[Total Vendas Ultimo Ano 2];[Total Vendas Ultimo A
 
 
 --------------------------------------------------------------------
+
+Prova (Power Bi)
+
+Linguagem M -> para inserir coluna ID
+
+= Table.TransformColumns(#"Linhas Agrupadas", {"tabela", each Table.AddIndexColumn(_, "ClienteID", 1, 1)})
+
+	
